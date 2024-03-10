@@ -56,3 +56,23 @@ export const register = async (req, res) => {
     }
 }
 
+export const login = async (req, res) => {
+    try {
+        res.status(200).json(
+            { 
+                success: true,
+                message: "Login successful",
+                //token: "token"
+            }
+        );
+    } catch (error) {
+        res.status(500).json(
+            { 
+                success: false,
+                message: "Internal server error",
+                error: error.message
+            }
+        );
+    }
+}
+
