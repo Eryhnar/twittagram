@@ -1,5 +1,6 @@
 import User from "../entities/User/user-model.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
     try {
@@ -58,11 +59,52 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "All fields are required"
+                }
+            );
+        }
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "User does not exist"
+                }
+            );
+        }
+
+        if (!await bcrypt.compare(password, user.password)) {
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "Invalid credentials"
+                }
+            );
+        }
+
+        const token = jwt.sign(
+            { 
+                userId: user._id
+            },
+            process.env.JWT_SECRET,
+            { 
+                expiresIn: "2h"
+            }
+        );
+
         res.status(200).json(
             { 
                 success: true,
                 message: "Login successful",
-                //token: "token"
+                token: token
             }
         );
     } catch (error) {
