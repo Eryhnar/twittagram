@@ -34,6 +34,11 @@ const UserSchema = new Schema(
             type: String,
             required: false,
         },
+        isActive: {
+            type: Boolean,
+            required: true,
+            default: true,
+        },
         followers: [{
             type: Schema.Types.ObjectId,
             ref: 'User'

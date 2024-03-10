@@ -1,4 +1,5 @@
 import User from "../entities/User/user-model.js";
+import bcrypt from "bcrypt";
 
 export const register = async (req, res) => {
     try {
@@ -33,7 +34,9 @@ export const register = async (req, res) => {
             );
         }
 
-        const user = await User.create({ userHandle, userName, email, password });
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const user = await User.create({ userHandle, userName, email, password: hashedPassword });
 
         res.status(201).json(
             { 
@@ -52,3 +55,4 @@ export const register = async (req, res) => {
         );
     }
 }
+
