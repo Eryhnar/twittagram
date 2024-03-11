@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import User from "../../entities/User/user-model.js";
 import {faker} from "@faker-js/faker";
 
@@ -41,7 +40,7 @@ const seedUsers = async () => {
             userName: faker.internet.displayName(),
             userHandle: `@${faker.internet.userName()}`,
             email: faker.internet.email(),
-            password: faker.internet.password(),
+            password: "Aa123456",
             role: "user",
             profilePicture: faker.image.avatar(),
             bio: faker.person.bio(),
