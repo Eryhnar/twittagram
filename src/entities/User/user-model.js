@@ -47,16 +47,22 @@ const UserSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'User'
         }],
-        friends: [{
-            type: Schema.Types.ObjectId,
-            ref: 'User'
-        }],
-        // favouriteBooks: [
-        //   {
+        // friends: [{
         //     type: Schema.Types.ObjectId,
-        //     ref: 'Book'
-        //   }
-        // ]
+        //     ref: 'User'
+        // }],
+        // posts: [{ //maybe later
+        //     type: Schema.Types.ObjectId,
+        //     ref: 'Post'
+        // }],
+        // liked: [{ //maybe later
+        //     type: Schema.Types.ObjectId,
+        //     ref: 'Post'
+        // }],
+        saved: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Post'
+        }],
     },
     {
         timestamps: true,
