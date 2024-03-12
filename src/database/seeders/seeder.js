@@ -5,7 +5,7 @@ import { dbConnection } from "../db.js";
 import mongoose from "mongoose";
 import userSeeder from "./user-seeder.js";
 import postSeeder from './post-seeder.js';
-//import commentSeeder from './comment-seeder.js';
+import commentSeeder from './comment-seeder.js';
 
 
 
@@ -15,7 +15,7 @@ const seed = async () => {
         console.log("Database connected.");
         await userSeeder();
         await postSeeder();
-        //await commentSeeder();
+        await commentSeeder();
     } catch (error) {
         console.log("Database connection failed.");
         console.error(error.message);
