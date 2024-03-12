@@ -15,7 +15,6 @@ const seedPosts = async () => {
         };
         posts.push(post);
     }
-
     await Post.create(posts);
 }
 
