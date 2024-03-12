@@ -10,9 +10,9 @@ const seed = async () => {
     try {
         await dbConnection();
         console.log("Database connected.");
-        //await userSeeder();
+        await userSeeder();
         await postSeeder();
-        //await commentSeeder();
+        await commentSeeder();
     } catch (error) {
         console.log("Database connection failed.");
         console.error(error.message);
