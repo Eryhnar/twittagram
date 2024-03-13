@@ -73,3 +73,22 @@ export const getUsers = async (req, res) => { //search bar
 // const user = await User.find({}, { bio: true, isActive: true });
 // const user = await User.find({}, 'bio isActive');
 
+export const getProfile = async (req, res) => {
+    try {
+        res.status(200).json(
+            {
+                success: true,
+                message: "Profile retrived",
+                data: req.user
+            }
+        )
+    } catch (error) {
+        res.status(500).json(
+            {
+                success: false,
+                message: "Profile could not be retrived",
+                error: error
+            }
+        )
+    }
+}
