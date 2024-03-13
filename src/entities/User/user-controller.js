@@ -75,6 +75,8 @@ export const getUsers = async (req, res) => { //search bar
 
 export const getProfile = async (req, res) => {
     try {
+        const userId = req.tokenData.userId;
+        console.log(userId)
         res.status(200).json(
             {
                 success: true,
