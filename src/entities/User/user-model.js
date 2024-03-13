@@ -15,15 +15,18 @@ const UserSchema = new Schema(
             type: String,
             required: true,
             unique: true,
+            select: false,
         },
         password: {
             type: String,
             required: true,
+            select: false,
         },
         role: {
             type: String,
             enum: ["user", "admin", "super_admin"],
             default: "user",
+            select: false,
         },
         profilePicture: {
             type: String,

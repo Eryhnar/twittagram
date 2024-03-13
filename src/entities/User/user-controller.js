@@ -76,12 +76,26 @@ export const getUsers = async (req, res) => { //search bar
 export const getProfile = async (req, res) => {
     try {
         const userId = req.tokenData.userId;
-        console.log(userId)
+        const user = await User.findOne(
+            { 
+                _id: userId
+            }
+        );
+
+        if (!user) {
+            return res.status(404).json(
+                {
+                    success: false,
+                    message: "User not found"
+                }
+            )
+        }
+        
         res.status(200).json(
             {
                 success: true,
                 message: "Profile retrived",
-                data: req.user
+                data: user
             }
         )
     } catch (error) {

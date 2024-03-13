@@ -69,9 +69,14 @@ export const login = async (req, res) => {
                 }
             );
         }
-
-        const user = await User.findOne({ email });
-
+        console.log(email);
+        const user = await User.findOne(
+            { 
+                email 
+            },
+            "+role +password"
+        );
+        console.log(user);
         if (!user) {
             return res.status(400).json(
                 { 
@@ -92,7 +97,8 @@ export const login = async (req, res) => {
 
         const token = jwt.sign(
             { 
-                userId: user._id
+                userId: user._id,
+                role: user.role
             },
             process.env.JWT_SECRET,
             { 
