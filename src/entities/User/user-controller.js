@@ -90,7 +90,7 @@ export const getProfile = async (req, res) => {
                 }
             )
         }
-        
+
         res.status(200).json(
             {
                 success: true,
@@ -103,6 +103,26 @@ export const getProfile = async (req, res) => {
             {
                 success: false,
                 message: "Profile could not be retrived",
+                error: error
+            }
+        )
+    }
+}
+
+export const updateProfile = async (req, res) => {
+    try {
+        res.status(200).json(
+            {
+                success: true,
+                message: "Profile updated",
+                //data: newProfile
+            }
+        )
+    } catch (error) {
+        res.status(500).json(
+            {
+                success: false,
+                message: "Profile could not be updated",
                 error: error
             }
         )
