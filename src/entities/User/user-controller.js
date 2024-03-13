@@ -156,3 +156,23 @@ export const updateProfile = async (req, res) => {
         )
     }
 }
+
+export const updateUserById = async (req, res) => {
+    try {
+        res.status(200).json(
+            {
+                success: true,
+                message: "Profile updated",
+                data: "Profile updated"
+            }
+        )
+    } catch (error) {
+        res.status(500).json(
+            {
+                success: false,
+                message: "Profile could not be updated",
+                error: error
+            }
+        )
+    }
+}
