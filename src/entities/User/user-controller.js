@@ -111,11 +111,39 @@ export const getProfile = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
     try {
+        const userId = req.tokenData.userId;
+        const { userName, userHandle, email, bio, profilePicture } = req.body;
+        const updatedFields = {};
+        if (userName) {
+            updatedFields.userName = userName;
+        }
+        if (userHandle) {
+            updatedFields.userHandle = userHandle;
+        }
+        if (email) {
+            updatedFields.email = email;
+        }
+        if (bio) {
+            updatedFields.bio = bio;
+        }
+        if (profilePicture) {
+            updatedFields.profilePicture = profilePicture;
+        }
+        const newProfile = await User.findOneAndUpdate(
+            { 
+                _id: userId
+            },
+            updatedFields,
+            { 
+                new: true
+            }
+        );
+
         res.status(200).json(
             {
                 success: true,
                 message: "Profile updated",
-                //data: newProfile
+                data: newProfile
             }
         )
     } catch (error) {
