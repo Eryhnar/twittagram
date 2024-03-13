@@ -212,3 +212,37 @@ export const updateUserById = async (req, res) => {
         )
     }
 }
+
+export const deleteUserById = async (req, res) => {
+    try {
+        const targetUserId = req.params.id;
+        const targetUser = await User.findOne(
+            { 
+                _id: targetUserId 
+            }
+        );
+        if (!targetUser) {
+            return res.status(400).json(
+                { 
+                    message: 'User not found' 
+                }
+            );
+        }
+        await User.deleteOne({ _id: targetUserId });
+
+        res.status(200).json(
+            {
+                success: true,
+                message: "User deleted",
+            }
+        )
+    } catch (error) {
+        res.status(500).json(
+            {
+                success: false,
+                message: "Profile could not be updated",
+                error: error
+            }
+        )
+    }
+}
