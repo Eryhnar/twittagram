@@ -21,10 +21,11 @@ export const getUsersAdmin = async (req, res) => {
             searchFilters.isActive = isActive;
         }
         const users = await User.find(
-            searchFilters
+            searchFilters,
+            "-password"
         )
         
-        return res.status(201).json(
+        return res.status(200).json(
             {
                 success: true,
                 message: "Users retrived",
@@ -71,3 +72,4 @@ export const getUsers = async (req, res) => { //search bar
 */
 // const user = await User.find({}, { bio: true, isActive: true });
 // const user = await User.find({}, 'bio isActive');
+

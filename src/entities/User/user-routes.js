@@ -5,5 +5,6 @@ const router = Router();
 
 //router.get('/', getUsers);
 router.get('/admin', getUsersAdmin);
+router.get('/profile', getProfile);
 
 export default router;
