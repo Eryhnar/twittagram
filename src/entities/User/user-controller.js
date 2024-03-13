@@ -159,11 +159,47 @@ export const updateProfile = async (req, res) => {
 
 export const updateUserById = async (req, res) => {
     try {
+        const targetUserId = req.params.id;
+        const { userName, userHandle, email, role, isActive, bio, profilePicture } = req.body;
+
+        const user = await User.findOne({ _id: targetUserId });
+
+        if (!user) {
+            return res.status(404).json(
+                { 
+                    message: 'User not found' 
+                }
+            );
+        }
+
+        if (userName) {
+            user.userName = userName;
+        }
+        if (userHandle) {
+            user.userHandle = userHandle;
+        }
+        if (email) {
+            user.email = email;
+        }
+        if (role) {
+            user.role = role;
+        }
+        if (isActive) {
+            user.isActive = isActive;
+        }
+        if (bio) {
+            user.bio = bio;
+        }
+        if (profilePicture) {
+            user.profilePicture = profilePicture;
+        }
+
+        await user.save();
         res.status(200).json(
             {
                 success: true,
                 message: "Profile updated",
-                data: "Profile updated"
+                data: user
             }
         )
     } catch (error) {
