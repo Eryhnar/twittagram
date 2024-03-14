@@ -30,7 +30,8 @@ export const getTimeline = async (req, res) => {
             { 
                 createdAt: -1
             }
-        ).skip(skip).limit(limit);
+        ).skip(skip)
+        .limit(limit);
 
         const followerPosts = await Post.find(
             { 
@@ -41,7 +42,8 @@ export const getTimeline = async (req, res) => {
             { 
                 createdAt: -1
             }
-        ).skip(skip).limit(limit);
+        ).skip(skip)
+        .limit(limit);
 
         // Combine the two arrays of posts
         const allPosts = [...posts, ...followerPosts];
@@ -222,7 +224,8 @@ export const getOwnPosts = async (req, res) => {
             { 
                 createdAt: -1
             }
-        ).skip(skip).limit(limit);
+        ).skip(skip)
+        .limit(limit);
 
         res.status(200).json(
             { 
