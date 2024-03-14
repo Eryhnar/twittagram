@@ -162,17 +162,18 @@ export const updatePost = async (req, res) => {
         const post = await Post.findOne(
             { 
                 _id: postId,
+                author: userId
             }
         );
-
-        if (userId != post.author) {
-            return res.status(403).json(
-                { 
-                    success: false,
-                    message: "You are not authorized to update this post"
-                }
-            );
-        }
+            //check if it still works commented
+        // if (userId != post.author) {
+        //     return res.status(403).json(
+        //         { 
+        //             success: false,
+        //             message: "You are not authorized to update this post"
+        //         }
+        //     );
+        // }
 
         if (caption) {
             post.caption = caption;
@@ -277,6 +278,25 @@ export const getPostById = async (req, res) => {
 
 export const deletePostById = async (req, res) => {
     try {
+        const postId = req.params.id;
+        const userId = req.tokenData.userId;
+        const post = await Post.findOne(
+            { 
+                _id: postId,
+                author: userId
+            }
+        );
+        if (!post) {
+            return res.status(404).json(
+                { 
+                    success: false,
+                    message: "Post not found"
+                }
+            );
+        }
+
+        await Post.deleteOne({ _id: postId });
+
         res.status(200).json(
             { 
                 success: true,
