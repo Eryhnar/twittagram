@@ -156,10 +156,43 @@ export const createPost = async (req, res) => {
 
 export const updatePost = async (req, res) => {
     try {
+        const { postId, caption, visibility, tags } = req.body;
+        //const updateFields = {};
+        const userId = req.tokenData.userId; 
+        const post = await Post.findOne(
+            { 
+                _id: postId,
+            }
+        );
+
+        if (userId != post.author) {
+            return res.status(403).json(
+                { 
+                    success: false,
+                    message: "You are not authorized to update this post"
+                }
+            );
+        }
+
+        if (caption) {
+            post.caption = caption;
+        }
+
+        if (visibility) {
+            post.visibility = visibility;
+        }
+
+        if (tags) {
+            post.tags = tags;
+        }
+
+        await post.save();
+
         res.status(200).json(
             { 
                 success: true,
                 message: "Post updated successfully",
+                data: post
             }
         );
     } catch (error) {
@@ -178,7 +211,7 @@ export const getOwnPosts = async (req, res) => {
         const limit = 10
         const page = req.query.page || 1;
         const skip = (page - 1) * limit;
-        
+
         const userId = req.tokenData.userId; 
         const posts = await Post.find(
             {
