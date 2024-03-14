@@ -345,3 +345,22 @@ export const deactivateProfile = async (req, res) => {
         )
     }
 }
+
+export const getPostsByUserId = async (req, res) => {
+    try {
+        res.status(200).json(
+            { 
+                success: true,
+                message: "The posts were retrieved successfully",
+            }
+        );
+    } catch (error) {
+        res.status(500).json(
+            { 
+                success: false,
+                message: "The posts could not be retrieved",
+                error: error.message
+            }
+        );        
+    }
+}
