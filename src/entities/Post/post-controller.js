@@ -50,7 +50,29 @@ export const getTimeline = async (req, res) => {
                 success: true,
                 message: "Get all posts",
                 data: allPosts,
+                prev_page: page > 1 ? page - 1 : null,
+                next_page: page < Math.ceil(allPosts.length / limit) ? page + 1 : null,
                 page: page
+
+            }
+        );
+    } catch (error) {
+        res.status(500).json(
+            { 
+                success: false,
+                message: "Internal server error",
+                error: error.message
+            }
+        );
+    }
+}
+
+export const getPosts = async (req, res) => {
+    try {
+        res.status(200).json(
+            { 
+                success: true,
+                message: "Get all posts",
             }
         );
     } catch (error) {

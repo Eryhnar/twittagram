@@ -5,6 +5,7 @@ import { getPosts, getTimeline } from "./post-controller.js";
 
 const router = Router();
 
-router.get('/', auth, getTimeline);
+router.get('/', auth, isSuperadmin, getPosts);
+router.get('/timeline', auth, getTimeline);
 
 export default router;

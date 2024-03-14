@@ -7,7 +7,7 @@ const seedUsers = async () => {
         {
             userHandle: "@super_admin",
             userName: "Super_admin",
-            email: "super_admin@super_admin.com",
+            email: "superadmin@superadmin.com",
             password: await bcrypt.hash("Aa123456", 10),
             role: "super_admin",
             profilePicture: "https://example.com/profile1.jpg",
