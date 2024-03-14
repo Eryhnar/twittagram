@@ -72,11 +72,31 @@ export const getPosts = async (req, res) => {
         const limit = 10
         const page = req.query.page || 1;
         const skip = (page - 1) * limit;
-        
+
+        if (isNaN(page) || page <= 0) {
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "Invalid page number"
+                }
+            );
+        }
+
+        const posts = await Post.find()
+            .sort(
+                { 
+                    createdAt: -1
+                }
+            ).skip(skip).limit(limit);
+
         res.status(200).json(
             { 
                 success: true,
                 message: "Get all posts",
+                data: posts,
+                prev_page: page > 1 ? page - 1 : null,
+                next_page: page < Math.ceil(posts.length / limit) ? page + 1 : null,
+                page: page
             }
         );
     } catch (error) {
