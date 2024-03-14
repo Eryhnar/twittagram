@@ -322,12 +322,30 @@ export const deletePostById = async (req, res) => {
 
 export const toggleLike = async (req, res) => {
     try {
+        const postId = req.params.id;
+        const userId = req.tokenData.userId;
+        const post = await Post.findOne(
+            { 
+                _id: postId
+            }
+        );
+        if (!post) {
+            return res.status(404).json(
+                { 
+                    success: false,
+                    message: "Post not found"
+                }
+            );
+        }
+        post.likes.includes(userId) ? post.likes.pull(userId) : post.likes.push(userId);
+        await post.save();
 
         //todo: change this message
         res.status(200).json(
             { 
                 success: true,
                 message: "Post liked successfully",
+                data: post
             }
         );
     } catch (error) {
