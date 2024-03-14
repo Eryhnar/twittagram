@@ -69,6 +69,10 @@ export const getTimeline = async (req, res) => {
 
 export const getPosts = async (req, res) => {
     try {
+        const limit = 10
+        const page = req.query.page || 1;
+        const skip = (page - 1) * limit;
+        
         res.status(200).json(
             { 
                 success: true,
