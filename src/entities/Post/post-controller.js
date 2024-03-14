@@ -113,10 +113,34 @@ export const getPosts = async (req, res) => {
 
 export const createPost = async (req, res) => {
     try {
+        const { caption, image, visibility, tags } = req.body;
+        const userId = req.tokenData.userId; // replace with req.tokenUser
+        const user = await User.findOne({ _id: userId });
+
+        if (!image) {
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "Image is required"
+                }
+            );
+        }
+
+        const post = new Post(
+            {
+                author: user._id,
+                caption,
+                image,
+                visibility,
+                tags,
+            }
+        );
+
         res.status(201).json(
             { 
                 success: true,
                 message: "Post created successfully",
+                data: post
             }
         );
     } catch (error) {
