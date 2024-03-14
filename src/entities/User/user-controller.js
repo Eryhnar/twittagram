@@ -1,4 +1,5 @@
 import User from "./user-model.js";
+import bcrypt from "bcrypt";
 
 export const getUsers = async (req, res) => {
     try {
@@ -134,7 +135,63 @@ export const updateProfile = async (req, res) => {
 
 export const updateProfilePassword = async (req, res) => {
     try {
+        const userId = req.tokenData.userId; 
+        const { oldPassword, newPassword, newPasswordRepeat } = req.body;
+        const user = await User.findOne(
+            { 
+                _id: userId
+            },
+            "+password"
+        );
         
+        if (!user) {
+            return res.status(400).json(
+                {
+                    success: false,
+                    message: "User not found"
+                }
+            )
+        }
+
+        if (!oldPassword || !newPassword || !newPasswordRepeat) {
+            return res.status(400).json(
+                {
+                    success: false,
+                    message: "All fields are required"
+                }
+            )
+        }
+
+        if (newPassword !== newPasswordRepeat) {
+            return res.status(400).json(
+                {
+                    success: false,
+                    message: "Passwords do not match"
+                }
+            )
+        }
+
+        if (!await bcrypt.compare(oldPassword, user.password)) { 
+            return res.status(400).json(
+                {
+                    success: false,
+                    message: "Incorrect password"
+                }
+            )
+        }
+
+        if (oldPassword === newPassword) {
+            return res.status(400).json(
+                {
+                    success: false,
+                    message: "New password must be different from old password"
+                }
+            )
+        }
+
+        user.password = await bcrypt.hash(newPassword, 10);
+        await user.save();
+
         res.status(200).json(
             {
                 success: true,
