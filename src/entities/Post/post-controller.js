@@ -1,6 +1,7 @@
 import User from "../User/user-model.js";
 import Post from "./post-model.js";
 
+// extract public posts from non-following users into for you page
 export const getTimeline = async (req, res) => {
     try {
         //const limit = parseInt(req.query.limit) || 10;
@@ -97,6 +98,25 @@ export const getPosts = async (req, res) => {
                 prev_page: page > 1 ? page - 1 : null,
                 next_page: page < Math.ceil(posts.length / limit) ? page + 1 : null,
                 page: page
+            }
+        );
+    } catch (error) {
+        res.status(500).json(
+            { 
+                success: false,
+                message: "Internal server error",
+                error: error.message
+            }
+        );
+    }
+}
+
+export const createPost = async (req, res) => {
+    try {
+        res.status(201).json(
+            { 
+                success: true,
+                message: "Post created successfully",
             }
         );
     } catch (error) {
