@@ -8,13 +8,13 @@ export const getUsers = async (req, res) => {
         const { userName, userHandle, email, role, isActive} = req.query;
         const searchFilters = {}
         if (userName) {
-            searchFilters.userName = { $regex: userName, $options: 'i' };
+            searchFilters.userName = { $regex: userName, $options: "i" };
         }
         if (userHandle) {
-            searchFilters.userHandle = { $regex: userHandle, $options: 'i' };
+            searchFilters.userHandle = { $regex: userHandle, $options: "i" };
         }
         if (email) {
-            searchFilters.email = { $regex: email, $options: 'i' };
+            searchFilters.email = { $regex: email, $options: "i" };
         }
         if (role) {
             searchFilters.role = role;
@@ -220,7 +220,7 @@ export const updateUserById = async (req, res) => {
         if (!user) {
             return res.status(404).json(
                 { 
-                    message: 'User not found' 
+                    message: "User not found" 
                 }
             );
         }
@@ -277,7 +277,7 @@ export const deleteUserById = async (req, res) => {
         if (!targetUser) {
             return res.status(400).json(
                 { 
-                    message: 'User not found' 
+                    message: "User not found" 
                 }
             );
         }
@@ -314,7 +314,7 @@ export const deactivateProfile = async (req, res) => {
         if (!user) {
             return res.status(400).json(
                 { 
-                    message: 'User not found' 
+                    message: "User not found" 
                 }
             );
         }
@@ -322,7 +322,7 @@ export const deactivateProfile = async (req, res) => {
         if (!await bcrypt.compare(password, user.password)) {
             return res.status(400).json(
                 { 
-                    message: 'Invalid password' 
+                    message: "Invalid password" 
                 }
             );
         }

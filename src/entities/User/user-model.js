@@ -44,27 +44,27 @@ const UserSchema = new Schema(
         },
         followers: [{
             type: Schema.Types.ObjectId,
-            ref: 'User'
+            ref: "User"
         }],
         following: [{
             type: Schema.Types.ObjectId,
-            ref: 'User'
+            ref: "User"
         }],
         // friends: [{
         //     type: Schema.Types.ObjectId,
-        //     ref: 'User'
+        //     ref: "User"
         // }],
         // posts: [{ //maybe later
         //     type: Schema.Types.ObjectId,
-        //     ref: 'Post'
+        //     ref: "Post"
         // }],
         // liked: [{ //maybe later
         //     type: Schema.Types.ObjectId,
-        //     ref: 'Post'
+        //     ref: "Post"
         // }],
         saved: [{
             type: Schema.Types.ObjectId,
-            ref: 'Post'
+            ref: "Post"
         }],
     },
     {

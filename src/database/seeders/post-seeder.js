@@ -21,7 +21,7 @@ const seedPosts = async () => {
         for (let j = 0; j < numLikes; j++) {
             const randomLikerIndex = Math.floor(Math.random() * users.length);
             likes.push(users[randomLikerIndex]._id);
-            likers.splice(randomLikerIndex, 1); // Remove the selected liker so they can't like the post twice
+            likers.splice(randomLikerIndex, 1); // Remove the selected liker so they can"t like the post twice
         }
         
         const post = {

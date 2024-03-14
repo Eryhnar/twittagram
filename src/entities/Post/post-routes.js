@@ -5,15 +5,17 @@ import { createPost, deletePostById, getOwnPosts, getPostById, getPosts, getTime
 
 const router = Router();
 
-router.get('/', auth, isSuperadmin, getPosts); //admin
-router.get('/timeline', auth, getTimeline);
-router.post('/', auth, createPost);
+router.get("/", auth, isSuperadmin, getPosts); //admin
+router.get("/timeline", auth, getTimeline);
+router.post("/", auth, createPost);
 router.put("/" , auth, updatePost);
 router.get("/own", auth, getOwnPosts); 
 router.get("/:id", auth, getPostById); 
-//saved
+//get saved
 router.delete("/:id", auth, deletePostById);
 //router.get("/:user-id", auth, getPostsByUserId); 
 router.put("/like/:id", auth, toggleLike);
+//delete post admin
+//update post admin
 
 export default router;

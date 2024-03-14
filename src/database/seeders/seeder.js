@@ -1,8 +1,8 @@
 import { dbConnection } from "../db.js";
 import mongoose from "mongoose";
 import userSeeder from "./user-seeder.js";
-import postSeeder from './post-seeder.js';
-import commentSeeder from './comment-seeder.js';
+import postSeeder from "./post-seeder.js";
+import commentSeeder from "./comment-seeder.js";
 
 
 

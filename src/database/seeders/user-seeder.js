@@ -11,7 +11,7 @@ const seedUsers = async () => {
             password: await bcrypt.hash("Aa123456", 10),
             role: "super_admin",
             profilePicture: "https://example.com/profile1.jpg",
-            bio: "I'm a fixed user",
+            bio: "I"m a fixed user",
             isActive: true,
         },
         {
@@ -21,7 +21,7 @@ const seedUsers = async () => {
             password: await bcrypt.hash("Aa123456", 10),
             role: "admin",
             profilePicture: "https://example.com/profile2.jpg",
-            bio: "I'm another fixed user",
+            bio: "I"m another fixed user",
             isActive: true,
         },
         {
@@ -31,7 +31,7 @@ const seedUsers = async () => {
             password: await bcrypt.hash("Aa123456", 10),
             role: "user",
             profilePicture: "https://example.com/profile3.jpg",
-            bio: "I'm the third fixed user",
+            bio: "I"m the third fixed user",
             isActive: true,
         },
     ];

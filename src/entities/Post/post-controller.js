@@ -24,7 +24,7 @@ export const getTimeline = async (req, res) => {
         const posts = await Post.find(
             { 
                 author: { $nin: user._id },
-                visibility: 'public'
+                visibility: "public"
             }
         ).sort(
             { 
@@ -36,7 +36,7 @@ export const getTimeline = async (req, res) => {
         const followerPosts = await Post.find(
             { 
                 author: { $in: following },
-                visibility: 'followers'
+                visibility: "followers"
             }
         ).sort(
             { 
