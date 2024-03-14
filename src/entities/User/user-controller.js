@@ -42,46 +42,20 @@ export const getUsers = async (req, res) => {
         )
     }
 }
-/*
-export const getUsers = async (req, res) => { //search bar
-    try {
-        //optional fields to filter by
-        const { userName, userHandle } = req.query;
-        const user = await User.find(
-            {
-
-            },
-        )
-        return res.status(201).json(
-            {
-                success: true,
-                message: "Users retrived",
-                //data: user
-            }
-        )
-    } catch (error) {
-        return res.status(500).json(
-            {
-                success: false,
-                message: "Users could not be retrived",
-                error: error
-            }
-        )
-    }
-}
-*/
-// const user = await User.find({}, { bio: true, isActive: true });
-// const user = await User.find({}, 'bio isActive');
 
 export const getProfile = async (req, res) => {
     try {
+
+        //SUBSTITUTE FOR TOKEN USER
         const userId = req.tokenData.userId;
         const user = await User.findOne(
             { 
                 _id: userId
             }
         );
+        //SUBSTITUTE FOR TOKEN USER
 
+        // REMOVE
         if (!user) {
             return res.status(404).json(
                 {
@@ -90,6 +64,7 @@ export const getProfile = async (req, res) => {
                 }
             )
         }
+        // REMOVE
 
         res.status(200).json(
             {
@@ -144,6 +119,26 @@ export const updateProfile = async (req, res) => {
                 success: true,
                 message: "Profile updated",
                 data: newProfile
+            }
+        )
+    } catch (error) {
+        res.status(500).json(
+            {
+                success: false,
+                message: "Profile could not be updated",
+                error: error
+            }
+        )
+    }
+}
+
+export const updateProfilePassword = async (req, res) => {
+    try {
+        
+        res.status(200).json(
+            {
+                success: true,
+                message: "Profile updated",
             }
         )
     } catch (error) {
