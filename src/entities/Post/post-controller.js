@@ -126,7 +126,7 @@ export const createPost = async (req, res) => {
             );
         }
 
-        const post = new Post(
+        const post = await Post.create(
             {
                 author: user._id,
                 caption,
@@ -175,10 +175,25 @@ export const updatePost = async (req, res) => {
 
 export const getOwnPosts = async (req, res) => {
     try {
+        const limit = 10
+        const page = req.query.page || 1;
+        const skip = (page - 1) * limit;
+        const userId = req.tokenData.userId; 
+        const posts = await Post.find(
+            {
+                author: userId
+            }
+        ).sort(
+            { 
+                createdAt: -1
+            }
+        ).skip(skip).limit(limit);
+
         res.status(200).json(
             { 
                 success: true,
                 message: "Get all own posts",
+                data: posts
             }
         );
     } catch (error) {
