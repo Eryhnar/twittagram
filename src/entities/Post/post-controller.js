@@ -240,3 +240,22 @@ export const getOwnPosts = async (req, res) => {
         );
     }
 }
+
+export const getPostById = async (req, res) => {
+    try {
+        res.status(200).json(
+            { 
+                success: true,
+                message: "Post retrieved successfully",
+            }
+        );
+    } catch (error) {
+        res.status(500).json(
+            { 
+                success: false,
+                message: "The post could not be retrieved",
+                error: error.message
+            }
+        );
+    }
+}
