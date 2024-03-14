@@ -274,3 +274,22 @@ export const getPostById = async (req, res) => {
         );
     }
 }
+
+export const deletePostById = async (req, res) => {
+    try {
+        res.status(200).json(
+            { 
+                success: true,
+                message: "Post deleted successfully",
+            }
+        );
+    } catch (error) {
+        res.status(500).json(
+            { 
+                success: false,
+                message: "The post could not be deleted",
+                error: error.message
+            }
+        );
+    }
+}
