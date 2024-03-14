@@ -298,3 +298,22 @@ export const deleteUserById = async (req, res) => {
         )
     }
 }
+
+export const deactivateProfile = async (req, res) => {
+    try {
+        res.status(200).json(
+            {
+                success: true,
+                message: "User deactivated",
+            }
+        )
+    } catch (error) {
+        res.status(500).json(
+            {
+                success: false,
+                message: "Profile could not be updated",
+                error: error
+            }
+        )
+    }
+}
