@@ -301,6 +301,34 @@ export const deleteUserById = async (req, res) => {
 
 export const deactivateProfile = async (req, res) => {
     try {
+        const userId = req.tokenData.userId;
+        const password = req.body.password;
+        const user = await User.findOne(
+            { 
+                _id: userId 
+            },
+            "+password +isActive"
+        );
+        // NOT NEEDED
+        if (!user) {
+            return res.status(400).json(
+                { 
+                    message: 'User not found' 
+                }
+            );
+        }
+
+        if (!await bcrypt.compare(password, user.password)) {
+            return res.status(400).json(
+                { 
+                    message: 'Invalid password' 
+                }
+            );
+        }
+
+        user.isActive = false;
+        await user.save();
+
         res.status(200).json(
             {
                 success: true,
