@@ -178,6 +178,7 @@ export const getOwnPosts = async (req, res) => {
         const limit = 10
         const page = req.query.page || 1;
         const skip = (page - 1) * limit;
+        
         const userId = req.tokenData.userId; 
         const posts = await Post.find(
             {
