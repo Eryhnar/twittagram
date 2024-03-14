@@ -1,3 +1,4 @@
+import Post from "../Post/post-model.js";
 import User from "./user-model.js";
 import bcrypt from "bcrypt";
 
@@ -348,10 +349,30 @@ export const deactivateProfile = async (req, res) => {
 
 export const getPostsByUserId = async (req, res) => {
     try {
+        const limit = 10
+        const page = req.query.page || 1;
+        const skip = (page - 1) * limit;
+
+        const userId = req.params.id;
+        const posts = await Post.find(
+            {
+                author: userId
+            }
+        ).sort(
+            { 
+                createdAt: -1
+            }
+        ).skip(skip)
+        .limit(limit);
+
         res.status(200).json(
             { 
                 success: true,
                 message: "The posts were retrieved successfully",
+                data: posts,
+                prev_page: page > 1 ? page - 1 : null,
+                next_page: page < Math.ceil(posts.length / limit) ? page + 1 : null,
+                page: page
             }
         );
     } catch (error) {

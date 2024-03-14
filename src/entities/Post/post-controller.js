@@ -228,7 +228,10 @@ export const getOwnPosts = async (req, res) => {
             { 
                 success: true,
                 message: "Get all own posts",
-                data: posts
+                data: posts,
+                prev_page: page > 1 ? page - 1 : null,
+                next_page: page < Math.ceil(posts.length / limit) ? page + 1 : null,
+                page: page
             }
         );
     } catch (error) {
@@ -314,21 +317,3 @@ export const deletePostById = async (req, res) => {
     }
 }
 
-export const getPostsByUserId = async (req, res) => {
-    try {
-        res.status(200).json(
-            { 
-                success: true,
-                message: "The posts were retrieved successfully",
-            }
-        );
-    } catch (error) {
-        res.status(500).json(
-            { 
-                success: false,
-                message: "The posts could not be retrieved",
-                error: error.message
-            }
-        );        
-    }
-}
