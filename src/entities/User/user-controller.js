@@ -1,6 +1,6 @@
 import User from "./user-model.js";
 
-export const getUsersAdmin = async (req, res) => {
+export const getUsers = async (req, res) => {
     try {
         //optional fields to filter by
         const { userName, userHandle, email, role, isActive} = req.query;
