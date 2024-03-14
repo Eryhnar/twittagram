@@ -61,7 +61,7 @@ export const getTimeline = async (req, res) => {
         res.status(500).json(
             { 
                 success: false,
-                message: "Internal server error",
+                message: "The timeline could not be retrieved",
                 error: error.message
             }
         );
@@ -104,7 +104,7 @@ export const getPosts = async (req, res) => {
         res.status(500).json(
             { 
                 success: false,
-                message: "Internal server error",
+                message: "The posts could not be retrieved",
                 error: error.message
             }
         );
@@ -147,7 +147,7 @@ export const createPost = async (req, res) => {
         res.status(500).json(
             { 
                 success: false,
-                message: "Internal server error",
+                message: "The post could not be created",
                 error: error.message
             }
         );
@@ -166,7 +166,26 @@ export const updatePost = async (req, res) => {
         res.status(500).json(
             { 
                 success: false,
-                message: "Internal server error",
+                message: "The post could not be updated",
+                error: error.message
+            }
+        );
+    }
+}
+
+export const getOwnPosts = async (req, res) => {
+    try {
+        res.status(200).json(
+            { 
+                success: true,
+                message: "Get all own posts",
+            }
+        );
+    } catch (error) {
+        res.status(500).json(
+            { 
+                success: false,
+                message: "Your posts could not be retrieved",
                 error: error.message
             }
         );
