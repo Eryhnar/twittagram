@@ -320,3 +320,23 @@ export const deletePostById = async (req, res) => {
     }
 }
 
+export const toggleLike = async (req, res) => {
+    try {
+
+        //todo: change this message
+        res.status(200).json(
+            { 
+                success: true,
+                message: "Post liked successfully",
+            }
+        );
+    } catch (error) {
+        res.status(500).json(
+            { 
+                success: false,
+                message: "The post could not be liked",
+                error: error.message
+            }
+        );
+    }
+}

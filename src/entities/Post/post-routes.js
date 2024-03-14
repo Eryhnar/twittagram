@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { auth } from "../../middlewares/auth.js";
 import { isSuperadmin } from "../../middlewares/isSuperadmin.js";
-import { createPost, deletePostById, getOwnPosts, getPostById, getPosts, getTimeline, updatePost } from "./post-controller.js";
+import { createPost, deletePostById, getOwnPosts, getPostById, getPosts, getTimeline, toggleLike, updatePost } from "./post-controller.js";
 
 const router = Router();
 
@@ -13,6 +13,7 @@ router.get("/own", auth, getOwnPosts);
 router.get("/:id", auth, getPostById); 
 //saved
 router.delete("/:id", auth, deletePostById);
-//user-id
 //router.get("/:user-id", auth, getPostsByUserId); 
+router.put("/like/:id", auth, toggleLike);
+
 export default router;
