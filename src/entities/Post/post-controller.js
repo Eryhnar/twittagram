@@ -361,6 +361,27 @@ export const toggleLike = async (req, res) => {
 
 export const savePost = async (req, res) => {
     try {
+        const userId = req.tokenData.userId;
+        const user = await User.findOne({ _id: userId });
+        const postId = req.params.id;
+        const post = await Post.findOne(
+            { 
+                _id: postId
+            }
+        );
+        if (!post) {
+            return res.status(404).json(
+                { 
+                    success: false,
+                    message: "Post not found"
+                }
+            );
+        }
+        user.saved.includes(postId) 
+        ? user.saved.pull(postId) 
+        : user.saved.push(postId);
+        await user.save();
+        
         res.status(200).json(
             { 
                 success: true,
