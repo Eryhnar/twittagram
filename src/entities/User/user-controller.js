@@ -385,3 +385,22 @@ export const getPostsByUserId = async (req, res) => {
         );        
     }
 }
+
+export const getSavedPosts = async (req, res) => {
+    try {
+        res.status(200).json(
+            { 
+                success: true,
+                message: "Saved posts retrieved successfully",
+            }
+        );
+    } catch (error) {
+        res.status(500).json(
+            { 
+                success: false,
+                message: "Saved posts could not be retrieved",
+                error: error.message
+            }
+        );
+    }
+}

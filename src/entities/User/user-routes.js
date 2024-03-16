@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { deactivateProfile, deleteUserById, getPostsByUserId, getProfile, getUsers, updateProfile, updateProfilePassword, updateUserById } from "./user-controller.js";
+import { deactivateProfile, deleteUserById, getPostsByUserId, getProfile, getSavedPosts, getUsers, updateProfile, updateProfilePassword, updateUserById } from "./user-controller.js";
 import { auth } from "../../middlewares/auth.js";
 import { isSuperadmin } from "../../middlewares/isSuperadmin.js";
 
@@ -14,5 +14,6 @@ router.put("/profile/password", auth, updateProfilePassword);
 router.put("/:id", auth, isSuperadmin, updateUserById); //admin NEEDS VALIDATIONS
 router.delete("/:id", auth, isSuperadmin, deleteUserById); //admin SHOULD NOT DELETE EVERYTHING
 router.get("/posts/:id", auth, getPostsByUserId);
+router.get("/saved" , auth, getSavedPosts); 
 
 export default router;
