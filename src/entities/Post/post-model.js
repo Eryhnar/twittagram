@@ -29,7 +29,7 @@ const PostSchema = new Schema(
         // }],
         visibility: {
             type: String,
-            enum: ["public", "followers", "private"],
+            enum: ["public", "friends", "private"],
             default: "public",
         },
         tags: [{

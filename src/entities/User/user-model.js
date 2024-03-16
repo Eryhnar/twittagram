@@ -50,10 +50,10 @@ const UserSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: "User"
         }],
-        // friends: [{
-        //     type: Schema.Types.ObjectId,
-        //     ref: "User"
-        // }],
+        friends: [{
+            type: Schema.Types.ObjectId,
+            ref: "User"
+        }],
         // posts: [{ //maybe later
         //     type: Schema.Types.ObjectId,
         //     ref: "Post"
