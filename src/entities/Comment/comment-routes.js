@@ -7,7 +7,7 @@ import { postComment } from "./comment-controller.js";
 const router = Router();
 
 //post comment
-router.post("/", auth, postComment);
+router.post("/", auth, postComment); // review
 //post reply
 //get comments
 //get replies
