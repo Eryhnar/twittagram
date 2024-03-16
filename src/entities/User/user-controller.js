@@ -388,10 +388,26 @@ export const getPostsByUserId = async (req, res) => {
 
 export const getSavedPosts = async (req, res) => {
     try {
+        const limit = 10
+        const page = req.query.page || 1;
+        const skip = (page - 1) * limit;
+        const userId = req.tokenData.userId;
+        const user = await User.findOne(
+            { 
+                _id: userId 
+            }
+        ).populate(
+            "saved"
+        ).skip(skip)
+        .limit(limit);
+
+        const savedPosts = user.saved;
+
         res.status(200).json(
             { 
                 success: true,
                 message: "Saved posts retrieved successfully",
+                data: savedPosts
             }
         );
     } catch (error) {

@@ -13,7 +13,7 @@ router.put("/profile/deactivate", auth, deactivateProfile);
 router.put("/profile/password", auth, updateProfilePassword);
 router.put("/:id", auth, isSuperadmin, updateUserById); //admin NEEDS VALIDATIONS
 router.delete("/:id", auth, isSuperadmin, deleteUserById); //admin SHOULD NOT DELETE EVERYTHING
-router.get("/posts/:id", auth, getPostsByUserId);
+router.get("/posts/:id", auth, getPostsByUserId); // todo consider modifying route to add it to posts.
 router.get("/saved" , auth, getSavedPosts); 
 
 export default router;
