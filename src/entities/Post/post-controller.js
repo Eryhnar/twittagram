@@ -358,3 +358,22 @@ export const toggleLike = async (req, res) => {
         );
     }
 }
+
+export const savePost = async (req, res) => {
+    try {
+        res.status(200).json(
+            { 
+                success: true,
+                message: "Post saved successfully",
+            }
+        );
+    } catch (error) {
+        res.status(500).json(
+            { 
+                success: false,
+                message: "The post could not be saved",
+                error: error.message
+            }
+        );
+    }
+}
