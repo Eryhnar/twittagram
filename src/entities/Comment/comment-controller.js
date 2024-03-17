@@ -342,7 +342,7 @@ export const likeComment = async (req, res) => {
             );
         }
         if ( comment.likes.includes(userId) ) {
-            comment.likes = comment.likes.pull(userId);
+            comment.likes.pull(userId);
             //res here
         }
         else {
@@ -371,10 +371,62 @@ export const likeComment = async (req, res) => {
 
 export const likeReply = async (req, res) => {
     try {
+        const userId = req.tokenData.userId;
+        const { replyId, postId, commentId } = req.body;
+        if ( !replyId || !postId || !commentId ) {
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "All fields are required" 
+                }
+            );
+        }
+
+        const comment = await Comment.findOne(
+            { 
+                _id: commentId, 
+                post: postId,
+                replies: { $in: [replyId] }
+            }
+        )
+        if ( !comment ) {
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "Comment does not exist" 
+                }
+            );
+        }
+
+        const reply = await Comment.findOne(
+            { 
+                _id: replyId,
+                post: postId,
+            }
+        );
+        if ( !reply ) {
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "Reply does not exist" 
+                }
+            );
+        }
+
+        if ( reply.likes.includes(userId) ) {
+            reply.likes.pull(userId);
+        }
+        else {
+            reply.likes.push(userId);
+        }
+        await reply.save();
+
         res.status(200).json(
             { 
                 success: true,
                 message: "Reply liked successfully",
+                data: comment,
+                details: reply
             }
         );
     } catch (error) {
