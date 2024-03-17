@@ -489,10 +489,54 @@ export const updateComment = async (req, res) => {
 
 export const updateReply = async (req, res) => {
     try {
+        const userId = req.tokenData.userId;
+        const { replyId, postId, commentId, content } = req.body;
+        if ( !replyId || !postId || !commentId || !content ) {
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "All fields are required" 
+                }
+            );
+        }
+        const comment = await Comment.findOne(
+            { 
+                _id: commentId, 
+                post: postId,
+                replies: { $in: [replyId] }
+            }
+        );
+        if ( !comment ) {
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "Comment does not exist" 
+                }
+            );
+        }
+        const reply = await Comment.findOne(
+            { 
+                _id: replyId,
+                post: postId,
+                author: userId,
+            }
+        );
+        if ( !reply ) {
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "Reply does not exist" 
+                }
+            );
+        }
+        reply.content = content;
+        await reply.save();
         res.status(200).json(
             { 
                 success: true,
                 message: "Reply updated successfully",
+                data: comment,
+                details: reply
             }
         );
     } catch (error) {
