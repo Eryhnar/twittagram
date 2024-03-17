@@ -439,3 +439,22 @@ export const likeReply = async (req, res) => {
         );
     }
 }
+
+export const updateComment = async (req, res) => {
+    try {
+        res.status(200).json(
+            { 
+                success: true,
+                message: "Comment updated successfully",
+            }
+        );
+    } catch (error) {
+        res.status(500).json(
+            { 
+                success: false,
+                message: "Comment could not be updated",
+                error: error.message 
+            }
+        );
+    }
+}
