@@ -57,3 +57,22 @@ export const postComment = async (req, res) => {
         );
     }
 }
+
+export const postReply = async (req, res) => {
+    try {
+        res.status(200).json(
+            { 
+                success: true,
+                message: "Reply posted successfully" 
+            }
+        );
+    } catch (error) {
+        res.status(500).json(
+            { 
+                success: false,
+                message: "Reply could not be posted",
+                error: error.message 
+            }
+        );
+    }
+}

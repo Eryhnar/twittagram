@@ -69,14 +69,12 @@ export const login = async (req, res) => {
                 }
             );
         }
-        console.log(email);
         const user = await User.findOne(
             { 
                 email 
             },
             "+role +password"
         );
-        console.log(user);
         if (!user) {
             return res.status(400).json(
                 { 

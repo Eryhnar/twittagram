@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { auth } from "../../middlewares/auth.js";
 import { isSuperadmin } from "../../middlewares/isSuperadmin.js";
-import { postComment } from "./comment-controller.js";
+import { postComment, postReply } from "./comment-controller.js";
 
 
 const router = Router();
@@ -9,6 +9,7 @@ const router = Router();
 //post comment
 router.post("/", auth, postComment); // review
 //post reply
+router.post("/reply", auth, postReply); // review
 //get comments
 //get replies
 //delete comment
