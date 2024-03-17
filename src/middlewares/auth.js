@@ -29,7 +29,7 @@ export const auth = async (req, res, next) => {
             }
         );
 
-        const { isActive, ...tokenUser } = user;
+        const { isActive, ...tokenUser } = user._doc;
 
         // verify if user exists and is active and role matches the token
         // TODO verify token in session database

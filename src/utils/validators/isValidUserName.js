@@ -8,7 +8,8 @@
 //no dots, underscores or hyphens at the beginning
 
 const regex = /^(?!.*[._-]{2})[a-zA-Z0-9_. -]{3,20}$/;
-export const isValidUserName = (userName) => {
+const isValidUserName = (userName) => {
     return regex.test(userName);
 }
 
+export default isValidUserName;

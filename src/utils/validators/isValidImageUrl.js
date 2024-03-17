@@ -1,5 +1,7 @@
 const imageUrlRegex = /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|svg|png)/g;
 
-export default function isValidImageUrl(url) {
+const isValidImageUrl = (url) => {
     return imageUrlRegex.test(url);
 }
+
+export default isValidImageUrl;

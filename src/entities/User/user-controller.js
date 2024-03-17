@@ -1,33 +1,13 @@
 import Post from "../Post/post-model.js";
 import User from "./user-model.js";
 import bcrypt from "bcrypt";
+import { getUsersService, updateProfileService } from "./user-service.js";
 
 export const getUsers = async (req, res) => {
     try {
-        //optional fields to filter by
-        const { userName, userHandle, email, role, isActive} = req.query;
-        const searchFilters = {}
-        if (userName) {
-            searchFilters.userName = { $regex: userName, $options: "i" };
-        }
-        if (userHandle) {
-            searchFilters.userHandle = { $regex: userHandle, $options: "i" };
-        }
-        if (email) {
-            searchFilters.email = { $regex: email, $options: "i" };
-        }
-        if (role) {
-            searchFilters.role = role;
-        }
-        if (isActive) {
-            searchFilters.isActive = isActive;
-        }
-        const users = await User.find(
-            searchFilters,
-            "-password"
-        )
+        const users = await getUsersService(req.query)
         
-        return res.status(200).json(
+        res.status(200).json(
             {
                 success: true,
                 message: "Users retrived",
@@ -35,7 +15,7 @@ export const getUsers = async (req, res) => {
             }
         )
     } catch (error) {
-        return res.status(500).json(
+        res.status(500).json(
             {
                 success: false,
                 message: "Users could not be retrived",
@@ -48,25 +28,7 @@ export const getUsers = async (req, res) => {
 export const getProfile = async (req, res) => {
     try {
 
-        //SUBSTITUTE FOR TOKEN USER
-        const userId = req.tokenData.userId;
-        const user = await User.findOne(
-            { 
-                _id: userId
-            }
-        );
-        //SUBSTITUTE FOR TOKEN USER
-
-        // REMOVE
-        if (!user) {
-            return res.status(404).json(
-                {
-                    success: false,
-                    message: "User not found"
-                }
-            )
-        }
-        // REMOVE
+        const user = req.body.tokenUser
 
         res.status(200).json(
             {
@@ -88,33 +50,34 @@ export const getProfile = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
     try {
-        const userId = req.tokenData.userId;
-        const { userName, userHandle, email, bio, profilePicture } = req.body;
-        const updatedFields = {};
-        if (userName) {
-            updatedFields.userName = userName;
-        }
-        if (userHandle) {
-            updatedFields.userHandle = userHandle;
-        }
-        if (email) {
-            updatedFields.email = email;
-        }
-        if (bio) {
-            updatedFields.bio = bio;
-        }
-        if (profilePicture) {
-            updatedFields.profilePicture = profilePicture;
-        }
-        const newProfile = await User.findOneAndUpdate(
-            { 
-                _id: userId
-            },
-            updatedFields,
-            { 
-                new: true
-            }
-        );
+        // const userId = req.tokenData.userId;
+        // const { userName, userHandle, email, bio, profilePicture } = req.body;
+        // const updatedFields = {};
+        // if (userName) {
+        //     updatedFields.userName = userName;
+        // }
+        // if (userHandle) {
+        //     updatedFields.userHandle = userHandle;
+        // }
+        // if (email) {
+        //     updatedFields.email = email;
+        // }
+        // if (bio) {
+        //     updatedFields.bio = bio;
+        // }
+        // if (profilePicture) {
+        //     updatedFields.profilePicture = profilePicture;
+        // }
+        // const newProfile = await User.findOneAndUpdate(
+        //     { 
+        //         _id: userId
+        //     },
+        //     updatedFields,
+        //     { 
+        //         new: true
+        //     }
+        // );
+        const newProfile = await updateProfileService(req)
 
         res.status(200).json(
             {
@@ -128,7 +91,7 @@ export const updateProfile = async (req, res) => {
             {
                 success: false,
                 message: "Profile could not be updated",
-                error: error
+                error: error.message
             }
         )
     }
