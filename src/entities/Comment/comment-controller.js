@@ -139,21 +139,92 @@ export const postReply = async (req, res) => {
     }
 }
 
-export const getComments = async (req, res) => {
+// export const getComments = async (req, res) => {
+//     try {
+//         res.status(200).json(
+//             { 
+//                 success: true,
+//                 message: "Comments retrieved successfully",
+//             }
+//         );
+//     } catch (error) {
+//         res.status(500).json(
+//             { 
+//                 success: false,
+//                 message: "Comments could not be retrieved",
+//                 error: error.message 
+//             }
+//         );        
+//     }
+// }
+
+export const deleteComment = async (req, res) => {
     try {
+        const userId = req.tokenData.userId;
+        const { commentId, postId } = req.body;
+        if ( !commentId || !postId ) {
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "All fields are required" 
+                }
+            );
+        }
+        
+        // const post = await Post.findOne(
+        //     { 
+        //         _id: postId,
+        //     }
+        // );
+        // if ( !post ) {
+        //     return res.status(400).json(
+        //         { 
+        //             success: false,
+        //             message: "Post does not exist" 
+        //         }
+        //     );
+        // }
+        const comment = await Comment.findOne(
+            { 
+                _id: commentId,
+                post: postId,
+            }
+        );
+        if ( !comment ) {
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "Comment does not exist" 
+                }
+            );
+        }
+        if ( comment.author != userId ) {
+            return res.status(401).json(
+                { 
+                    success: false,
+                    message: "Unauthorized" 
+                }
+            );
+        }
+        await Comment.deleteOne(
+            { 
+                _id: commentId 
+            }
+        );
+        
         res.status(200).json(
             { 
                 success: true,
-                message: "Comments retrieved successfully",
+                message: "Comment deleted successfully",
             }
         );
     } catch (error) {
         res.status(500).json(
             { 
                 success: false,
-                message: "Comments could not be retrieved",
+                message: "Comment could not be deleted",
                 error: error.message 
             }
-        );        
+        );
     }
 }
