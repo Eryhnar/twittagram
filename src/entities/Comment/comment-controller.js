@@ -231,6 +231,63 @@ export const deleteComment = async (req, res) => {
 
 export const deleteReply = async (req, res) => {
     try {
+        const userId = req.tokenData.userId;
+        const { replyId, postId, commentId } = req.body;
+        if ( !replyId || !postId || !commentId ) {
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "All fields are required" 
+                }
+            );
+        }
+        const comment = await Comment.findOne(
+            { 
+                _id: commentId, 
+                post: postId 
+            }
+        )
+        .populate('replies');
+        if (!comment) {
+            return res.status(400).json(
+                { 
+                    success: false, 
+                    message: "Comment does not exist" 
+                }
+            );
+        }
+        const reply = comment.replies.find(
+            (reply) => reply._id == replyId
+        );
+        // const reply = await Comment.findOne(
+        //     { 
+        //         _id: replyId,
+        //         post: postId,
+        //     }
+        // );
+        // if ( !reply ) {
+        //     return res.status(400).json(
+        //         { 
+        //             success: false,
+        //             message: "Reply does not exist" 
+        //         }
+        //     );
+        // }
+        if ( reply.author != userId ) {
+            return res.status(401).json(
+                { 
+                    success: false,
+                    message: "Unauthorized" 
+                }
+            );
+        }
+        await Comment.deleteOne(
+            { 
+                _id: replyId 
+            }
+        );
+        comment.replies = comment.replies.pull(replyId);
+        await comment.save();
         res.status(200).json(
             { 
                 success: true,
