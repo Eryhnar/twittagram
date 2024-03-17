@@ -19,10 +19,10 @@ const PostSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: "User",
         }],
-        comments: [{
-            type: Schema.Types.ObjectId,
-            ref: "Comment",
-        }],
+        // comments: [{ //TODO removed need to change seeders.
+        //     type: Schema.Types.ObjectId,
+        //     ref: "Comment",
+        // }],
         // saved: [{ //maybe later
         //     type: Schema.Types.ObjectId,
         //     ref: "User",

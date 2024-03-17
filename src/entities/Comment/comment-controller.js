@@ -60,10 +60,72 @@ export const postComment = async (req, res) => {
 
 export const postReply = async (req, res) => {
     try {
+        const authorId = req.tokenData.userId;
+        const { postId, content, commentId } = req.body;
+        if ( !postId || !content || !commentId) {
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "All fields are required" 
+                }
+            );
+        }
+
+        // validate content.trim().length > 0
+
+        const post = await Post.findOne(
+            { 
+                _id: postId,
+            }
+        );
+
+        if ( !post ) {
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "Post does not exist" 
+                }
+            );
+        }
+        const comment = await Comment.findOne(
+            { 
+                _id: commentId 
+            }
+        );
+        if ( !comment ) {
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "Comment does not exist" 
+                }
+            );
+        }
+
+        const reply = await Comment.create(
+            {
+                author: authorId,
+                post: postId,
+                content,
+            }
+        );
+
+        comment.replies.push(reply._id);
+        await comment.save();
+        // const comment = await Comment.updateOne(
+        //     { 
+        //         _id: commentId 
+        //     },
+        //     { 
+        //         $push: { replies: reply._id } 
+        //     }
+        // );
+
         res.status(200).json(
             { 
                 success: true,
-                message: "Reply posted successfully" 
+                message: "Reply posted successfully",
+                data: comment,
+                details: reply
             }
         );
     } catch (error) {
