@@ -442,10 +442,38 @@ export const likeReply = async (req, res) => {
 
 export const updateComment = async (req, res) => {
     try {
+        const userId = req.tokenData.userId;
+        const { commentId, postId, content } = req.body;
+        if ( !commentId || !postId || !content ) {
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "All fields are required" 
+                }
+            );
+        }
+        const comment = await Comment.findOne(
+            { 
+                _id: commentId,
+                post: postId,
+                author: userId,
+            }
+        );
+        if ( !comment ) {
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "Comment does not exist" 
+                }
+            );
+        }
+        comment.content = content
+        await comment.save();
         res.status(200).json(
             { 
                 success: true,
                 message: "Comment updated successfully",
+                data: comment
             }
         );
     } catch (error) {
