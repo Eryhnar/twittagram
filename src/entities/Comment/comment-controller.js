@@ -206,9 +206,14 @@ export const deleteComment = async (req, res) => {
                 }
             );
         }
-        await Comment.deleteOne(
+        await Comment.findOneAndUpdate(
             { 
                 _id: commentId 
+            },
+            { 
+                $set: { 
+                    content: "This comment has been deleted" 
+                } 
             }
         );
         
@@ -281,13 +286,18 @@ export const deleteReply = async (req, res) => {
                 }
             );
         }
-        await Comment.deleteOne(
+        await Comment.findOneAndUpdate(
             { 
                 _id: replyId 
+            },
+            { 
+                $set: { 
+                    content: "This reply has been deleted" 
+                } 
             }
         );
-        comment.replies = comment.replies.pull(replyId);
-        await comment.save();
+        // comment.replies = comment.replies.pull(replyId);
+        // await comment.save();
         res.status(200).json(
             { 
                 success: true,
@@ -304,3 +314,4 @@ export const deleteReply = async (req, res) => {
         );
     }
 }
+

@@ -14,9 +14,9 @@ router.post("/reply", auth, postReply); // review
 // router.get("/", auth, getComments) // not needed for now
 //get replies
 //delete comment
-router.delete("/", auth, deleteComment)
+router.put("/delete", auth, deleteComment) //TODO turn into a put request
 //delete reply
-router.delete("/reply", auth, deleteReply)
+router.put("/reply/delete", auth, deleteReply) //TODO turn into a put request
 //like comment
 //like reply
 //update comment
