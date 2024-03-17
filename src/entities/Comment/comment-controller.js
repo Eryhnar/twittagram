@@ -138,3 +138,22 @@ export const postReply = async (req, res) => {
         );
     }
 }
+
+export const getComments = async (req, res) => {
+    try {
+        res.status(200).json(
+            { 
+                success: true,
+                message: "Comments retrieved successfully",
+            }
+        );
+    } catch (error) {
+        res.status(500).json(
+            { 
+                success: false,
+                message: "Comments could not be retrieved",
+                error: error.message 
+            }
+        );        
+    }
+}
