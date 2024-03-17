@@ -1,4 +1,5 @@
 import User from "./user-model.js"
+import UndefinedError from "../../utils/errors/UndefinedError.js"
 
 export const findUsers = async (searchFilters) => {
     return await User.find(
@@ -27,7 +28,16 @@ export const updateProfile = async (userId, updatedFields) => {
         );
         return updatedUser;
     } catch (error) {
-        console.error(error);
-        throw new Error("Error updating the user");
+        throw new UndefinedError("Error updating the user");
     }
+}
+
+export const getUserWithPassword = async (userId) => {
+    const user = await User.findOne(
+        { 
+            _id: userId
+        },
+        "+password"
+    );
+    return user;
 }

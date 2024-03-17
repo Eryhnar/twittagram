@@ -1,3 +1,5 @@
-export const makeTag = (tag) => {
-    return '#' + tag.trim().toLowerCase();
+const makeTag = (tag) => {
+    return "#" + tag.trim().toLowerCase();
 }
+
+export default makeTag;

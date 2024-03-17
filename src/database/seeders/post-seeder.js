@@ -6,7 +6,6 @@ import { faker } from "@faker-js/faker";
 const seedPosts = async () => {
     const posts = [];
     const users = await User.find();
-    //console.log(users);
     const visibilityOptions = ["public", "followers", "private"];
 
     for (let i = 0; i < 10; i++) {

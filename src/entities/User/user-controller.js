@@ -1,7 +1,7 @@
 import Post from "../Post/post-model.js";
 import User from "./user-model.js";
 import bcrypt from "bcrypt";
-import { getUsersService, updateProfileService } from "./user-service.js";
+import { getUsersService, updateProfileService, updatePasswordService } from "./user-service.js";
 
 export const getUsers = async (req, res) => {
     try {
@@ -50,33 +50,7 @@ export const getProfile = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
     try {
-        // const userId = req.tokenData.userId;
-        // const { userName, userHandle, email, bio, profilePicture } = req.body;
-        // const updatedFields = {};
-        // if (userName) {
-        //     updatedFields.userName = userName;
-        // }
-        // if (userHandle) {
-        //     updatedFields.userHandle = userHandle;
-        // }
-        // if (email) {
-        //     updatedFields.email = email;
-        // }
-        // if (bio) {
-        //     updatedFields.bio = bio;
-        // }
-        // if (profilePicture) {
-        //     updatedFields.profilePicture = profilePicture;
-        // }
-        // const newProfile = await User.findOneAndUpdate(
-        //     { 
-        //         _id: userId
-        //     },
-        //     updatedFields,
-        //     { 
-        //         new: true
-        //     }
-        // );
+        
         const newProfile = await updateProfileService(req)
 
         res.status(200).json(
@@ -99,62 +73,7 @@ export const updateProfile = async (req, res) => {
 
 export const updateProfilePassword = async (req, res) => {
     try {
-        const userId = req.tokenData.userId; 
-        const { oldPassword, newPassword, newPasswordRepeat } = req.body;
-        const user = await User.findOne(
-            { 
-                _id: userId
-            },
-            "+password"
-        );
-        
-        if (!user) {
-            return res.status(400).json(
-                {
-                    success: false,
-                    message: "User not found"
-                }
-            )
-        }
-
-        if (!oldPassword || !newPassword || !newPasswordRepeat) {
-            return res.status(400).json(
-                {
-                    success: false,
-                    message: "All fields are required"
-                }
-            )
-        }
-
-        if (newPassword !== newPasswordRepeat) {
-            return res.status(400).json(
-                {
-                    success: false,
-                    message: "Passwords do not match"
-                }
-            )
-        }
-
-        if (!await bcrypt.compare(oldPassword, user.password)) { 
-            return res.status(400).json(
-                {
-                    success: false,
-                    message: "Incorrect password"
-                }
-            )
-        }
-
-        if (oldPassword === newPassword) {
-            return res.status(400).json(
-                {
-                    success: false,
-                    message: "New password must be different from old password"
-                }
-            )
-        }
-
-        user.password = await bcrypt.hash(newPassword, 10);
-        await user.save();
+        const updatedUser = await updatePasswordService(req);
 
         res.status(200).json(
             {

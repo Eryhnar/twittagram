@@ -3,8 +3,7 @@ import "dotenv/config";
 import { app } from "./app.js";
 
 const PORT = process.env.PORT || 4001;
-//console.log(process.env.PORT);
-//console.log(MONGO_URI);
+
 
 dbConnection()
 .then(() => {

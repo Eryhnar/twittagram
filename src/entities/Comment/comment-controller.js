@@ -252,7 +252,7 @@ export const deleteReply = async (req, res) => {
                 post: postId 
             }
         )
-        .populate('replies');
+        .populate("replies");
         if (!comment) {
             return res.status(400).json(
                 { 
