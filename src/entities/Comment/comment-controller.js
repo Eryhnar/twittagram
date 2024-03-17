@@ -315,3 +315,21 @@ export const deleteReply = async (req, res) => {
     }
 }
 
+export const likeComment = async (req, res) => {
+    try {
+        res.status(200).json(
+            { 
+                success: true,
+                message: "Comment liked successfully",
+            }
+        );
+    } catch (error) {
+        res.status(500).json(
+            { 
+                success: false,
+                message: "Comment could not be liked",
+                error: error.message 
+            }
+        );
+    }
+}
