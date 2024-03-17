@@ -343,9 +343,11 @@ export const likeComment = async (req, res) => {
         }
         if ( comment.likes.includes(userId) ) {
             comment.likes = comment.likes.pull(userId);
+            //res here
         }
         else {
             comment.likes.push(userId);
+            res //here
         }
         await comment.save();
 
@@ -361,6 +363,25 @@ export const likeComment = async (req, res) => {
             { 
                 success: false,
                 message: "Comment could not be liked",
+                error: error.message 
+            }
+        );
+    }
+}
+
+export const likeReply = async (req, res) => {
+    try {
+        res.status(200).json(
+            { 
+                success: true,
+                message: "Reply liked successfully",
+            }
+        );
+    } catch (error) {
+        res.status(500).json(
+            { 
+                success: false,
+                message: "Reply could not be liked",
                 error: error.message 
             }
         );
