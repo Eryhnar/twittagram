@@ -317,10 +317,43 @@ export const deleteReply = async (req, res) => {
 
 export const likeComment = async (req, res) => {
     try {
+        const userId = req.tokenData.userId;
+        const { commentId, postId } = req.body;
+        if ( !commentId || !postId ) {
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "All fields are required" 
+                }
+            );
+        }
+        const comment = await Comment.findOne(
+            { 
+                _id: commentId,
+                post: postId,
+            }
+        );
+        if ( !comment ) {
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "Comment does not exist" 
+                }
+            );
+        }
+        if ( comment.likes.includes(userId) ) {
+            comment.likes = comment.likes.pull(userId);
+        }
+        else {
+            comment.likes.push(userId);
+        }
+        await comment.save();
+
         res.status(200).json(
             { 
                 success: true,
                 message: "Comment liked successfully",
+                data: comment
             }
         );
     } catch (error) {
