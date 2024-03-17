@@ -228,3 +228,22 @@ export const deleteComment = async (req, res) => {
         );
     }
 }
+
+export const deleteReply = async (req, res) => {
+    try {
+        res.status(200).json(
+            { 
+                success: true,
+                message: "Reply deleted successfully",
+            }
+        );
+    } catch (error) {
+        res.status(500).json(
+            { 
+                success: false,
+                message: "Reply could not be deleted",
+                error: error.message 
+            }
+        );
+    }
+}
