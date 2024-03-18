@@ -89,3 +89,11 @@ export const updatePost = async (post, updateFields) => {
         throw error;
     }
 }
+
+export const deletePostById = async (searchFilters) => {
+    try {
+        await Post.deleteOne(searchFilters);
+    } catch (error) {
+        throw error;
+    }
+}

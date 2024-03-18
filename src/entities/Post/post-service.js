@@ -1,6 +1,6 @@
 import InvalidInputError from "../../utils/errors/InvalidInputError.js";
 import { findUserById } from "../User/user-repository.js";
-import { createPost, findPost, findPosts, updatePost } from "./post-repository.js";
+import { createPost, deletePostById, findPost, findPosts, updatePost } from "./post-repository.js";
 import isValidImageUrl from "../../utils/validators/isValidImageUrl.js";
 import processTag from "../../utils/treatment-utils/processTag.js";
 import isValidVisibility from "../../utils/validators/isValidVisibility.js";
@@ -160,3 +160,16 @@ export const getPostByIdService = async (req) => {
     }
 }
     
+export const deletePostByIdService = async (req) => {
+    try {
+        const postId = req.params.id;
+        const userId = req.tokenData.userId;
+        const post = await findPost({ _id: postId, author: userId });
+        if (!post) {
+            throw new InvalidInputError(404, "Post not found");
+        }
+        return await deletePostById({ _id: postId });
+    } catch (error) {
+        throw error;
+    }
+}
