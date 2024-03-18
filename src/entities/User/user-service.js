@@ -234,3 +234,19 @@ export const getPostsByUserIdService = async (req, limit, skip) => {
     }
 }
     
+export const getSavedPostsService = async (req, limit, skip) => {
+    try {
+        const userId = req.tokenData.userId;
+        const user = await findUserById(userId);
+        const posts = await findPosts(
+            { 
+                _id: { $in: user.saved } 
+            },
+            skip,
+            limit,
+        )
+        return posts;
+    } catch (error) {
+        throw error;
+    }
+}

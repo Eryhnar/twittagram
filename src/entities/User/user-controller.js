@@ -1,7 +1,7 @@
 import Post from "../Post/post-model.js";
 import User from "./user-model.js";
 import bcrypt from "bcrypt";
-import { getUsersService, updateProfileService, updatePasswordService, updateUserByIdService, deleteUserByIdService, deactivateProfileService, getPostsByUserIdService } from "./user-service.js";
+import { getUsersService, updateProfileService, updatePasswordService, updateUserByIdService, deleteUserByIdService, deactivateProfileService, getPostsByUserIdService, getSavedPostsService } from "./user-service.js";
 
 export const getUsers = async (req, res) => {
     try {
@@ -189,17 +189,8 @@ export const getSavedPosts = async (req, res) => {
         const limit = 10
         const page = req.query.page || 1;
         const skip = (page - 1) * limit;
-        const userId = req.tokenData.userId;
-        const user = await User.findOne(
-            { 
-                _id: userId 
-            }
-        ).populate(
-            "saved"
-        ).skip(skip)
-        .limit(limit);
 
-        const savedPosts = user.saved;
+        const savedPosts = await getSavedPostsService(req, limit, skip);
 
         res.status(200).json(
             { 
