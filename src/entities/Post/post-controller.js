@@ -1,6 +1,6 @@
 import User from "../User/user-model.js";
 import Post from "./post-model.js";
-import { getPostsService, getTimelineService } from "./post-service.js";
+import { createPostService, getPostsService, getTimelineService, updatePostService } from "./post-service.js";
 
 // extract public posts from non-following users into for you page
 export const getTimeline = async (req, res) => {
@@ -65,28 +65,7 @@ export const getPosts = async (req, res) => {
 
 export const createPost = async (req, res) => {
     try {
-        const { caption, image, visibility, tags } = req.body;
-        const userId = req.tokenData.userId; // replace with req.tokenUser
-        const user = await User.findOne({ _id: userId });
-
-        if (!image) {
-            return res.status(400).json(
-                { 
-                    success: false,
-                    message: "Image is required"
-                }
-            );
-        }
-
-        const post = await Post.create(
-            {
-                author: user._id,
-                caption,
-                image,
-                visibility,
-                tags,
-            }
-        );
+        const post  = await createPostService(req);
 
         res.status(201).json(
             { 
@@ -108,38 +87,7 @@ export const createPost = async (req, res) => {
 
 export const updatePost = async (req, res) => {
     try {
-        const { postId, caption, visibility, tags } = req.body;
-        //const updateFields = {};
-        const userId = req.tokenData.userId; 
-        const post = await Post.findOne(
-            { 
-                _id: postId,
-                author: userId
-            }
-        );
-            //check if it still works commented
-        // if (userId != post.author) {
-        //     return res.status(403).json(
-        //         { 
-        //             success: false,
-        //             message: "You are not authorized to update this post"
-        //         }
-        //     );
-        // }
-
-        if (caption) {
-            post.caption = caption;
-        }
-
-        if (visibility) {
-            post.visibility = visibility;
-        }
-
-        if (tags) {
-            post.tags = tags;
-        }
-
-        await post.save();
+        const post = await updatePostService(req);
 
         res.status(200).json(
             { 

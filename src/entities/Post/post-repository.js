@@ -26,14 +26,55 @@ export const findPosts = async (searchFilters, skip, limit, userId, sort) => {
             .limit(limit);
         return posts;
     } catch (error) {
-        throw new UndefinedError("Error finding posts");
+        throw error;
     }
 }
 
-export const createPost = async (userId, caption, visibility, tags) => {
+export const createPost = async (userId, image, caption, visibility, tags) => {
     try {
-        Post.create({ author: userId, caption, visibility, tags });
+        const post = await Post.create(
+            { 
+                author: userId, 
+                image,
+                caption, 
+                visibility, 
+                tags 
+            }
+        );
+        return post;
     } catch (error) {
-        throw new UndefinedError("Error creating post");
+        throw error
+        //throw new UndefinedError("Error creating post", error);
+    }
+}
+
+export const findPost = async (userId, id) => {
+    try {
+        const post = await Post.findOne(
+            {
+                _id: id,
+                author: userId
+            }
+        );
+        return post;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const updatePost = async (post, updateFields) => {
+    try {
+        const updatedPost = await Post.findOneAndUpdate(
+            {
+                _id: post._id
+            },
+            updateFields,
+            {
+                new: true
+            }
+        )
+        return updatedPost;
+    } catch (error) {
+        throw error;
     }
 }
