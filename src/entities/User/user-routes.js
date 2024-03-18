@@ -15,5 +15,6 @@ router.put("/:id", auth, isSuperadmin, updateUserById); //admin NEEDS VALIDATION
 router.delete("/:id", auth, isSuperadmin, deleteUserById); //admin SHOULD NOT DELETE EVERYTHING
 router.get("/posts/:id", auth, getPostsByUserId); // todo consider modifying route to add it to posts.
 router.get("/saved" , auth, getSavedPosts); 
+//add soft delete user route
 
 export default router;

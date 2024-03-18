@@ -42,7 +42,7 @@ export const auth = async (req, res, next) => {
             );
         }
 
-        req.body.tokenUser = tokenUser;
+        req.tokenUser = tokenUser;
         next();
     } catch (error) {
         return res.status(500).json(

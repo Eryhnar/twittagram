@@ -1,7 +1,7 @@
 import Post from "../Post/post-model.js";
 import User from "./user-model.js";
 import bcrypt from "bcrypt";
-import { getUsersService, updateProfileService, updatePasswordService } from "./user-service.js";
+import { getUsersService, updateProfileService, updatePasswordService, updateUserByIdService, deleteUserByIdService, deactivateProfileService, getPostsByUserIdService } from "./user-service.js";
 
 export const getUsers = async (req, res) => {
     try {
@@ -28,7 +28,7 @@ export const getUsers = async (req, res) => {
 export const getProfile = async (req, res) => {
     try {
 
-        const user = req.body.tokenUser
+        const user = req.tokenUser
 
         res.status(200).json(
             {
@@ -94,42 +94,7 @@ export const updateProfilePassword = async (req, res) => {
 
 export const updateUserById = async (req, res) => {
     try {
-        const targetUserId = req.params.id;
-        const { userName, userHandle, email, role, isActive, bio, profilePicture } = req.body;
-
-        const user = await User.findOne({ _id: targetUserId });
-
-        if (!user) {
-            return res.status(404).json(
-                { 
-                    message: "User not found" 
-                }
-            );
-        }
-
-        if (userName) {
-            user.userName = userName;
-        }
-        if (userHandle) {
-            user.userHandle = userHandle;
-        }
-        if (email) {
-            user.email = email;
-        }
-        if (role) {
-            user.role = role;
-        }
-        if (isActive) {
-            user.isActive = isActive;
-        }
-        if (bio) {
-            user.bio = bio;
-        }
-        if (profilePicture) {
-            user.profilePicture = profilePicture;
-        }
-
-        await user.save();
+        const user = await updateUserByIdService(req);
         res.status(200).json(
             {
                 success: true,
@@ -150,20 +115,7 @@ export const updateUserById = async (req, res) => {
 
 export const deleteUserById = async (req, res) => {
     try {
-        const targetUserId = req.params.id;
-        const targetUser = await User.findOne(
-            { 
-                _id: targetUserId 
-            }
-        );
-        if (!targetUser) {
-            return res.status(400).json(
-                { 
-                    message: "User not found" 
-                }
-            );
-        }
-        await User.deleteOne({ _id: targetUserId });
+        deleteUserByIdService(req);
 
         res.status(200).json(
             {
@@ -175,7 +127,7 @@ export const deleteUserById = async (req, res) => {
         res.status(500).json(
             {
                 success: false,
-                message: "Profile could not be updated",
+                message: "Profile could not be deleted",
                 error: error
             }
         )
@@ -184,33 +136,7 @@ export const deleteUserById = async (req, res) => {
 
 export const deactivateProfile = async (req, res) => {
     try {
-        const userId = req.tokenData.userId;
-        const password = req.body.password;
-        const user = await User.findOne(
-            { 
-                _id: userId 
-            },
-            "+password +isActive"
-        );
-        // NOT NEEDED
-        if (!user) {
-            return res.status(400).json(
-                { 
-                    message: "User not found" 
-                }
-            );
-        }
-
-        if (!await bcrypt.compare(password, user.password)) {
-            return res.status(400).json(
-                { 
-                    message: "Invalid password" 
-                }
-            );
-        }
-
-        user.isActive = false;
-        await user.save();
+        deactivateProfileService(req);
 
         res.status(200).json(
             {
@@ -235,17 +161,7 @@ export const getPostsByUserId = async (req, res) => {
         const page = req.query.page || 1;
         const skip = (page - 1) * limit;
 
-        const userId = req.params.id;
-        const posts = await Post.find(
-            {
-                author: userId
-            }
-        ).sort(
-            { 
-                createdAt: -1
-            }
-        ).skip(skip)
-        .limit(limit);
+        const posts = await getPostsByUserIdService(req, limit, skip);
 
         res.status(200).json(
             { 

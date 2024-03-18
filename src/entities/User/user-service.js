@@ -1,4 +1,4 @@
-import { findUsers, updateProfile, getUserWithPassword } from "./user-repository.js";
+import { findUsers, updateProfile, findUserById, updateUser, deleteUser, getUserToUpdate } from "./user-repository.js";
 import isValidUserName from "../../utils/validators/isValidUserName.js";
 import isValidBio from "../../utils/validators/isValidBio.js";
 import isValidEmail from "../../utils/validators/isValidEmail.js";
@@ -8,6 +8,9 @@ import comparePassword from "../../utils/treatment-utils/comparePassword.js";
 import hashPassword from "../../utils/treatment-utils/hashPassword.js";
 import UnauthorizedError from "../../utils/errors/UnauthorizedError.js";
 import InvalidInputError from "../../utils/errors/InvalidInputError.js";
+import NotFoundError from "../../utils/errors/NotFoundError.js";
+import isValidId from "../../utils/validators/IsValidId.js";
+import { findPosts } from "../Post/post-repository.js";
 
 
 export const getUsersService = async (query) => {
@@ -81,7 +84,7 @@ export const updatePasswordService = async (req) => {
         if (oldPassword === newPassword) {
             throw new InvalidInputError(400, "New password must be different from old password");
         }
-        const user = await getUserWithPassword(userId);
+        const user = await getUserToUpdate(userId);
         if (!user) {
             throw new InvalidInputError(400, "User does not exist");
         }
@@ -91,6 +94,141 @@ export const updatePasswordService = async (req) => {
         const hashedPassword = await hashPassword(newPassword);
         const updatedUser = await updateProfile(userId, { password: hashedPassword });
         return updatedUser;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const updateUserByIdService = async (req) => {
+    try {
+        const targetUserId = req.params.id;
+        const { userName, email, role, isActive, bio, profilePicture } = req.body;
+        const updateFields = {};
+
+        if (!isValidId(targetUserId)) {
+            throw new InvalidInputError(400, "Invalid user id");
+        }
+
+        if (userName) {
+            if (!isValidUserName(userName)) {
+                throw new InvalidInputError(400, "Invalid user name");
+            }
+            updateFields.userName = userName;
+        }
+
+        if (email) {
+            if (!isValidEmail(email)) {
+                throw new InvalidInputError(400, "Invalid email");
+            }
+            updateFields.email = email;
+        }
+
+        if (role) {
+            if (!["user", "admin", "superadmin"].includes(role)) {
+                throw new InvalidInputError(400, "Invalid role");
+            }
+            updateFields.role = role;
+        }
+
+        if (bio) {
+            if (!isValidBio(bio)) {
+                throw new InvalidInputError(400, "Invalid bio");
+            }
+            updateFields.bio = bio;
+        }
+
+        if (profilePicture) {
+            if (!isValidImageUrl(profilePicture)) {
+                throw new InvalidInputError(400, "Invalid profile picture");
+            }
+            updateFields.profilePicture = profilePicture;
+        }
+
+        if (isActive !== undefined) {
+            if (typeof isActive !== "boolean") {
+                throw new InvalidInputError(400, "Invalid isActive");
+            }
+            updateFields.isActive = isActive;
+        }
+
+        const user = await getUserToUpdate(targetUserId);
+        if (!user) {
+            throw new NotFoundError(404, "User not found");
+        }
+
+        const newProfile = await updateUser(user, updateFields);
+        return newProfile;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const deleteUserByIdService = async (req) => {
+    try {
+        const targetUserId = req.params.id;
+        if (!targetUserId || !isValidId(targetUserId)) {
+            throw new InvalidInputError(400, "Invalid user id");
+        }
+        //TODO remove??
+        const targetUser = await findUserById(targetUserId);
+        if (!targetUser) {
+            throw new NotFoundError(404, "User not found");
+        }
+        await deleteUser(targetUserId);
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const deactivateProfileService = async (req) => {
+    try {
+        const userId = req.tokenData.userId;
+        const password = req.body.password;
+        const user = await getUserToUpdate(userId);
+        // const updatedFields = {};
+
+        // NOT NEEDED
+        if (!user) {
+            return res.status(400).json(
+                { 
+                    message: "User not found" 
+                }
+            );
+        }
+
+        if (!await comparePassword(password, user.password)) {
+            return res.status(400).json(
+                { 
+                    message: "Invalid password" 
+                }
+            );
+        }
+
+        const isActive = {isActive: false};
+        await updateUser(user, isActive);
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const getPostsByUserIdService = async (req, limit, skip) => {
+    try {
+        const authorId = req.params.id;
+        const userId = req.tokenData.userId;
+
+        if (!authorId || !isValidId(authorId)) {
+            throw new InvalidInputError(400, "Invalid user id");
+        }
+        const posts = await findPosts(
+            { 
+                author: authorId
+            },
+            skip,
+            limit,
+            userId
+        )
+
+        return posts;
     } catch (error) {
         throw error;
     }
