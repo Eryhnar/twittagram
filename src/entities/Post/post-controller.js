@@ -1,6 +1,6 @@
 import User from "../User/user-model.js";
 import Post from "./post-model.js";
-import { getTimelineService } from "./post-service.js";
+import { getPostsService, getTimelineService } from "./post-service.js";
 
 // extract public posts from non-following users into for you page
 export const getTimeline = async (req, res) => {
@@ -40,21 +40,7 @@ export const getPosts = async (req, res) => {
         const page = req.query.page || 1;
         const skip = (page - 1) * limit;
 
-        if (isNaN(page) || page <= 0) {
-            return res.status(400).json(
-                { 
-                    success: false,
-                    message: "Invalid page number"
-                }
-            );
-        }
-
-        const posts = await Post.find()
-            .sort(
-                { 
-                    createdAt: -1
-                }
-            ).skip(skip).limit(limit);
+        const posts = await getPostsService(req, limit, skip, page);
 
         res.status(200).json(
             { 
