@@ -1,17 +1,20 @@
-import Post from "../Post/post-model.js";
-import User from "./user-model.js";
-import bcrypt from "bcrypt";
-import { getUsersService, updateProfileService, updatePasswordService, updateUserByIdService, deleteUserByIdService, deactivateProfileService, getPostsByUserIdService, getSavedPostsService } from "./user-service.js";
+import { getUsersService, updateProfileService, updatePasswordService, updateUserByIdService, deleteUserByIdService, deactivateProfileService, getPostsByUserIdService, getSavedPostsService, getProfileService, toggleFollowService } from "./user-service.js";
 
 export const getUsers = async (req, res) => {
     try {
-        const users = await getUsersService(req.query)
+        const limit = 10
+        const page = req.query.page || 1;
+        const skip = (page - 1) * limit;
+        const users = await getUsersService(req.query, limit, page, skip)
         
         res.status(200).json(
             {
                 success: true,
                 message: "Users retrived",
-                data: users
+                data: users,
+                prev_page: page > 1 ? page - 1 : null,
+                next_page: page < Math.ceil(allPosts.length / limit) ? page + 1 : null,
+                page: page
             }
         )
     } catch (error) {
@@ -28,7 +31,7 @@ export const getUsers = async (req, res) => {
 export const getProfile = async (req, res) => {
     try {
 
-        const user = req.tokenUser
+        const user = await getProfileService(req)
 
         res.status(200).json(
             {
@@ -161,7 +164,7 @@ export const getPostsByUserId = async (req, res) => {
         const page = req.query.page || 1;
         const skip = (page - 1) * limit;
 
-        const posts = await getPostsByUserIdService(req, limit, skip);
+        const posts = await getPostsByUserIdService(req, limit, skip, page);
 
         res.status(200).json(
             { 
@@ -169,7 +172,7 @@ export const getPostsByUserId = async (req, res) => {
                 message: "The posts were retrieved successfully",
                 data: posts,
                 prev_page: page > 1 ? page - 1 : null,
-                next_page: page < Math.ceil(posts.length / limit) ? page + 1 : null,
+                next_page: page < Math.ceil(allPosts.length / limit) ? page + 1 : null,
                 page: page
             }
         );
@@ -190,13 +193,16 @@ export const getSavedPosts = async (req, res) => {
         const page = req.query.page || 1;
         const skip = (page - 1) * limit;
 
-        const savedPosts = await getSavedPostsService(req, limit, skip);
+        const savedPosts = await getSavedPostsService(req, limit, skip, page);
 
         res.status(200).json(
             { 
                 success: true,
                 message: "Saved posts retrieved successfully",
-                data: savedPosts
+                data: savedPosts,
+                prev_page: page > 1 ? page - 1 : null,
+                next_page: page < Math.ceil(allPosts.length / limit) ? page + 1 : null,
+                page: page
             }
         );
     } catch (error) {
@@ -204,6 +210,27 @@ export const getSavedPosts = async (req, res) => {
             { 
                 success: false,
                 message: "Saved posts could not be retrieved",
+                error: error.message
+            }
+        );
+    }
+}
+
+export const toggleFollow = async (req, res) => {
+    try {
+        const user = await toggleFollowService(req);
+        res.status(200).json(
+            { 
+                success: true,
+                message: "Follow toggled successfully",
+                data: user
+            }
+        );
+    } catch (error) {
+        res.status(500).json(
+            { 
+                success: false,
+                message: "Follow could not be toggled",
                 error: error.message
             }
         );

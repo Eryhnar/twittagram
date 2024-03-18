@@ -13,7 +13,7 @@ import UndefinedError from "../../utils/errors/UndefinedError.js";
 //     }
 // }
 
-export const findPosts = async (searchFilters, skip, limit, userId) => {
+export const findPosts = async (searchFilters, skip, limit, userId, sort) => {
     try {
         // Add additional conditions to searchFilters
         searchFilters.$or = [
@@ -21,6 +21,7 @@ export const findPosts = async (searchFilters, skip, limit, userId) => {
         ];
 
         const posts = await Post.find(searchFilters)
+            // .sort(sort)
             .skip(skip)
             .limit(limit);
 

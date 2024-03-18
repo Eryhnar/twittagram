@@ -11,10 +11,29 @@ import InvalidInputError from "../../utils/errors/InvalidInputError.js";
 import NotFoundError from "../../utils/errors/NotFoundError.js";
 import isValidId from "../../utils/validators/IsValidId.js";
 import { findPosts } from "../Post/post-repository.js";
+import { updateUserById } from "./user-controller.js";
 
 
-export const getUsersService = async (query) => {
+export const getProfileService = async (req) => {
+    try {
+        const user = await findUserById(req.tokenData.userId);
+        return user;
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
+export const getUsersService = async (query, limit, page, skip) => {
     try{
+        if (isNaN(page) || page <= 0) { //TODO abstract it to a function maybe
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "Invalid page number"
+                }
+            );
+        }
         const { userName, userHandle, email, role, isActive} = query;
         const searchFilters = {}
         if (userName) {
@@ -32,7 +51,7 @@ export const getUsersService = async (query) => {
         if (isActive) {
             searchFilters.isActive = isActive;
         }
-        return findUsers(searchFilters);
+        return findUsers(searchFilters, skip, limit);
     }
     catch (error) {
         return error;
@@ -189,19 +208,11 @@ export const deactivateProfileService = async (req) => {
 
         // NOT NEEDED
         if (!user) {
-            return res.status(400).json(
-                { 
-                    message: "User not found" 
-                }
-            );
+            throw new NotFoundError(404, "User not found");
         }
 
         if (!await comparePassword(password, user.password)) {
-            return res.status(400).json(
-                { 
-                    message: "Invalid password" 
-                }
-            );
+            throw new UnauthorizedError(400, "Invalid credentials");
         }
 
         const isActive = {isActive: false};
@@ -211,10 +222,18 @@ export const deactivateProfileService = async (req) => {
     }
 }
 
-export const getPostsByUserIdService = async (req, limit, skip) => {
+export const getPostsByUserIdService = async (req, limit, skip, page) => {
     try {
         const authorId = req.params.id;
         const userId = req.tokenData.userId;
+        if (isNaN(page) || page <= 0) { //TODO abstract it to a function maybe
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "Invalid page number"
+                }
+            );
+        }
 
         if (!authorId || !isValidId(authorId)) {
             throw new InvalidInputError(400, "Invalid user id");
@@ -234,8 +253,20 @@ export const getPostsByUserIdService = async (req, limit, skip) => {
     }
 }
     
-export const getSavedPostsService = async (req, limit, skip) => {
+export const getSavedPostsService = async (req, limit, skip, page) => {
     try {
+        // TODO check best way to handle wrong page
+        // if (isNaN(page) || page <= 0) {
+        //     page = 1;
+        // }
+        if (isNaN(page) || page <= 0) { //TODO abstract it to a function maybe
+            return res.status(400).json(
+                { 
+                    success: false,
+                    message: "Invalid page number"
+                }
+            );
+        }
         const userId = req.tokenData.userId;
         const user = await findUserById(userId);
         const posts = await findPosts(
@@ -246,6 +277,34 @@ export const getSavedPostsService = async (req, limit, skip) => {
             limit,
         )
         return posts;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const toggleFollowService = async (req) => {
+    try {
+        const userId = req.tokenData.userId;
+        const targetUserId = req.body.targetUserId;
+        if (!targetUserId || !isValidId(targetUserId)) {
+            throw new InvalidInputError(400, "Invalid user id");
+        }
+        const user = await findUserById(userId);
+        const targetUser = await findUserById(targetUserId);
+        if (!targetUser) {
+            throw new NotFoundError(404, "User not found");
+        }
+        if (user.following.includes(targetUserId)) {
+            user.following.pull(targetUserId);
+            targetUser.followers.pull(userId);
+        } else {
+            user.following.push(targetUserId);
+            targetUser.followers.push(userId);
+        }
+        await updateUser(targetUserId, targetUser);
+        return updateUser(userId, user);
+        // await user.save();
+        // await targetUser.save();
     } catch (error) {
         throw error;
     }

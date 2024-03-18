@@ -7,12 +7,13 @@ export const findUsers = async (searchFilters) => {
     )
 }
 
-export const findUserById = async (userId) => {
+export const findUserById = async (userId, limit, skip) => {
     return await User.findOne(
         { 
             _id: userId
         }
-    )
+    ).skip(skip)
+    .limit(limit);
 }
 
 export const updateProfile = async (userId, updatedFields) => {
