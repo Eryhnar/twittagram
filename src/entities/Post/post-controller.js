@@ -1,6 +1,6 @@
 import User from "../User/user-model.js";
 import Post from "./post-model.js";
-import { createPostService, deletePostByIdService, getOwnPostsService, getPostByIdService, getPostsService, getTimelineService, toggleLikeService, updatePostService } from "./post-service.js";
+import { createPostService, deletePostByIdService, getOwnPostsService, getPostByIdService, getPostsService, getTimelineService, savePostService, toggleLikeService, updatePostService } from "./post-service.js";
 
 // extract public posts from non-following users into for you page
 export const getTimeline = async (req, res) => {
@@ -182,23 +182,6 @@ export const deletePostById = async (req, res) => {
 
 export const toggleLike = async (req, res) => {
     try {
-        // const postId = req.params.id;
-        // const userId = req.tokenData.userId;
-        // const post = await Post.findOne(
-        //     { 
-        //         _id: postId
-        //     }
-        // );
-        // if (!post) {
-        //     return res.status(404).json(
-        //         { 
-        //             success: false,
-        //             message: "Post not found"
-        //         }
-        //     );
-        // }
-        // post.likes.includes(userId) ? post.likes.pull(userId) : post.likes.push(userId);
-        // await post.save();
 
         const post = await toggleLikeService(req);
 
@@ -221,33 +204,16 @@ export const toggleLike = async (req, res) => {
     }
 }
 
-export const savePost = async (req, res) => {
+export const savePost = async (req, res) => { //TODO move to user controller ??
     try {
-        const userId = req.tokenData.userId;
-        const user = await User.findOne({ _id: userId });
-        const postId = req.params.id;
-        const post = await Post.findOne(
-            { 
-                _id: postId
-            }
-        );
-        if (!post) {
-            return res.status(404).json(
-                { 
-                    success: false,
-                    message: "Post not found"
-                }
-            );
-        }
-        user.saved.includes(postId) 
-        ? user.saved.pull(postId) 
-        : user.saved.push(postId);
-        await user.save();
+        
+        const updatedProfile = await savePostService(req);
         
         res.status(200).json(
             { 
                 success: true,
                 message: "Post saved successfully",
+                data: updatedProfile
             }
         );
     } catch (error) {

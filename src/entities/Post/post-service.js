@@ -1,5 +1,5 @@
 import InvalidInputError from "../../utils/errors/InvalidInputError.js";
-import { findUserById } from "../User/user-repository.js";
+import { findUserById, updateProfile } from "../User/user-repository.js";
 import { createPost, deletePostById, findPost, findPosts, updatePost } from "./post-repository.js";
 import isValidImageUrl from "../../utils/validators/isValidImageUrl.js";
 import processTag from "../../utils/treatment-utils/processTag.js";
@@ -184,6 +184,25 @@ export const toggleLikeService = async (req) => {
         }
         post.likes.includes(userId) ? post.likes.pull(userId) : post.likes.push(userId);
         return await updatePost(post, { likes: post.likes });
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const savePostService = async (req) => {
+    try {
+        const userId = req.tokenData.userId;
+        const postId = req.params.id;
+        const user = await findUserById(userId);
+        const post = await findPost({ _id: postId });
+        if (!post) {
+            throw new InvalidInputError(404, "Post not found");
+        }
+        user.saved.includes(postId) 
+        ? user.saved.pull(postId) 
+        : user.saved.push(postId);
+        const updatedProfile = await updateProfile(user, { saved: user.saved });
+        return updatedProfile;
     } catch (error) {
         throw error;
     }
