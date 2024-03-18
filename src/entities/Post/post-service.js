@@ -173,3 +173,18 @@ export const deletePostByIdService = async (req) => {
         throw error;
     }
 }
+
+export const toggleLikeService = async (req) => {
+    try {
+        const postId = req.params.id;
+        const userId = req.tokenData.userId;
+        const post = await findPost({ _id: postId, visibility: "public"});
+        if (!post) {
+            throw new InvalidInputError(404, "Post not found");
+        }
+        post.likes.includes(userId) ? post.likes.pull(userId) : post.likes.push(userId);
+        return await updatePost(post, { likes: post.likes });
+    } catch (error) {
+        throw error;
+    }
+}

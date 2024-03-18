@@ -1,6 +1,6 @@
 import User from "../User/user-model.js";
 import Post from "./post-model.js";
-import { createPostService, deletePostByIdService, getOwnPostsService, getPostByIdService, getPostsService, getTimelineService, updatePostService } from "./post-service.js";
+import { createPostService, deletePostByIdService, getOwnPostsService, getPostByIdService, getPostsService, getTimelineService, toggleLikeService, updatePostService } from "./post-service.js";
 
 // extract public posts from non-following users into for you page
 export const getTimeline = async (req, res) => {
@@ -182,23 +182,25 @@ export const deletePostById = async (req, res) => {
 
 export const toggleLike = async (req, res) => {
     try {
-        const postId = req.params.id;
-        const userId = req.tokenData.userId;
-        const post = await Post.findOne(
-            { 
-                _id: postId
-            }
-        );
-        if (!post) {
-            return res.status(404).json(
-                { 
-                    success: false,
-                    message: "Post not found"
-                }
-            );
-        }
-        post.likes.includes(userId) ? post.likes.pull(userId) : post.likes.push(userId);
-        await post.save();
+        // const postId = req.params.id;
+        // const userId = req.tokenData.userId;
+        // const post = await Post.findOne(
+        //     { 
+        //         _id: postId
+        //     }
+        // );
+        // if (!post) {
+        //     return res.status(404).json(
+        //         { 
+        //             success: false,
+        //             message: "Post not found"
+        //         }
+        //     );
+        // }
+        // post.likes.includes(userId) ? post.likes.pull(userId) : post.likes.push(userId);
+        // await post.save();
+
+        const post = await toggleLikeService(req);
 
         //todo: change this message
         res.status(200).json(
