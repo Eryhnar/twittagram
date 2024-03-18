@@ -1,6 +1,6 @@
 import User from "../User/user-model.js";
 import Post from "./post-model.js";
-import { createPostService, getPostsService, getTimelineService, updatePostService } from "./post-service.js";
+import { createPostService, getOwnPostsService, getPostByIdService, getPostsService, getTimelineService, updatePostService } from "./post-service.js";
 
 // extract public posts from non-following users into for you page
 export const getTimeline = async (req, res) => {
@@ -113,18 +113,8 @@ export const getOwnPosts = async (req, res) => {
         const page = req.query.page || 1;
         const skip = (page - 1) * limit;
 
-        const userId = req.tokenData.userId; 
-        const posts = await Post.find(
-            {
-                author: userId
-            }
-        ).sort(
-            { 
-                createdAt: -1
-            }
-        ).skip(skip)
-        .limit(limit);
-
+        const posts = await getOwnPostsService(req, limit, skip, page);
+        
         res.status(200).json(
             { 
                 success: true,
@@ -148,20 +138,8 @@ export const getOwnPosts = async (req, res) => {
 
 export const getPostById = async (req, res) => {
     try {
-        const postId = req.params.id;
-        const post = await Post.findOne(
-            { 
-                _id: postId
-            }
-        );
-        if (!post) {
-            return res.status(404).json(
-                { 
-                    success: false,
-                    message: "Post not found"
-                }
-            );
-        }
+        
+        const post = await getPostByIdService(req);
         res.status(200).json(
             { 
                 success: true,

@@ -86,7 +86,7 @@ export const updatePostService = async (req) => {
         const { postId, caption, visibility, tags } = req.body;
         const userId = req.tokenData.userId;
         const updateFields = {};
-        const post = await findPost(userId, postId);
+        const post = await findPost({ author: userId, _id: postId});
         if (!post) {
             throw new InvalidInputError(400, "Post not found");
         }
@@ -122,6 +122,39 @@ export const updatePostService = async (req) => {
             updateFields.tags = processedTags;
         }
         return await updatePost(post, updateFields);
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const getOwnPostsService = async (req, limit, skip, page) => {
+    try {
+        const userId = req.tokenData.userId;
+        const sort = { createdAt: -1 };
+        //TODO validate page HERE or in controller
+        const posts = await findPosts(
+            {
+                author: userId
+            },
+            sort,
+            skip,
+            limit,
+        )    
+        return posts;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const getPostByIdService = async (req) => {
+    try {
+        console.log("1");
+        const postId = req.params.id;
+        const post = await findPost({ _id: postId, visibility: "public" });
+        if (!post) {
+            throw new InvalidInputError(404, "Post not found");
+        }
+        return post;
     } catch (error) {
         throw error;
     }

@@ -19,7 +19,6 @@ export const findPosts = async (searchFilters, skip, limit, userId, sort) => {
         // searchFilters.$or = [
         //     { visibility: 'public' },
         // ];
-
         const posts = await Post.find(searchFilters)
             .sort(sort)
             .skip(skip)
@@ -48,14 +47,26 @@ export const createPost = async (userId, image, caption, visibility, tags) => {
     }
 }
 
-export const findPost = async (userId, id) => {
+// export const findPost = async (userId, id) => {
+//     try {
+//         const post = await Post.findOne(
+//             {
+//                 _id: id,
+//                 author: userId
+//             }
+//         );
+//         return post;
+//     } catch (error) {
+//         throw error;
+//     }
+// }
+export const findPost = async (searchFilters) => {
     try {
+        console.log("2");
         const post = await Post.findOne(
-            {
-                _id: id,
-                author: userId
-            }
+            searchFilters
         );
+        console.log(post);
         return post;
     } catch (error) {
         throw error;
