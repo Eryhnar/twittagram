@@ -6,9 +6,9 @@ import { faker } from "@faker-js/faker";
 const seedPosts = async () => {
     const posts = [];
     const users = await User.find();
-    const visibilityOptions = ["public", "followers", "private"];
+    const visibilityOptions = ["public", "friends", "private"];
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 100; i++) {
         const randomUserIndex = Math.floor(Math.random() * users.length);
         const words = faker.lorem.words({ min: 1, max: 5 }).split(" ");
         const tags = words.map(word => `#${word}`);

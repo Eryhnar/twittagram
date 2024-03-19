@@ -1,7 +1,7 @@
 import Post from "../Post/post-model.js";
 import User from "../User/user-model.js";
 import Comment from "./comment-model.js";
-import { deleteCommentService, likeCommentService, postCommentService, postReplyService } from "./comment-service.js";
+import { deleteCommentService, likeCommentService, postCommentService, postReplyService, updateCommentService } from "./comment-service.js";
 
 export const postComment = async (req, res) => {
     try {
@@ -247,33 +247,8 @@ export const likeComment = async (req, res) => {
 
 export const updateComment = async (req, res) => {
     try {
-        const userId = req.tokenData.userId;
-        const { commentId, postId, content } = req.body;
-        if ( !commentId || !postId || !content ) {
-            return res.status(400).json(
-                { 
-                    success: false,
-                    message: "All fields are required" 
-                }
-            );
-        }
-        const comment = await Comment.findOne(
-            { 
-                _id: commentId,
-                post: postId,
-                author: userId,
-            }
-        );
-        if ( !comment ) {
-            return res.status(400).json(
-                { 
-                    success: false,
-                    message: "Comment does not exist" 
-                }
-            );
-        }
-        comment.content = content
-        await comment.save();
+        
+        const comment = await updateCommentService(req);
         res.status(200).json(
             { 
                 success: true,
@@ -292,65 +267,65 @@ export const updateComment = async (req, res) => {
     }
 }
 
-export const updateReply = async (req, res) => {
-    try {
-        const userId = req.tokenData.userId;
-        const { replyId, postId, commentId, content } = req.body;
-        if ( !replyId || !postId || !commentId || !content ) {
-            return res.status(400).json(
-                { 
-                    success: false,
-                    message: "All fields are required" 
-                }
-            );
-        }
-        const comment = await Comment.findOne(
-            { 
-                _id: commentId, 
-                post: postId,
-                replies: { $in: [replyId] }
-            }
-        );
-        if ( !comment ) {
-            return res.status(400).json(
-                { 
-                    success: false,
-                    message: "Comment does not exist" 
-                }
-            );
-        }
-        const reply = await Comment.findOne(
-            { 
-                _id: replyId,
-                post: postId,
-                author: userId,
-            }
-        );
-        if ( !reply ) {
-            return res.status(400).json(
-                { 
-                    success: false,
-                    message: "Reply does not exist" 
-                }
-            );
-        }
-        reply.content = content;
-        await reply.save();
-        res.status(200).json(
-            { 
-                success: true,
-                message: "Reply updated successfully",
-                data: comment,
-                details: reply
-            }
-        );
-    } catch (error) {
-        res.status(500).json(
-            { 
-                success: false,
-                message: "Reply could not be updated",
-                error: error.message 
-            }
-        );
-    }
-}
+// export const updateReply = async (req, res) => {
+//     try {
+//         const userId = req.tokenData.userId;
+//         const { replyId, postId, commentId, content } = req.body;
+//         if ( !replyId || !postId || !commentId || !content ) {
+//             return res.status(400).json(
+//                 { 
+//                     success: false,
+//                     message: "All fields are required" 
+//                 }
+//             );
+//         }
+//         const comment = await Comment.findOne(
+//             { 
+//                 _id: commentId, 
+//                 post: postId,
+//                 replies: { $in: [replyId] }
+//             }
+//         );
+//         if ( !comment ) {
+//             return res.status(400).json(
+//                 { 
+//                     success: false,
+//                     message: "Comment does not exist" 
+//                 }
+//             );
+//         }
+//         const reply = await Comment.findOne(
+//             { 
+//                 _id: replyId,
+//                 post: postId,
+//                 author: userId,
+//             }
+//         );
+//         if ( !reply ) {
+//             return res.status(400).json(
+//                 { 
+//                     success: false,
+//                     message: "Reply does not exist" 
+//                 }
+//             );
+//         }
+//         reply.content = content;
+//         await reply.save();
+//         res.status(200).json(
+//             { 
+//                 success: true,
+//                 message: "Reply updated successfully",
+//                 data: comment,
+//                 details: reply
+//             }
+//         );
+//     } catch (error) {
+//         res.status(500).json(
+//             { 
+//                 success: false,
+//                 message: "Reply could not be updated",
+//                 error: error.message 
+//             }
+//         );
+//     }
+// }

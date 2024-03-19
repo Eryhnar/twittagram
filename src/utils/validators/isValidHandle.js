@@ -8,7 +8,7 @@
 //no consecutive dots, underscores or hyphens
 //no dots, underscores or hyphens at the beginning
 
-const regex = /^@[a-z0-9](?!.*[._-]{2})[a-z0-9_.-]{2,19}$/;
+const regex = /^@[a-z0-9](?!.*[._-]{2})[a-z0-9_.-]{4,21}$/;
 const isValidHandle = (handle) => {
     return regex.test(handle);
 }

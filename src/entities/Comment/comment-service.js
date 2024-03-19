@@ -80,3 +80,18 @@ export const likeCommentService = async (req) => {
         throw error;
     }
 }
+
+export const updateCommentService = async (req) => {
+    try {
+        const userId = req.tokenData.userId;
+        const { commentId, postId, content } = req.body;
+        validateRequiredFields(['commentId', 'postId', 'content'], req.body);
+        const comment = await findComment({ _id: commentId, post: postId, author: userId });
+        if (!comment) {
+            throw new InvalidInputError(400, "Comment not found");
+        }
+        return await updateComment(commentId, { content });
+    } catch (error) {
+        throw error;
+    }
+}
