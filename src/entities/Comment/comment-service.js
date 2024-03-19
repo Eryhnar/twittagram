@@ -40,3 +40,22 @@ export const postReplyService = async (req) => {
         throw error;
     }
 }
+
+export const deleteCommentService = async (req) => {
+    try {
+        const userId = req.tokenData.userId;
+        const { commentId, postId } = req.body;
+        validateRequiredFields(['commentId', 'postId'], req.body);
+        const post = await findPost({ _id: postId });
+        if (!post) {
+            throw new InvalidInputError(400, "Post not found");
+        }
+        const comment = await findComment({ _id: commentId, author: userId });
+        if (!comment) {
+            throw new InvalidInputError(400, "Comment not found");
+        }
+        await updateComment(commentId, { content: "This comment has been deleted" });
+    } catch (error) {
+        throw error;
+    }
+}

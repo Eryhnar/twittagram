@@ -1,7 +1,7 @@
 import Post from "../Post/post-model.js";
 import User from "../User/user-model.js";
 import Comment from "./comment-model.js";
-import { postCommentService, postReplyService } from "./comment-service.js";
+import { deleteCommentService, postCommentService, postReplyService } from "./comment-service.js";
 
 export const postComment = async (req, res) => {
     try {
@@ -27,65 +27,7 @@ export const postComment = async (req, res) => {
 
 export const postReply = async (req, res) => {
     try {
-        // const authorId = req.tokenData.userId;
-        // const { postId, content, commentId } = req.body;
-        // if ( !postId || !content || !commentId) {
-        //     return res.status(400).json(
-        //         { 
-        //             success: false,
-        //             message: "All fields are required" 
-        //         }
-        //     );
-        // }
-
-        // // validate content.trim().length > 0
-
-        // const post = await Post.findOne(
-        //     { 
-        //         _id: postId,
-        //     }
-        // );
-
-        // if ( !post ) {
-        //     return res.status(400).json(
-        //         { 
-        //             success: false,
-        //             message: "Post does not exist" 
-        //         }
-        //     );
-        // }
-        // const comment = await Comment.findOne(
-        //     { 
-        //         _id: commentId 
-        //     }
-        // );
-        // if ( !comment ) {
-        //     return res.status(400).json(
-        //         { 
-        //             success: false,
-        //             message: "Comment does not exist" 
-        //         }
-        //     );
-        // }
-
-        // const reply = await Comment.create(
-        //     {
-        //         author: authorId,
-        //         post: postId,
-        //         content,
-        //     }
-        // );
-
-        // comment.replies.push(reply._id);
-        // await comment.save();
-        // const comment = await Comment.updateOne(
-        //     { 
-        //         _id: commentId 
-        //     },
-        //     { 
-        //         $push: { replies: reply._id } 
-        //     }
-        // );
+        
         const reply = await postReplyService(req);
 
         res.status(200).json(
@@ -106,83 +48,65 @@ export const postReply = async (req, res) => {
     }
 }
 
-// export const getComments = async (req, res) => {
-//     try {
-//         res.status(200).json(
-//             { 
-//                 success: true,
-//                 message: "Comments retrieved successfully",
-//             }
-//         );
-//     } catch (error) {
-//         res.status(500).json(
-//             { 
-//                 success: false,
-//                 message: "Comments could not be retrieved",
-//                 error: error.message 
-//             }
-//         );        
-//     }
-// }
-
 export const deleteComment = async (req, res) => {
     try {
-        const userId = req.tokenData.userId;
-        const { commentId, postId } = req.body;
-        if ( !commentId || !postId ) {
-            return res.status(400).json(
-                { 
-                    success: false,
-                    message: "All fields are required" 
-                }
-            );
-        }
-        
-        // const post = await Post.findOne(
-        //     { 
-        //         _id: postId,
-        //     }
-        // );
-        // if ( !post ) {
+        // const userId = req.tokenData.userId;
+        // const { commentId, postId } = req.body;
+        // if ( !commentId || !postId ) {
         //     return res.status(400).json(
         //         { 
         //             success: false,
-        //             message: "Post does not exist" 
+        //             message: "All fields are required" 
         //         }
         //     );
         // }
-        const comment = await Comment.findOne(
-            { 
-                _id: commentId,
-                post: postId,
-            }
-        );
-        if ( !comment ) {
-            return res.status(400).json(
-                { 
-                    success: false,
-                    message: "Comment does not exist" 
-                }
-            );
-        }
-        if ( comment.author != userId ) {
-            return res.status(401).json(
-                { 
-                    success: false,
-                    message: "Unauthorized" 
-                }
-            );
-        }
-        await Comment.findOneAndUpdate(
-            { 
-                _id: commentId 
-            },
-            { 
-                $set: { 
-                    content: "This comment has been deleted" 
-                } 
-            }
-        );
+        
+        // // const post = await Post.findOne(
+        // //     { 
+        // //         _id: postId,
+        // //     }
+        // // );
+        // // if ( !post ) {
+        // //     return res.status(400).json(
+        // //         { 
+        // //             success: false,
+        // //             message: "Post does not exist" 
+        // //         }
+        // //     );
+        // // }
+        // const comment = await Comment.findOne(
+        //     { 
+        //         _id: commentId,
+        //         post: postId,
+        //     }
+        // );
+        // if ( !comment ) {
+        //     return res.status(400).json(
+        //         { 
+        //             success: false,
+        //             message: "Comment does not exist" 
+        //         }
+        //     );
+        // }
+        // if ( comment.author != userId ) {
+        //     return res.status(401).json(
+        //         { 
+        //             success: false,
+        //             message: "Unauthorized" 
+        //         }
+        //     );
+        // }
+        // await Comment.findOneAndUpdate(
+        //     { 
+        //         _id: commentId 
+        //     },
+        //     { 
+        //         $set: { 
+        //             content: "This comment has been deleted" 
+        //         } 
+        //     }
+        // );
+        deleteCommentService(req);
         
         res.status(200).json(
             { 
