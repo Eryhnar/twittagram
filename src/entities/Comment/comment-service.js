@@ -59,3 +59,24 @@ export const deleteCommentService = async (req) => {
         throw error;
     }
 }
+
+export const likeCommentService = async (req) => {
+    try {
+        const userId = req.tokenData.userId;
+        const { commentId, postId } = req.body;
+        validateRequiredFields(['commentId', 'postId'], req.body);
+        const comment = await findComment({ _id: commentId, post: postId });
+        if (!comment) {
+            throw new InvalidInputError(400, "Comment not found");
+        }
+        if ( comment.likes.includes(userId) ) {
+            comment.likes.pull(userId);
+        }
+        else {
+            comment.likes.push(userId);
+        }
+        return await updateComment(commentId, { likes: comment.likes });
+    } catch (error) {
+        throw error;
+    }
+}
