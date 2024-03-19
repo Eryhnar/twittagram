@@ -15,15 +15,18 @@ const UserSchema = new Schema(
             type: String,
             required: true,
             unique: true,
+            select: false,
         },
         password: {
             type: String,
             required: true,
+            select: false,
         },
         role: {
             type: String,
             enum: ["user", "admin", "super_admin"],
             default: "user",
+            select: false,
         },
         profilePicture: {
             type: String,
@@ -41,22 +44,28 @@ const UserSchema = new Schema(
         },
         followers: [{
             type: Schema.Types.ObjectId,
-            ref: 'User'
+            ref: "User"
         }],
         following: [{
             type: Schema.Types.ObjectId,
-            ref: 'User'
+            ref: "User"
         }],
         friends: [{
             type: Schema.Types.ObjectId,
-            ref: 'User'
+            ref: "User"
         }],
-        // favouriteBooks: [
-        //   {
+        // posts: [{ //maybe later
         //     type: Schema.Types.ObjectId,
-        //     ref: 'Book'
-        //   }
-        // ]
+        //     ref: "Post"
+        // }],
+        // liked: [{ //maybe later
+        //     type: Schema.Types.ObjectId,
+        //     ref: "Post"
+        // }],
+        saved: [{
+            type: Schema.Types.ObjectId,
+            ref: "Post"
+        }],
     },
     {
         timestamps: true,
