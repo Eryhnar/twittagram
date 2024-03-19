@@ -1,4 +1,4 @@
-# Tattoo Studio backend
+# Twittagram
 
 <details>
   <summary>Content 📝</summary>
