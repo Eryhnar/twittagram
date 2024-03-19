@@ -3,7 +3,7 @@ import Post from "./post-model.js";
 import { createPostService, deletePostByIdService, getOwnPostsService, getPostByIdService, getPostsService, getTimelineService, savePostService, toggleLikeService, updatePostService } from "./post-service.js";
 
 // extract public posts from non-following users into for you page
-export const getTimeline = async (req, res) => {
+export const getTimeline = async (req, res, next) => {
     try {
         //const limit = parseInt(req.query.limit) || 10;
         const page = req.query.page || 1;
@@ -24,17 +24,11 @@ export const getTimeline = async (req, res) => {
             }
         );
     } catch (error) {
-        res.status(500).json(
-            { 
-                success: false,
-                message: "The timeline could not be retrieved",
-                error: error.message
-            }
-        );
+        next(error);
     }
 }
 
-export const getPosts = async (req, res) => {
+export const getPosts = async (req, res, next) => {
     try {
         const limit = 10
         const page = req.query.page || 1;
@@ -53,17 +47,11 @@ export const getPosts = async (req, res) => {
             }
         );
     } catch (error) {
-        res.status(500).json(
-            { 
-                success: false,
-                message: "The posts could not be retrieved",
-                error: error.message
-            }
-        );
+        next(error);
     }
 }
 
-export const createPost = async (req, res) => {
+export const createPost = async (req, res, next) => {
     try {
         const post  = await createPostService(req);
 
@@ -75,17 +63,11 @@ export const createPost = async (req, res) => {
             }
         );
     } catch (error) {
-        res.status(500).json(
-            { 
-                success: false,
-                message: "The post could not be created",
-                error: error.message
-            }
-        );
+        next(error);
     }
 }
 
-export const updatePost = async (req, res) => {
+export const updatePost = async (req, res, next) => {
     try {
         const post = await updatePostService(req);
 
@@ -97,17 +79,11 @@ export const updatePost = async (req, res) => {
             }
         );
     } catch (error) {
-        res.status(500).json(
-            { 
-                success: false,
-                message: "The post could not be updated",
-                error: error.message
-            }
-        );
+        next(error);
     }
 }
 
-export const getOwnPosts = async (req, res) => {
+export const getOwnPosts = async (req, res, next) => {
     try {
         const limit = 10
         const page = req.query.page || 1;
@@ -126,17 +102,11 @@ export const getOwnPosts = async (req, res) => {
             }
         );
     } catch (error) {
-        res.status(500).json(
-            { 
-                success: false,
-                message: "Your posts could not be retrieved",
-                error: error.message
-            }
-        );
+        next(error);
     }
 }
 
-export const getPostById = async (req, res) => {
+export const getPostById = async (req, res, next) => {
     try {
         
         const post = await getPostByIdService(req);
@@ -148,17 +118,11 @@ export const getPostById = async (req, res) => {
             }
         );
     } catch (error) {
-        res.status(500).json(
-            { 
-                success: false,
-                message: "The post could not be retrieved",
-                error: error.message
-            }
-        );
+        next(error);
     }
 }
 
-export const deletePostById = async (req, res) => {
+export const deletePostById = async (req, res, next) => {
     try {
         
         await deletePostByIdService(req);
@@ -170,17 +134,11 @@ export const deletePostById = async (req, res) => {
             }
         );
     } catch (error) {
-        res.status(500).json(
-            { 
-                success: false,
-                message: "The post could not be deleted",
-                error: error.message
-            }
-        );
+        next(error);
     }
 }
 
-export const toggleLike = async (req, res) => {
+export const toggleLike = async (req, res, next) => {
     try {
 
         const post = await toggleLikeService(req);
@@ -194,17 +152,11 @@ export const toggleLike = async (req, res) => {
             }
         );
     } catch (error) {
-        res.status(500).json(
-            { 
-                success: false,
-                message: "The post could not be liked",
-                error: error.message
-            }
-        );
+        next(error);
     }
 }
 
-export const savePost = async (req, res) => { //TODO move to user controller ??
+export const savePost = async (req, res, next) => { //TODO move to user controller ??
     try {
         
         const updatedProfile = await savePostService(req);
@@ -217,12 +169,6 @@ export const savePost = async (req, res) => { //TODO move to user controller ??
             }
         );
     } catch (error) {
-        res.status(500).json(
-            { 
-                success: false,
-                message: "The post could not be saved",
-                error: error.message
-            }
-        );
+        next(error);
     }
 }

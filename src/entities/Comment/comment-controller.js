@@ -1,9 +1,6 @@
-import Post from "../Post/post-model.js";
-import User from "../User/user-model.js";
-import Comment from "./comment-model.js";
 import { deleteCommentService, likeCommentService, postCommentService, postReplyService, updateCommentService } from "./comment-service.js";
 
-export const postComment = async (req, res) => {
+export const postComment = async (req, res, next) => {
     try {
         
         const comment = await postCommentService(req);
@@ -15,17 +12,11 @@ export const postComment = async (req, res) => {
             }
         );
     } catch (error) {
-        res.status(500).json(
-            { 
-                success: false,
-                message: "Commment could not be posted",
-                error: error.message 
-            }
-        );
+        next(error);
     }
 }
 
-export const postReply = async (req, res) => {
+export const postReply = async (req, res, next) => {
     try {
         
         const reply = await postReplyService(req);
@@ -38,17 +29,11 @@ export const postReply = async (req, res) => {
             }
         );
     } catch (error) {
-        res.status(500).json(
-            { 
-                success: false,
-                message: "Reply could not be posted",
-                error: error.message 
-            }
-        );
+        next(error)
     }
 }
 
-export const deleteComment = async (req, res) => {
+export const deleteComment = async (req, res, next) => {
     try {
         
         deleteCommentService(req);
@@ -60,13 +45,7 @@ export const deleteComment = async (req, res) => {
             }
         );
     } catch (error) {
-        res.status(500).json(
-            { 
-                success: false,
-                message: "Comment could not be deleted",
-                error: error.message 
-            }
-        );
+        next(error);
     }
 }
 
@@ -151,7 +130,7 @@ export const deleteComment = async (req, res) => {
 //     }
 // }
 
-export const likeComment = async (req, res) => {
+export const likeComment = async (req, res, next) => {
     try {
         
         const comment = await likeCommentService(req);
@@ -164,13 +143,7 @@ export const likeComment = async (req, res) => {
             }
         );
     } catch (error) {
-        res.status(500).json(
-            { 
-                success: false,
-                message: "Comment could not be liked",
-                error: error.message 
-            }
-        );
+        next(error);
     }
 }
 
@@ -245,7 +218,7 @@ export const likeComment = async (req, res) => {
 //     }
 // }
 
-export const updateComment = async (req, res) => {
+export const updateComment = async (req, res, next) => {
     try {
         
         const comment = await updateCommentService(req);
@@ -257,13 +230,7 @@ export const updateComment = async (req, res) => {
             }
         );
     } catch (error) {
-        res.status(500).json(
-            { 
-                success: false,
-                message: "Comment could not be updated",
-                error: error.message 
-            }
-        );
+        next(error);
     }
 }
 

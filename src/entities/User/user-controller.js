@@ -1,6 +1,6 @@
 import { getUsersService, updateProfileService, updatePasswordService, updateUserByIdService, deleteUserByIdService, deactivateProfileService, getPostsByUserIdService, getSavedPostsService, getProfileService, toggleFollowService } from "./user-service.js";
 
-export const getUsers = async (req, res) => {
+export const getUsers = async (req, res, next) => {
     try {
         const limit = 10
         const page = req.query.page || 1;
@@ -18,17 +18,11 @@ export const getUsers = async (req, res) => {
             }
         )
     } catch (error) {
-        res.status(500).json(
-            {
-                success: false,
-                message: "Users could not be retrived",
-                error: error
-            }
-        )
+        next(error);
     }
 }
 
-export const getProfile = async (req, res) => {
+export const getProfile = async (req, res, next) => {
     try {
 
         const user = await getProfileService(req)
@@ -41,17 +35,11 @@ export const getProfile = async (req, res) => {
             }
         )
     } catch (error) {
-        res.status(500).json(
-            {
-                success: false,
-                message: "Profile could not be retrived",
-                error: error
-            }
-        )
+        next(error);
     }
 }
 
-export const updateProfile = async (req, res) => {
+export const updateProfile = async (req, res, next) => {
     try {
         
         const newProfile = await updateProfileService(req)
@@ -64,17 +52,11 @@ export const updateProfile = async (req, res) => {
             }
         )
     } catch (error) {
-        res.status(500).json(
-            {
-                success: false,
-                message: "Profile could not be updated",
-                error: error.message
-            }
-        )
+        next(error);
     }
 }
 
-export const updateProfilePassword = async (req, res) => {
+export const updateProfilePassword = async (req, res, next) => {
     try {
         const updatedUser = await updatePasswordService(req);
 
@@ -85,17 +67,11 @@ export const updateProfilePassword = async (req, res) => {
             }
         )
     } catch (error) {
-        res.status(500).json(
-            {
-                success: false,
-                message: "Profile could not be updated",
-                error: error
-            }
-        )
+        next(error);
     }
 }
 
-export const updateUserById = async (req, res) => {
+export const updateUserById = async (req, res, next) => {
     try {
         const user = await updateUserByIdService(req);
         res.status(200).json(
@@ -106,17 +82,11 @@ export const updateUserById = async (req, res) => {
             }
         )
     } catch (error) {
-        res.status(500).json(
-            {
-                success: false,
-                message: "Profile could not be updated",
-                error: error
-            }
-        )
+        next(error);
     }
 }
 
-export const deleteUserById = async (req, res) => {
+export const deleteUserById = async (req, res, next) => {
     try {
         deleteUserByIdService(req);
 
@@ -127,17 +97,11 @@ export const deleteUserById = async (req, res) => {
             }
         )
     } catch (error) {
-        res.status(500).json(
-            {
-                success: false,
-                message: "Profile could not be deleted",
-                error: error
-            }
-        )
+        next(error);
     }
 }
 
-export const deactivateProfile = async (req, res) => {
+export const deactivateProfile = async (req, res, next) => {
     try {
         deactivateProfileService(req);
 
@@ -148,17 +112,11 @@ export const deactivateProfile = async (req, res) => {
             }
         )
     } catch (error) {
-        res.status(500).json(
-            {
-                success: false,
-                message: "Profile could not be updated",
-                error: error
-            }
-        )
+        next(error);
     }
 }
 
-export const getPostsByUserId = async (req, res) => {
+export const getPostsByUserId = async (req, res, next) => {
     try {
         const limit = 10
         const page = req.query.page || 1;
@@ -177,17 +135,11 @@ export const getPostsByUserId = async (req, res) => {
             }
         );
     } catch (error) {
-        res.status(500).json(
-            { 
-                success: false,
-                message: "The posts could not be retrieved",
-                error: error.message
-            }
-        );        
+        next(error);      
     }
 }
 
-export const getSavedPosts = async (req, res) => {
+export const getSavedPosts = async (req, res, next) => {
     try {
         const limit = 10
         const page = req.query.page || 1;
@@ -206,17 +158,11 @@ export const getSavedPosts = async (req, res) => {
             }
         );
     } catch (error) {
-        res.status(500).json(
-            { 
-                success: false,
-                message: "Saved posts could not be retrieved",
-                error: error.message
-            }
-        );
+        next(error);
     }
 }
 
-export const toggleFollow = async (req, res) => {
+export const toggleFollow = async (req, res, next) => {
     try {
         const user = await toggleFollowService(req);
         res.status(200).json(
@@ -227,12 +173,6 @@ export const toggleFollow = async (req, res) => {
             }
         );
     } catch (error) {
-        res.status(500).json(
-            { 
-                success: false,
-                message: "Follow could not be toggled",
-                error: error.message
-            }
-        );
+        next(error);
     }
 }
