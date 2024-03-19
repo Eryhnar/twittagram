@@ -1,0 +1,649 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Pedro remote social media app",
+    "dateExported": "2024-03-19T20:46:42.553Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "5d691b21-6b39-49de-9327-2c2cd0728d9c",
+            "name": "auth routes",
+            "containerId": "",
+            "created": "2024-03-19T20:38:31.537Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "cb5704e2-7486-40b2-89fe-00b4dabf635a",
+            "name": "users",
+            "containerId": "",
+            "created": "2024-03-19T20:38:31.538Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "6510466e-4c46-4dca-8d20-0dd255858132",
+            "name": "posts",
+            "containerId": "",
+            "created": "2024-03-19T20:38:31.539Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "4c298089-a0a1-4afd-9e1b-a85c7c614116",
+            "name": "comments",
+            "containerId": "",
+            "created": "2024-03-19T20:38:31.540Z",
+            "sortNum": 40000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "b45da820-7088-404b-ad81-8d1443a855f5",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "5d691b21-6b39-49de-9327-2c2cd0728d9c",
+            "name": "register",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/auth/register",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-03-19T20:38:31.537Z",
+            "modified": "2024-03-19T20:40:23.485Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"userName\": \"Manolo\",\n  \"email\": \"manolo@manolo.com\",\n  \"password\": \"Aa123456\"\n}",
+                "form": []
+            },
+            "reqType": "post",
+            "tests": []
+        },
+        {
+            "_id": "8f004a35-0ab0-42cb-87f4-418ad60f5df3",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "5d691b21-6b39-49de-9327-2c2cd0728d9c",
+            "name": "login",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/auth/login",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-03-19T20:38:31.538Z",
+            "modified": "2024-03-19T20:40:14.113Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"user@user.com\",\n  \"password\": \"Aa123456\"\n}",
+                "form": []
+            },
+            "reqType": "post",
+            "tests": []
+        },
+        {
+            "_id": "78965867-4e30-46a0-a10a-9a7cbc710ab4",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "cb5704e2-7486-40b2-89fe-00b4dabf635a",
+            "name": "get users",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/users?userHandle=lil",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2024-03-19T20:38:31.539Z",
+            "modified": "2024-03-19T20:40:35.761Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "userHandle",
+                    "value": "lil",
+                    "isPath": false
+                }
+            ],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVmNDFjOGQ0ZWUyNzcyYTBmOTc4NDkiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpYXQiOjE3MTA3MDAxNzQsImV4cCI6MTcxMDcwNzM3NH0.VlW1GgKCJWFWqR2PwgTqZ6ZenvDeJlMTGx1YJjZGzp0"
+            },
+            "tests": []
+        },
+        {
+            "_id": "1f6ad09b-ad6b-4d8a-a839-bbaf81f06b8c",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "cb5704e2-7486-40b2-89fe-00b4dabf635a",
+            "name": "get profile",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/users/profile",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2024-03-19T20:38:31.540Z",
+            "modified": "2024-03-19T20:40:41.679Z",
+            "headers": [],
+            "params": [],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDc4MjEwMSwiZXhwIjoxNzEwNzg5MzAxfQ.-DDi_IJcMAxkGz7lbGicnBJ9Q62yp9R8isbH2sB-tvw"
+            },
+            "tests": []
+        },
+        {
+            "_id": "0ba75590-4f42-42fc-8bbc-549051f778f6",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "cb5704e2-7486-40b2-89fe-00b4dabf635a",
+            "name": "update profile",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/users/profile",
+            "method": "PUT",
+            "sortNum": 60000,
+            "created": "2024-03-19T20:38:31.541Z",
+            "modified": "2024-03-19T20:40:47.440Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"userName\": \"Omari Wiegand\"\n}",
+                "form": []
+            },
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVmNDFjOGQ0ZWUyNzcyYTBmOTc4NGUiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDcxMzExMiwiZXhwIjoxNzEwNzIwMzEyfQ.--scKe3tWm1XiNBa5PxEN1mK9t11tDEVwYq8nD-Qj6A"
+            },
+            "tests": []
+        },
+        {
+            "_id": "384c6d82-0949-45e9-a11e-769bb488cdf6",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "cb5704e2-7486-40b2-89fe-00b4dabf635a",
+            "name": "update user by id",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/users/65ef41c8d4ee2772a0f9784e",
+            "method": "PUT",
+            "sortNum": 70000,
+            "created": "2024-03-19T20:38:31.542Z",
+            "modified": "2024-03-19T20:40:53.710Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"bio\": \"hey\"\n}",
+                "form": []
+            },
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVmNDFjOGQ0ZWUyNzcyYTBmOTc4NDkiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpYXQiOjE3MTA3NzI4ODgsImV4cCI6MTcxMDc4MDA4OH0.uz7gyvinq6qFaLxSMhFSSKSWLQztPv1-95WoSm3Lr9w"
+            },
+            "tests": []
+        },
+        {
+            "_id": "c033a659-a097-454e-8cc1-7058bca7edae",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "cb5704e2-7486-40b2-89fe-00b4dabf635a",
+            "name": "delete user by id",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/users/65ef41c8d4ee2772a0f97854",
+            "method": "DELETE",
+            "sortNum": 80000,
+            "created": "2024-03-19T20:38:31.543Z",
+            "modified": "2024-03-19T20:40:58.592Z",
+            "headers": [],
+            "params": [],
+            "reqType": "del",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVmNDFjOGQ0ZWUyNzcyYTBmOTc4NDkiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpYXQiOjE3MTA3NzI4ODgsImV4cCI6MTcxMDc4MDA4OH0.uz7gyvinq6qFaLxSMhFSSKSWLQztPv1-95WoSm3Lr9w"
+            },
+            "tests": []
+        },
+        {
+            "_id": "098920ff-40b3-45d0-8a12-e82d7216ad97",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "cb5704e2-7486-40b2-89fe-00b4dabf635a",
+            "name": "change password",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/users/profile/password",
+            "method": "PUT",
+            "sortNum": 90000,
+            "created": "2024-03-19T20:38:31.544Z",
+            "modified": "2024-03-19T20:41:04.167Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"oldPassword\": \"Aa123456\",\n  \"newPassword\": \"Bb123456\",\n  \"newPasswordRepeat\": \"Bb123456\"\n}",
+                "form": []
+            },
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVmNDFjOGQ0ZWUyNzcyYTBmOTc4NGUiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDcxMzExMiwiZXhwIjoxNzEwNzIwMzEyfQ.--scKe3tWm1XiNBa5PxEN1mK9t11tDEVwYq8nD-Qj6A"
+            },
+            "tests": []
+        },
+        {
+            "_id": "84457756-ce77-4123-b937-38321c173c13",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "cb5704e2-7486-40b2-89fe-00b4dabf635a",
+            "name": "deactivate profile",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/users/profile/deactivate",
+            "method": "PUT",
+            "sortNum": 100000,
+            "created": "2024-03-19T20:38:31.545Z",
+            "modified": "2024-03-19T20:41:25.903Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"password\": \"Aa123456\"\n}",
+                "form": []
+            },
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWYwOWZlNDRiYzlkNDM4MWVkOWViMGEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDc3Nzk3NiwiZXhwIjoxNzEwNzg1MTc2fQ.sv8tBSwklq7mr86FXBTjVjs4EBM3nriXTHiQQDYzlUw"
+            },
+            "tests": []
+        },
+        {
+            "_id": "9af2ca47-6fe7-486a-846c-ad160ed88a6f",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "6510466e-4c46-4dca-8d20-0dd255858132",
+            "name": "get posts",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/posts/?page=1",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2024-03-19T20:38:31.546Z",
+            "modified": "2024-03-19T20:42:01.015Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "1",
+                    "isPath": false
+                }
+            ],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVmNDFjOGQ0ZWUyNzcyYTBmOTc4NDkiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpYXQiOjE3MTA3OTE2MjcsImV4cCI6MTcxMDc5ODgyN30.DQYtPrC0ulWmsFC0Wjc478WvDzf1_obHK_Bv3wzzw1U"
+            },
+            "tests": []
+        },
+        {
+            "_id": "9ed2277e-8338-4ff4-96f5-f88e8944626b",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "cb5704e2-7486-40b2-89fe-00b4dabf635a",
+            "name": "get posts by user id",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/users/posts/65ef41c8d4ee2772a0f9784e",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2024-03-19T20:38:31.547Z",
+            "modified": "2024-03-19T20:41:30.105Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "4",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDc3OTExOCwiZXhwIjoxNzEwNzg2MzE4fQ.KyeToqIbyzR0e-Euhei61UvimcAVDZa_8Lwuj9fdf1Y"
+            },
+            "tests": []
+        },
+        {
+            "_id": "ed8bd648-d5ed-4c29-9d4d-b24b3495fe2a",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "6510466e-4c46-4dca-8d20-0dd255858132",
+            "name": "get timeline",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/posts/timeline/?page=1",
+            "method": "GET",
+            "sortNum": 120000,
+            "created": "2024-03-19T20:38:31.548Z",
+            "modified": "2024-03-19T20:42:05.508Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "1",
+                    "isPath": false
+                }
+            ],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDc4OTk5NCwiZXhwIjoxNzEwNzk3MTk0fQ.dzE81PNIXS2STe5Hlv6aqSZjJoNdHyhS8c2SSisfak4"
+            },
+            "tests": []
+        },
+        {
+            "_id": "29c3dbfb-4fce-4a07-b136-c9999e127819",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "cb5704e2-7486-40b2-89fe-00b4dabf635a",
+            "name": "get saved posts",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/users/saved",
+            "method": "GET",
+            "sortNum": 120000,
+            "created": "2024-03-19T20:38:31.549Z",
+            "modified": "2024-03-19T20:41:36.389Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "4",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDc4MjEwMSwiZXhwIjoxNzEwNzg5MzAxfQ.-DDi_IJcMAxkGz7lbGicnBJ9Q62yp9R8isbH2sB-tvw"
+            },
+            "tests": []
+        },
+        {
+            "_id": "d27c5f2d-5253-409b-a5e1-e2573fcb186e",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "6510466e-4c46-4dca-8d20-0dd255858132",
+            "name": "get own posts",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/posts/own/?page=1",
+            "method": "GET",
+            "sortNum": 125000,
+            "created": "2024-03-19T20:38:31.550Z",
+            "modified": "2024-03-19T20:42:09.403Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "1",
+                    "isPath": false
+                }
+            ],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWYwOWZlNDRiYzlkNDM4MWVkOWViMDkiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDc5OTI4MCwiZXhwIjoxNzEwODA2NDgwfQ.ra-4Gk0UIqaKN7c7I_gkWzp2v72ec-8U-a4rCUYiwAw"
+            },
+            "tests": []
+        },
+        {
+            "_id": "c8afdb71-71fb-43ac-a9fd-a8d9b68eeeea",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "6510466e-4c46-4dca-8d20-0dd255858132",
+            "name": "create post",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/posts/",
+            "method": "POST",
+            "sortNum": 130000,
+            "created": "2024-03-19T20:38:31.551Z",
+            "modified": "2024-03-19T20:42:13.872Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"caption\": \"summer time\",\n    \"image\": \"https://thisisarandomnonexistingurl.com.jpg\",\n    \"visibility\": \"public\",\n    \"tags\": \"#summer2024\"\n}",
+                "form": []
+            },
+            "reqType": "post",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWY5YTkzMmFkYTIxOTdkZjMxNzE2ZmIiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDg2MjQ2OCwiZXhwIjoxNzEwODY5NjY4fQ.CG9789-h3LRlF-7azRG4_tozlyCFX_CqrBfShktbWhY"
+            },
+            "tests": []
+        },
+        {
+            "_id": "6fdc63be-5ca8-4a60-89bf-ad4ba03707f2",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "cb5704e2-7486-40b2-89fe-00b4dabf635a",
+            "name": "toggle follow",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/users/follow",
+            "method": "PUT",
+            "sortNum": 130000,
+            "created": "2024-03-19T20:38:31.552Z",
+            "modified": "2024-03-19T20:41:41.006Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "4",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"targetUserId\": \"65ef41c8d4ee2772a0f97855\"\n}",
+                "form": []
+            },
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDc4OTk5NCwiZXhwIjoxNzEwNzk3MTk0fQ.dzE81PNIXS2STe5Hlv6aqSZjJoNdHyhS8c2SSisfak4"
+            },
+            "tests": []
+        },
+        {
+            "_id": "31c2c735-cbfa-49f4-85c1-d9aee4014b83",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "6510466e-4c46-4dca-8d20-0dd255858132",
+            "name": "update post",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/posts/",
+            "method": "PUT",
+            "sortNum": 140000,
+            "created": "2024-03-19T20:38:31.553Z",
+            "modified": "2024-03-19T20:42:18.283Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"postId\": \"65f0adccd40c0decd9f82d4b\",\n    \"caption\": \"Once upon a time...\",\n    \"tags\": \"good Memories\"\n}",
+                "form": []
+            },
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWYwOWZlNDRiYzlkNDM4MWVkOWViMDkiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDc5OTI4MCwiZXhwIjoxNzEwODA2NDgwfQ.ra-4Gk0UIqaKN7c7I_gkWzp2v72ec-8U-a4rCUYiwAw"
+            },
+            "tests": []
+        },
+        {
+            "_id": "2e3bc9c2-865d-4b66-9bd7-9bf5f863d2cd",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "6510466e-4c46-4dca-8d20-0dd255858132",
+            "name": "get post by id",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/posts/65f37105dc98526b24c91e4c",
+            "method": "GET",
+            "sortNum": 150000,
+            "created": "2024-03-19T20:38:31.554Z",
+            "modified": "2024-03-19T20:42:24.201Z",
+            "headers": [],
+            "params": [],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWYwOWZlNDRiYzlkNDM4MWVkOWViMDkiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDc5OTI4MCwiZXhwIjoxNzEwODA2NDgwfQ.ra-4Gk0UIqaKN7c7I_gkWzp2v72ec-8U-a4rCUYiwAw"
+            },
+            "tests": []
+        },
+        {
+            "_id": "1070e515-4d25-43f7-b65f-ccdeec4a2d9e",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "6510466e-4c46-4dca-8d20-0dd255858132",
+            "name": "toggle like",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/posts/like/",
+            "method": "PUT",
+            "sortNum": 155000,
+            "created": "2024-03-19T20:38:31.555Z",
+            "modified": "2024-03-19T20:42:27.892Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"postId\": \"65f37105dc98526b24c91e4c\"\n}",
+                "form": []
+            },
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDgwMjk2MywiZXhwIjoxNzEwODEwMTYzfQ.wReKjZAHUKqwp4bP-2CkNPzRYe4DGYEToZisaUVsX8c"
+            },
+            "tests": []
+        },
+        {
+            "_id": "3d770510-7f06-439d-ac64-2f80b5886ce4",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "6510466e-4c46-4dca-8d20-0dd255858132",
+            "name": "save post",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/posts/save/",
+            "method": "PUT",
+            "sortNum": 157500,
+            "created": "2024-03-19T20:38:31.556Z",
+            "modified": "2024-03-19T20:43:06.846Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"postId\": \"65f37105dc98526b24c91e4c\"\n}",
+                "form": []
+            },
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDgwMjk2MywiZXhwIjoxNzEwODEwMTYzfQ.wReKjZAHUKqwp4bP-2CkNPzRYe4DGYEToZisaUVsX8c"
+            },
+            "tests": []
+        },
+        {
+            "_id": "9e7fd2d3-229f-4c73-ac78-12d776cf6062",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "6510466e-4c46-4dca-8d20-0dd255858132",
+            "name": "delete post by id",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/posts/65f8a88fd0c74042b81788ca",
+            "method": "DELETE",
+            "sortNum": 160000,
+            "created": "2024-03-19T20:38:31.557Z",
+            "modified": "2024-03-19T20:43:12.468Z",
+            "headers": [],
+            "params": [],
+            "reqType": "del",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDgwMjk2MywiZXhwIjoxNzEwODEwMTYzfQ.wReKjZAHUKqwp4bP-2CkNPzRYe4DGYEToZisaUVsX8c"
+            },
+            "tests": []
+        },
+        {
+            "_id": "ea5bff2f-0feb-4ae9-a503-0f4fc4007055",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "4c298089-a0a1-4afd-9e1b-a85c7c614116",
+            "name": "post comment",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/comments",
+            "method": "POST",
+            "sortNum": 170000,
+            "created": "2024-03-19T20:38:31.558Z",
+            "modified": "2024-03-19T20:43:20.969Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"postId\": \"65ef60d8584d459f16f2728d\",\n  \"content\": \"Nice Pic!\"\n}",
+                "form": []
+            },
+            "reqType": "post",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDg0MDgzNywiZXhwIjoxNzEwODQ4MDM3fQ.4lQ8aZqdYx2hUt8OhTr68LBvJY6_JEoZVd2tJvU-j6E"
+            },
+            "tests": []
+        },
+        {
+            "_id": "f28c55b4-e3e9-474d-9ff1-87d900c2092e",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "4c298089-a0a1-4afd-9e1b-a85c7c614116",
+            "name": "post reply",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/comments/reply",
+            "method": "POST",
+            "sortNum": 180000,
+            "created": "2024-03-19T20:38:31.559Z",
+            "modified": "2024-03-19T20:43:25.433Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"postId\": \"65ef60d8584d459f16f2728d\",\n  \"content\": \"Grow up..\",\n  \"commentId\": \"65f6cce82e2e170f0021dc85\"\n}",
+                "form": []
+            },
+            "reqType": "post",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDg0MDgzNywiZXhwIjoxNzEwODQ4MDM3fQ.4lQ8aZqdYx2hUt8OhTr68LBvJY6_JEoZVd2tJvU-j6E"
+            },
+            "tests": []
+        },
+        {
+            "_id": "d3addf57-fb38-4067-b2e3-5f5dc492aab6",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "4c298089-a0a1-4afd-9e1b-a85c7c614116",
+            "name": "delete comment",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/comments/delete",
+            "method": "PUT",
+            "sortNum": 200000,
+            "created": "2024-03-19T20:38:31.560Z",
+            "modified": "2024-03-19T20:43:28.726Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"postId\": \"65ef60d8584d459f16f2728d\",\n  \"commentId\": \"65f96889560d2a6575ce52be\"\n}",
+                "form": []
+            },
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDg0MDgzNywiZXhwIjoxNzEwODQ4MDM3fQ.4lQ8aZqdYx2hUt8OhTr68LBvJY6_JEoZVd2tJvU-j6E"
+            },
+            "tests": []
+        },
+        {
+            "_id": "c4ac2ad3-c046-44fe-8a61-07ba99629139",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "4c298089-a0a1-4afd-9e1b-a85c7c614116",
+            "name": "like comment",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/comments/like",
+            "method": "PUT",
+            "sortNum": 220000,
+            "created": "2024-03-19T20:38:31.561Z",
+            "modified": "2024-03-19T20:43:32.846Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"postId\": \"65ef60d8584d459f16f2728e\",\n  \"commentId\": \"65f0a341a63d5fc53cc14b06\"\n}",
+                "form": []
+            },
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDg0OTYzOCwiZXhwIjoxNzEwODU2ODM4fQ.CmWiag-F-GoSBklJBRU0Ua8anZbUx6RUlsdvDTQD1k0"
+            },
+            "tests": []
+        },
+        {
+            "_id": "55d09f27-4633-4537-9a2e-df36a778ec71",
+            "colId": "f620859a-fc9e-4f1a-b14a-6000c3596192",
+            "containerId": "4c298089-a0a1-4afd-9e1b-a85c7c614116",
+            "name": "update comment",
+            "url": "https://twittagram-dev-pajn.2.ie-1.fl0.io/api/comments/",
+            "method": "PUT",
+            "sortNum": 240000,
+            "created": "2024-03-19T20:38:31.562Z",
+            "modified": "2024-03-19T20:43:36.892Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"postId\": \"65ef60d8584d459f16f2728d\",\n  \"commentId\": \"65f96c2c003334adb63d884e\",\n  \"content\": \"That is fake.\"\n}",
+                "form": []
+            },
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDg0OTYzOCwiZXhwIjoxNzEwODU2ODM4fQ.CmWiag-F-GoSBklJBRU0Ua8anZbUx6RUlsdvDTQD1k0"
+            },
+            "tests": []
+        }
+    ]
+}

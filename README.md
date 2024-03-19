@@ -1,5 +1,13 @@
 # Twittagram
 
+### IMPORTANT
+
+- The IDs referenced in the thunder collections are an example and do not represent real IDs. The following IDs ARE REAL.
+
+- Random userId 65f9f41f0f53bbfb5564d6fe 
+- Random postId 65f9f4290f53bbfb5564d7f8
+- Random commentId 65f9f42a0f53bbfb5564d8c0
+
 <details>
   <summary>Content 📝</summary>
   <ol>

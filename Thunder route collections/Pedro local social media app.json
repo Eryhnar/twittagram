@@ -1,0 +1,644 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Pedro local social media app",
+    "dateExported": "2024-03-19T20:37:42.210Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "4ba3c091-6da2-4b74-963e-2d6ffd4def8a",
+            "name": "auth routes",
+            "containerId": "",
+            "created": "2024-03-19T12:10:53.240Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "4b2639b2-0211-441d-b2d3-dad664417c50",
+            "name": "users",
+            "containerId": "",
+            "created": "2024-03-19T12:10:53.241Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "619593b6-e404-45cf-9c30-dd7ff4b1cd8d",
+            "name": "posts",
+            "containerId": "",
+            "created": "2024-03-19T12:10:53.242Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "8e87a98f-c6fc-4c0c-ba8b-e8dcffb63277",
+            "name": "comments",
+            "containerId": "",
+            "created": "2024-03-19T12:10:53.243Z",
+            "sortNum": 40000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "1a2bdda7-fe33-4900-87cb-3c519ab4a102",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "4ba3c091-6da2-4b74-963e-2d6ffd4def8a",
+            "name": "register",
+            "url": "http://127.0.0.1:4000/api/auth/register",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-03-19T12:10:53.240Z",
+            "modified": "2024-03-19T14:32:20.740Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"userName\": \"Manolo\",\n  \"email\": \"manolo@manolo.com\",\n  \"password\": \"Aa123456\"\n}",
+                "form": []
+            },
+            "reqType": "post",
+            "tests": []
+        },
+        {
+            "_id": "22a9d5a6-21e3-4db2-ae20-697c066c99bf",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "4ba3c091-6da2-4b74-963e-2d6ffd4def8a",
+            "name": "login",
+            "url": "http://127.0.0.1:4000/api/auth/login",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-03-19T12:10:53.241Z",
+            "modified": "2024-03-19T12:10:53.241Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"user@user.com\",\n  \"password\": \"Aa123456\"\n}",
+                "form": []
+            },
+            "reqType": "post",
+            "tests": []
+        },
+        {
+            "_id": "2ba095a1-f1e8-471d-ad3c-4da9b0195bae",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "4b2639b2-0211-441d-b2d3-dad664417c50",
+            "name": "get users",
+            "url": "http://127.0.0.1:4000/api/users?userHandle=lil",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2024-03-19T12:10:53.242Z",
+            "modified": "2024-03-19T12:10:53.242Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "userHandle",
+                    "value": "lil",
+                    "isPath": false
+                }
+            ],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVmNDFjOGQ0ZWUyNzcyYTBmOTc4NDkiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpYXQiOjE3MTA3MDAxNzQsImV4cCI6MTcxMDcwNzM3NH0.VlW1GgKCJWFWqR2PwgTqZ6ZenvDeJlMTGx1YJjZGzp0"
+            },
+            "tests": []
+        },
+        {
+            "_id": "6485a0fc-9088-4171-83da-b8990a3e5b5b",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "4b2639b2-0211-441d-b2d3-dad664417c50",
+            "name": "get profile",
+            "url": "http://127.0.0.1:4000/api/users/profile",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2024-03-19T12:10:53.243Z",
+            "modified": "2024-03-19T12:10:53.243Z",
+            "headers": [],
+            "params": [],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDc4MjEwMSwiZXhwIjoxNzEwNzg5MzAxfQ.-DDi_IJcMAxkGz7lbGicnBJ9Q62yp9R8isbH2sB-tvw"
+            },
+            "tests": []
+        },
+        {
+            "_id": "78980a7f-df8f-4be0-8323-e9ccc2c297c1",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "4b2639b2-0211-441d-b2d3-dad664417c50",
+            "name": "update profile",
+            "url": "http://127.0.0.1:4000/api/users/profile",
+            "method": "PUT",
+            "sortNum": 60000,
+            "created": "2024-03-19T12:10:53.244Z",
+            "modified": "2024-03-19T12:10:53.244Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"userName\": \"Omari Wiegand\"\n}",
+                "form": []
+            },
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVmNDFjOGQ0ZWUyNzcyYTBmOTc4NGUiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDcxMzExMiwiZXhwIjoxNzEwNzIwMzEyfQ.--scKe3tWm1XiNBa5PxEN1mK9t11tDEVwYq8nD-Qj6A"
+            },
+            "tests": []
+        },
+        {
+            "_id": "71a48172-eac9-4466-9615-0a7b8ffbdb10",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "4b2639b2-0211-441d-b2d3-dad664417c50",
+            "name": "update user by id",
+            "url": "http://127.0.0.1:4000/api/users/65ef41c8d4ee2772a0f9784e",
+            "method": "PUT",
+            "sortNum": 70000,
+            "created": "2024-03-19T12:10:53.245Z",
+            "modified": "2024-03-19T12:10:53.245Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"bio\": \"hey\"\n}",
+                "form": []
+            },
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVmNDFjOGQ0ZWUyNzcyYTBmOTc4NDkiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpYXQiOjE3MTA3NzI4ODgsImV4cCI6MTcxMDc4MDA4OH0.uz7gyvinq6qFaLxSMhFSSKSWLQztPv1-95WoSm3Lr9w"
+            },
+            "tests": []
+        },
+        {
+            "_id": "c6e5a618-7fc7-4f02-8a94-72e95bac6a0f",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "4b2639b2-0211-441d-b2d3-dad664417c50",
+            "name": "delete user by id",
+            "url": "http://127.0.0.1:4000/api/users/65ef41c8d4ee2772a0f97854",
+            "method": "DELETE",
+            "sortNum": 80000,
+            "created": "2024-03-19T12:10:53.246Z",
+            "modified": "2024-03-19T12:10:53.246Z",
+            "headers": [],
+            "params": [],
+            "reqType": "del",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVmNDFjOGQ0ZWUyNzcyYTBmOTc4NDkiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpYXQiOjE3MTA3NzI4ODgsImV4cCI6MTcxMDc4MDA4OH0.uz7gyvinq6qFaLxSMhFSSKSWLQztPv1-95WoSm3Lr9w"
+            },
+            "tests": []
+        },
+        {
+            "_id": "16dd4e3f-d480-444a-8ff8-33347329b711",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "4b2639b2-0211-441d-b2d3-dad664417c50",
+            "name": "change password",
+            "url": "http://127.0.0.1:4000/api/users/profile/password",
+            "method": "PUT",
+            "sortNum": 90000,
+            "created": "2024-03-19T12:10:53.247Z",
+            "modified": "2024-03-19T12:10:53.247Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"oldPassword\": \"Aa123456\",\n  \"newPassword\": \"Bb123456\",\n  \"newPasswordRepeat\": \"Bb123456\"\n}",
+                "form": []
+            },
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVmNDFjOGQ0ZWUyNzcyYTBmOTc4NGUiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDcxMzExMiwiZXhwIjoxNzEwNzIwMzEyfQ.--scKe3tWm1XiNBa5PxEN1mK9t11tDEVwYq8nD-Qj6A"
+            },
+            "tests": []
+        },
+        {
+            "_id": "d48a02d6-d094-4e71-a609-b553bb8f11c5",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "4b2639b2-0211-441d-b2d3-dad664417c50",
+            "name": "deactivate profile",
+            "url": "http://127.0.0.1:4000/api/users/profile/deactivate",
+            "method": "PUT",
+            "sortNum": 100000,
+            "created": "2024-03-19T12:10:53.248Z",
+            "modified": "2024-03-19T12:10:53.248Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"password\": \"Aa123456\"\n}",
+                "form": []
+            },
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWYwOWZlNDRiYzlkNDM4MWVkOWViMGEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDc3Nzk3NiwiZXhwIjoxNzEwNzg1MTc2fQ.sv8tBSwklq7mr86FXBTjVjs4EBM3nriXTHiQQDYzlUw"
+            },
+            "tests": []
+        },
+        {
+            "_id": "2eb3460e-3175-4840-9348-82b215a29557",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "619593b6-e404-45cf-9c30-dd7ff4b1cd8d",
+            "name": "get posts",
+            "url": "http://127.0.0.1:4000/api/posts/?page=1",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2024-03-19T12:10:53.249Z",
+            "modified": "2024-03-19T12:10:53.249Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "1",
+                    "isPath": false
+                }
+            ],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVmNDFjOGQ0ZWUyNzcyYTBmOTc4NDkiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpYXQiOjE3MTA3OTE2MjcsImV4cCI6MTcxMDc5ODgyN30.DQYtPrC0ulWmsFC0Wjc478WvDzf1_obHK_Bv3wzzw1U"
+            },
+            "tests": []
+        },
+        {
+            "_id": "18ee99d0-5093-4ac3-8e9c-acc2a15b8109",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "4b2639b2-0211-441d-b2d3-dad664417c50",
+            "name": "get posts by user id",
+            "url": "http://127.0.0.1:4000/api/users/posts/65ef41c8d4ee2772a0f9784e",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2024-03-19T12:10:53.251Z",
+            "modified": "2024-03-19T12:10:53.251Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "4",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDc3OTExOCwiZXhwIjoxNzEwNzg2MzE4fQ.KyeToqIbyzR0e-Euhei61UvimcAVDZa_8Lwuj9fdf1Y"
+            },
+            "tests": []
+        },
+        {
+            "_id": "71ec93f5-de15-4525-874e-682f8464b62d",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "619593b6-e404-45cf-9c30-dd7ff4b1cd8d",
+            "name": "get timeline",
+            "url": "http://127.0.0.1:4000/api/posts/timeline/?page=1",
+            "method": "GET",
+            "sortNum": 120000,
+            "created": "2024-03-19T12:10:53.252Z",
+            "modified": "2024-03-19T12:10:53.252Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "1",
+                    "isPath": false
+                }
+            ],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDc4OTk5NCwiZXhwIjoxNzEwNzk3MTk0fQ.dzE81PNIXS2STe5Hlv6aqSZjJoNdHyhS8c2SSisfak4"
+            },
+            "tests": []
+        },
+        {
+            "_id": "13edb936-f66b-4255-870a-c53a213b23d4",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "4b2639b2-0211-441d-b2d3-dad664417c50",
+            "name": "get saved posts",
+            "url": "http://127.0.0.1:4000/api/users/saved",
+            "method": "GET",
+            "sortNum": 120000,
+            "created": "2024-03-19T12:10:53.253Z",
+            "modified": "2024-03-19T12:10:53.253Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "4",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDc4MjEwMSwiZXhwIjoxNzEwNzg5MzAxfQ.-DDi_IJcMAxkGz7lbGicnBJ9Q62yp9R8isbH2sB-tvw"
+            },
+            "tests": []
+        },
+        {
+            "_id": "52a25508-f979-4199-bf8e-746bc35bcf28",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "619593b6-e404-45cf-9c30-dd7ff4b1cd8d",
+            "name": "get own posts",
+            "url": "http://127.0.0.1:4000/api/posts/own/?page=1",
+            "method": "GET",
+            "sortNum": 125000,
+            "created": "2024-03-19T12:10:53.254Z",
+            "modified": "2024-03-19T12:10:53.254Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "1",
+                    "isPath": false
+                }
+            ],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWYwOWZlNDRiYzlkNDM4MWVkOWViMDkiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDc5OTI4MCwiZXhwIjoxNzEwODA2NDgwfQ.ra-4Gk0UIqaKN7c7I_gkWzp2v72ec-8U-a4rCUYiwAw"
+            },
+            "tests": []
+        },
+        {
+            "_id": "85328230-c425-40ad-be4e-48ddae4751a3",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "619593b6-e404-45cf-9c30-dd7ff4b1cd8d",
+            "name": "create post",
+            "url": "http://127.0.0.1:4000/api/posts/",
+            "method": "POST",
+            "sortNum": 130000,
+            "created": "2024-03-19T12:10:53.255Z",
+            "modified": "2024-03-19T15:57:10.809Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"caption\": \"summer time\",\n    \"image\": \"https://thisisarandomnonexistingurl.com.jpg\",\n    \"visibility\": \"public\",\n    \"tags\": \"#summer2024\"\n}",
+                "form": []
+            },
+            "reqType": "post",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWY5YTkzMmFkYTIxOTdkZjMxNzE2ZmIiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDg2MjQ2OCwiZXhwIjoxNzEwODY5NjY4fQ.CG9789-h3LRlF-7azRG4_tozlyCFX_CqrBfShktbWhY"
+            },
+            "tests": []
+        },
+        {
+            "_id": "d502846b-3052-429a-9530-c96e22f5f24f",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "4b2639b2-0211-441d-b2d3-dad664417c50",
+            "name": "toggle follow",
+            "url": "http://127.0.0.1:4000/api/users/follow",
+            "method": "PUT",
+            "sortNum": 130000,
+            "created": "2024-03-19T12:10:53.256Z",
+            "modified": "2024-03-19T12:10:53.256Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "4",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"targetUserId\": \"65ef41c8d4ee2772a0f97855\"\n}",
+                "form": []
+            },
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDc4OTk5NCwiZXhwIjoxNzEwNzk3MTk0fQ.dzE81PNIXS2STe5Hlv6aqSZjJoNdHyhS8c2SSisfak4"
+            },
+            "tests": []
+        },
+        {
+            "_id": "b6d0858d-8ae2-4413-8743-44da4e66fef3",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "619593b6-e404-45cf-9c30-dd7ff4b1cd8d",
+            "name": "update post",
+            "url": "http://127.0.0.1:4000/api/posts/",
+            "method": "PUT",
+            "sortNum": 140000,
+            "created": "2024-03-19T12:10:53.257Z",
+            "modified": "2024-03-19T12:10:53.257Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"postId\": \"65f0adccd40c0decd9f82d4b\",\n    \"caption\": \"Once upon a time...\",\n    \"tags\": \"good Memories\"\n}",
+                "form": []
+            },
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWYwOWZlNDRiYzlkNDM4MWVkOWViMDkiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDc5OTI4MCwiZXhwIjoxNzEwODA2NDgwfQ.ra-4Gk0UIqaKN7c7I_gkWzp2v72ec-8U-a4rCUYiwAw"
+            },
+            "tests": []
+        },
+        {
+            "_id": "6e752f29-4f0a-4f5c-a30d-dd491b922713",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "619593b6-e404-45cf-9c30-dd7ff4b1cd8d",
+            "name": "get post by id",
+            "url": "http://127.0.0.1:4000/api/posts/65f37105dc98526b24c91e4c",
+            "method": "GET",
+            "sortNum": 150000,
+            "created": "2024-03-19T12:10:53.258Z",
+            "modified": "2024-03-19T12:10:53.258Z",
+            "headers": [],
+            "params": [],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWYwOWZlNDRiYzlkNDM4MWVkOWViMDkiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDc5OTI4MCwiZXhwIjoxNzEwODA2NDgwfQ.ra-4Gk0UIqaKN7c7I_gkWzp2v72ec-8U-a4rCUYiwAw"
+            },
+            "tests": []
+        },
+        {
+            "_id": "6fa87967-5858-4908-83a5-1f53391aa50b",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "619593b6-e404-45cf-9c30-dd7ff4b1cd8d",
+            "name": "toggle like",
+            "url": "http://127.0.0.1:4000/api/posts/like/",
+            "method": "PUT",
+            "sortNum": 155000,
+            "created": "2024-03-19T12:10:53.259Z",
+            "modified": "2024-03-19T19:24:40.545Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"postId\": \"65f37105dc98526b24c91e4c\"\n}",
+                "form": []
+            },
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDgwMjk2MywiZXhwIjoxNzEwODEwMTYzfQ.wReKjZAHUKqwp4bP-2CkNPzRYe4DGYEToZisaUVsX8c"
+            },
+            "tests": []
+        },
+        {
+            "_id": "a2219de6-e736-467c-b418-e210040dddb4",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "619593b6-e404-45cf-9c30-dd7ff4b1cd8d",
+            "name": "save post",
+            "url": "http://127.0.0.1:4000/api/posts/save/65f37105dc98526b24c91e4c",
+            "method": "PUT",
+            "sortNum": 157500,
+            "created": "2024-03-19T12:10:53.260Z",
+            "modified": "2024-03-19T12:10:53.260Z",
+            "headers": [],
+            "params": [],
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDgwMjk2MywiZXhwIjoxNzEwODEwMTYzfQ.wReKjZAHUKqwp4bP-2CkNPzRYe4DGYEToZisaUVsX8c"
+            },
+            "tests": []
+        },
+        {
+            "_id": "3ab53779-6f0d-479d-a77f-5422ca8bdcd1",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "619593b6-e404-45cf-9c30-dd7ff4b1cd8d",
+            "name": "delete post by id",
+            "url": "http://127.0.0.1:4000/api/posts/65f8a88fd0c74042b81788ca",
+            "method": "DELETE",
+            "sortNum": 160000,
+            "created": "2024-03-19T12:10:53.261Z",
+            "modified": "2024-03-19T12:10:53.261Z",
+            "headers": [],
+            "params": [],
+            "reqType": "del",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDgwMjk2MywiZXhwIjoxNzEwODEwMTYzfQ.wReKjZAHUKqwp4bP-2CkNPzRYe4DGYEToZisaUVsX8c"
+            },
+            "tests": []
+        },
+        {
+            "_id": "d3de3951-3cff-4a84-bf87-66d27a5c7ec1",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "8e87a98f-c6fc-4c0c-ba8b-e8dcffb63277",
+            "name": "post comment",
+            "url": "localhost:4000/api/comments",
+            "method": "POST",
+            "sortNum": 170000,
+            "created": "2024-03-19T12:10:53.262Z",
+            "modified": "2024-03-19T12:10:53.262Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"postId\": \"65ef60d8584d459f16f2728d\",\n  \"content\": \"Nice Pic!\"\n}",
+                "form": []
+            },
+            "reqType": "post",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDg0MDgzNywiZXhwIjoxNzEwODQ4MDM3fQ.4lQ8aZqdYx2hUt8OhTr68LBvJY6_JEoZVd2tJvU-j6E"
+            },
+            "tests": []
+        },
+        {
+            "_id": "f5a584f7-3f3d-4670-8f07-866f0988a630",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "8e87a98f-c6fc-4c0c-ba8b-e8dcffb63277",
+            "name": "post reply",
+            "url": "localhost:4000/api/comments/reply",
+            "method": "POST",
+            "sortNum": 180000,
+            "created": "2024-03-19T12:10:53.263Z",
+            "modified": "2024-03-19T12:10:53.263Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"postId\": \"65ef60d8584d459f16f2728d\",\n  \"content\": \"Grow up..\",\n  \"commentId\": \"65f6cce82e2e170f0021dc85\"\n}",
+                "form": []
+            },
+            "reqType": "post",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDg0MDgzNywiZXhwIjoxNzEwODQ4MDM3fQ.4lQ8aZqdYx2hUt8OhTr68LBvJY6_JEoZVd2tJvU-j6E"
+            },
+            "tests": []
+        },
+        {
+            "_id": "514e99b2-7524-4150-bab0-ff468948d94b",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "8e87a98f-c6fc-4c0c-ba8b-e8dcffb63277",
+            "name": "delete comment",
+            "url": "localhost:4000/api/comments/delete",
+            "method": "PUT",
+            "sortNum": 200000,
+            "created": "2024-03-19T12:10:53.265Z",
+            "modified": "2024-03-19T12:10:53.265Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"postId\": \"65ef60d8584d459f16f2728d\",\n  \"commentId\": \"65f96889560d2a6575ce52be\"\n}",
+                "form": []
+            },
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDg0MDgzNywiZXhwIjoxNzEwODQ4MDM3fQ.4lQ8aZqdYx2hUt8OhTr68LBvJY6_JEoZVd2tJvU-j6E"
+            },
+            "tests": []
+        },
+        {
+            "_id": "5e11502e-0101-4cff-9967-527ea92e862d",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "8e87a98f-c6fc-4c0c-ba8b-e8dcffb63277",
+            "name": "like comment",
+            "url": "localhost:4000/api/comments/like",
+            "method": "PUT",
+            "sortNum": 220000,
+            "created": "2024-03-19T12:10:53.267Z",
+            "modified": "2024-03-19T12:10:53.267Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"postId\": \"65ef60d8584d459f16f2728e\",\n  \"commentId\": \"65f0a341a63d5fc53cc14b06\"\n}",
+                "form": []
+            },
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDg0OTYzOCwiZXhwIjoxNzEwODU2ODM4fQ.CmWiag-F-GoSBklJBRU0Ua8anZbUx6RUlsdvDTQD1k0"
+            },
+            "tests": []
+        },
+        {
+            "_id": "3fd5019f-cced-4b5f-90ae-30b81b7acfd2",
+            "colId": "bdc4f599-f3ad-47a1-84c2-cef743bd5cef",
+            "containerId": "8e87a98f-c6fc-4c0c-ba8b-e8dcffb63277",
+            "name": "update comment",
+            "url": "localhost:4000/api/comments/",
+            "method": "PUT",
+            "sortNum": 240000,
+            "created": "2024-03-19T12:10:53.269Z",
+            "modified": "2024-03-19T12:10:53.269Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"postId\": \"65ef60d8584d459f16f2728d\",\n  \"commentId\": \"65f96c2c003334adb63d884e\",\n  \"content\": \"That is fake.\"\n}",
+                "form": []
+            },
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlMDJkZDM5NzUzZjA5NTNmZGViYzEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxMDg0OTYzOCwiZXhwIjoxNzEwODU2ODM4fQ.CmWiag-F-GoSBklJBRU0Ua8anZbUx6RUlsdvDTQD1k0"
+            },
+            "tests": []
+        }
+    ]
+}
