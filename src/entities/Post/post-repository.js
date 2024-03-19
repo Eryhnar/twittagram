@@ -62,11 +62,9 @@ export const createPost = async (userId, image, caption, visibility, tags) => {
 // }
 export const findPost = async (searchFilters) => {
     try {
-        console.log("2");
         const post = await Post.findOne(
             searchFilters
         );
-        console.log(post);
         return post;
     } catch (error) {
         throw error;

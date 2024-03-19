@@ -2,18 +2,26 @@ import User from "./user-model.js"
 import UndefinedError from "../../utils/errors/UndefinedError.js"
 
 export const findUsers = async (searchFilters) => {
-    return await User.find(
-        searchFilters,
-    )
+    try {
+        return await User.find(
+            searchFilters,
+        )
+    } catch (error) {
+        throw error
+    }
 }
 
 export const findUserById = async (userId, limit, skip) => {
-    return await User.findOne(
-        { 
-            _id: userId
-        }
-    ).skip(skip)
-    .limit(limit);
+    try {
+        return await User.findOne(
+            { 
+                _id: userId
+            }
+        ).skip(skip)
+        .limit(limit);
+    } catch (error) {
+        throw error;
+    }
 }
 
 export const updateProfile = async (userId, updatedFields) => {
@@ -29,18 +37,22 @@ export const updateProfile = async (userId, updatedFields) => {
         );
         return updatedUser;
     } catch (error) {
-        throw new UndefinedError("Error updating the user");
+        throw error;
     }
 }
 
 export const getUserToUpdate = async (userId) => {
-    const user = await User.findOne(
-        { 
-            _id: userId
-        },
-        "+password +isActive +role"
-    );
-    return user;
+    try {
+        const user = await User.findOne(
+            { 
+                _id: userId
+            },
+            "+password +isActive +role"
+        );
+        return user;
+    } catch (error) {
+        throw error;
+    }
 }
 
 //TODO review might not work
@@ -68,7 +80,7 @@ export const updateUser = async (userId, updatedFields) => {
         return updatedUser;
     }
     catch (error) {
-        throw new UndefinedError("Error updating the user", error);
+        throw error;
     }
 }
 
@@ -80,6 +92,6 @@ export const deleteUser = async (userId) => {
             }
         );
     } catch (error) {
-        throw new UndefinedError("Error deleting the user", error);
+        throw error;
     }
 }

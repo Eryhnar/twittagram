@@ -11,7 +11,6 @@ import InvalidInputError from "../../utils/errors/InvalidInputError.js";
 import NotFoundError from "../../utils/errors/NotFoundError.js";
 import isValidId from "../../utils/validators/IsValidId.js";
 import { findPosts } from "../Post/post-repository.js";
-import { updateUserById } from "./user-controller.js";
 
 
 export const getProfileService = async (req) => {

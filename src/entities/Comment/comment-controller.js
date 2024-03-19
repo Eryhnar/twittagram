@@ -1,45 +1,12 @@
 import Post from "../Post/post-model.js";
 import User from "../User/user-model.js";
 import Comment from "./comment-model.js";
+import { postCommentService, postReplyService } from "./comment-service.js";
 
 export const postComment = async (req, res) => {
     try {
-        const authorId = req.tokenData.userId;
-        const author = await User.findOne({ _id: authorId });
-        const { postId, content } = req.body;
-        if ( !author ) {
-            return res.status(400).json(
-                { 
-                    success: false,
-                    message: "User does not exist" 
-                }
-            );
-        }
-        const post = await Post.findOne({ _id: postId })
-        if ( !post ) {
-            return res.status(400).json(
-                { 
-                    success: false,
-                    message: "Post does not exist" 
-                }
-            );
-        }
-        if ( !content ) {
-            return res.status(400).json(
-                { 
-                    success: false,
-                    message: "All fields are required" 
-                }
-            );
-        }
-
-        const comment = await Comment.create(
-            { 
-                author: author._id, 
-                post: postId, 
-                content 
-            }
-        );
+        
+        const comment = await postCommentService(req);
         res.status(201).json(
             { 
                 success: true,
@@ -60,57 +27,57 @@ export const postComment = async (req, res) => {
 
 export const postReply = async (req, res) => {
     try {
-        const authorId = req.tokenData.userId;
-        const { postId, content, commentId } = req.body;
-        if ( !postId || !content || !commentId) {
-            return res.status(400).json(
-                { 
-                    success: false,
-                    message: "All fields are required" 
-                }
-            );
-        }
+        // const authorId = req.tokenData.userId;
+        // const { postId, content, commentId } = req.body;
+        // if ( !postId || !content || !commentId) {
+        //     return res.status(400).json(
+        //         { 
+        //             success: false,
+        //             message: "All fields are required" 
+        //         }
+        //     );
+        // }
 
-        // validate content.trim().length > 0
+        // // validate content.trim().length > 0
 
-        const post = await Post.findOne(
-            { 
-                _id: postId,
-            }
-        );
+        // const post = await Post.findOne(
+        //     { 
+        //         _id: postId,
+        //     }
+        // );
 
-        if ( !post ) {
-            return res.status(400).json(
-                { 
-                    success: false,
-                    message: "Post does not exist" 
-                }
-            );
-        }
-        const comment = await Comment.findOne(
-            { 
-                _id: commentId 
-            }
-        );
-        if ( !comment ) {
-            return res.status(400).json(
-                { 
-                    success: false,
-                    message: "Comment does not exist" 
-                }
-            );
-        }
+        // if ( !post ) {
+        //     return res.status(400).json(
+        //         { 
+        //             success: false,
+        //             message: "Post does not exist" 
+        //         }
+        //     );
+        // }
+        // const comment = await Comment.findOne(
+        //     { 
+        //         _id: commentId 
+        //     }
+        // );
+        // if ( !comment ) {
+        //     return res.status(400).json(
+        //         { 
+        //             success: false,
+        //             message: "Comment does not exist" 
+        //         }
+        //     );
+        // }
 
-        const reply = await Comment.create(
-            {
-                author: authorId,
-                post: postId,
-                content,
-            }
-        );
+        // const reply = await Comment.create(
+        //     {
+        //         author: authorId,
+        //         post: postId,
+        //         content,
+        //     }
+        // );
 
-        comment.replies.push(reply._id);
-        await comment.save();
+        // comment.replies.push(reply._id);
+        // await comment.save();
         // const comment = await Comment.updateOne(
         //     { 
         //         _id: commentId 
@@ -119,12 +86,12 @@ export const postReply = async (req, res) => {
         //         $push: { replies: reply._id } 
         //     }
         // );
+        const reply = await postReplyService(req);
 
         res.status(200).json(
             { 
                 success: true,
                 message: "Reply posted successfully",
-                data: comment,
                 details: reply
             }
         );
