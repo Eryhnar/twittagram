@@ -26,12 +26,7 @@ export const getProfileService = async (req) => {
 export const getUsersService = async (query, limit, page, skip) => {
     try{
         if (isNaN(page) || page <= 0) { //TODO abstract it to a function maybe
-            return res.status(400).json(
-                { 
-                    success: false,
-                    message: "Invalid page number"
-                }
-            );
+            throw new InvalidInputError(400, "Invalid page number");
         }
         const { userName, userHandle, email, role, isActive} = query;
         const searchFilters = {}

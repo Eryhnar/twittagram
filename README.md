@@ -9,7 +9,7 @@
     <li><a href="#stack">Stack</a></li>
     <li><a href="#local-installation">Installation</a></li>
     <li><a href="#endpoints">Endpoints</a></li>
-    <li><a href="#decitions">Decitions</a></li>
+    <li><a href="#decisions">Decisions</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#author">Authort</a></li>
   </ol>
@@ -65,82 +65,212 @@ Technologies employed:
 1. Clone the repo: ` $ git clone https://github.com/Eryhnar/twittagram/tree/master`
 2. ` $ npm install `
 3. Create a mondodb database. I recommend using docker for this step.
-3. Set the .env file and adjust the params for the database.
-4. Connect to the database. If the .env is set properly the following command will connect to the database ``` $ npm run dev ```
-5. ``` $ npm run migrations-run ``` 
-6. ``` $ npm run dev ``` Start the server.
-7. ``` $  ``` Run the seeders.
-8. ``` $ npm run migrations-revert ``` If you ever need to revert them.
-9. Import the routes from the thunder routes collection folder.
+4. Set the .env file and adjust the params for the database.
+5. Connect to the database. If the .env is set properly, executing the following command within the ide console will connect to the database ``` $ npm run dev ```
+6. Import the routes from the thunder routes collection folder.
 
 ## Endpoints
 <details>
 <summary>Endpoints</summary>
     
+    
+### Register
 
-- AUTH
-    - register
+**Endpoint:** `/api/auth/register`
 
-            POST http://localhost:4000/api/register
-        body:
-        ``` js
-            {
-                "name": "David", 
-                "surname": "surname",
-                "email": "david@david.com", 
-                "password": "princes"
-            }
-        ```
-        name: single word name with no numbers
-        surname: single word name with no numbers
-        email: something@something.domain
-        password: minimum one capital letter, one lowercase and a number. Length 8-14.
+**Method:** `POST`
 
-    - login
+**Description:** This endpoint allows a user to register.
 
-            POST http://localhost:4000/api/login  
-        body:
-        ``` js
-            {
-                "email": "david@david.com",
-                "password": "princes"
-            }
-        ```
-        email: something@something.domain
-        password: minimum one capital letter, one lowercase and a number. Length 8-14.
-- ROLES
-    - getRoles
+**Headers:**
 
-            GET http://localhost:4000/api/roles
-- USERS
-    - getProfile
+- none
 
-            GET http://localhost:4000/api/users/profile  
-        auth:
-        ``` js
-            token
-        ```
-    - updateProfile
+**Request Body:**
 
-            POST http://localhost:4000/api/users/profile  
-        auth:
-        ``` js
-            token
-        ```
-        body:
-        ``` js
-            {
-                "email": "optional",
-                "name": "optional",
-                "surname": "optional"
-            }
-        ```
-        You may include 1-3 of the fields.
-        name: single word name with no numbers
-        surname: single word name with no numbers
-        email: something@something.domain
+- `userName`: Any combination of numbers and letters between 3-20 chars. Can include . _ - in any position past the first one. It will remove spaces and will turn to lowercase but accepts both in entry.
+- `email`: something@something.domain
+- `password`: minimum one capital letter, one lowercase and a number. Length 8-14. Accepts . - _
 
-    ### Update User Password
+**Responses:**
+
+- `201 OK`
+- `400 Bad Request`
+- `500 Internal Server Error`
+
+**Example Request:**
+
+```json
+{
+    "userName": "michael", 
+    "email": "michael@michael.com", 
+    "password": "princess"
+}
+```
+**Example Response:** 
+```json
+{
+    "success": true,
+    "message": "User registered successfully"
+}
+```
+### Log in
+
+**Endpoint:** `/api/auth/login`
+
+**Method:** `POST`
+
+**Description:** This endpoint allows a user to log in.
+
+**Headers:**
+
+- none
+
+**Request Body:**
+
+- `email`: something@something.domain
+- `password`: minimum one capital letter, one lowercase and a number. Length 8-14. Accepts . - _
+
+**Responses:**
+
+- `200 OK`
+- `400 Bad Request`
+- `404 Not Found`
+- `500 Internal Server Error`
+
+**Example Request:**
+
+```json
+{
+    "email": "michael@michael.com", 
+    "password": "princess"
+}
+```
+**Example Response:** 
+```json
+{
+    "success": true,
+    "message": "User  successfully"
+}
+```
+### Get Users
+
+**Endpoint:** `/api/users/`
+
+**Method:** `GET`
+
+**Description:** This endpoint a super admin to recover all users.
+
+**Headers:**
+
+- token
+
+**Request Body:**
+
+- none
+
+**Responses:**
+
+- `200 OK`
+- `400 Bad Request`
+- `500 Internal Server Error`
+
+**Optional Queries:**
+
+- page
+- userName
+- userHandle
+- email
+- role
+- isActive
+
+**Example Response:** 
+```json
+{
+    "success": true,
+    "message": "Users retrieved successfully "
+}
+```
+
+### Get User Profile
+
+**Endpoint:** `/api/users/profile`
+
+**Method:** `GET`
+
+**Description:** This endpoint allows a user to retrieve their profile information.
+
+**Headers:**
+
+- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
+
+**Example Headers:**
+
+```json
+{
+    "Authorization": "Bearer your_token_here"
+}
+```
+
+**Responses:**
+
+- `200 OK: The profile information was successfully retrieved. Returns the user's profile data.`
+- `401 Unauthorized: The user is not authenticated. Returns an error message.`
+- `500 Internal Server Error: An error occurred on the server while trying to retrieve the profile information. Returns an error message.`
+
+**Example Response:**
+``` js
+{
+    "success": true,
+    "message": "User profile retrieved successfully",
+    "data": user
+}
+```
+
+### Update User Profile
+
+**Endpoint:** `/api/users/profile`
+
+**Method:** `PUT`
+
+**Description:** This endpoint allows users to update their profile information.
+
+**Headers:**
+
+- `Authorization`: Bearer token for user authentication. This token must be included in the headers of the request.
+
+**Example Headers:**
+
+```json
+{
+    "Authorization": "Bearer your_token_here"
+}
+```
+
+**Request Body:**
+
+- `userName` (string, optional): New username.
+- `email` (string, optional): New email address.
+- `bio` (string, optional): New biography.
+- `profilePicture` (string, optional): URL of the new profile picture.
+
+**Example Request Body:**
+```json
+{
+    "userName": "new_username",
+    "email": "new_email@example.com",
+    "bio": "New biography",
+    "profilePicture": "https://example.com/new_profile_picture.jpg"
+}
+```
+**Responses:**
+
+- `200 OK:` The profile was successfully updated. Returns the updated user profile data.
+- `400 Bad Request:` The request body is invalid or missing required fields. Returns an error message detailing the issue.
+- `401 Unauthorized:` The user is not authenticated. Returns an error message.
+- `500 Internal Server Error:` An error occurred on the server while trying to update the profile. Returns an error message.
+
+### Update User Password
 
 **Endpoint:** `/api/users/profile/password`
 
@@ -159,18 +289,18 @@ Technologies employed:
     "Authorization": "Bearer your_token_here"
 }
 ```
-
 **Request Body:**
 
-- `oldPassword`: The user's current password.
-- `newPassword`: The user's new password.
-- `newPasswordRepeat`: Confirmation of the user's new password.
+- `oldPassword:` The user's current password.
+- `newPassword:` The user's new password.
+- `newPasswordRepeat:` Confirmation of the user's new password.
 
 **Responses:**
 
-- `200 OK`: The password was successfully updated. Returns a success message.
-- `400 Bad Request`: The new passwords do not match or the old password is incorrect. Returns an error message.
-- `500 Internal Server Error`: An error occurred on the server while trying to update the password. Returns an error message.
+- `200 OK:` The password was successfully updated. Returns a success message.
+- `400 Bad Request:` The new passwords do not match, the old password is incorrect, or the password does not meet the required criteria. Returns an error message.
+- `401 Unauthorized:` The user is not authenticated or the old password is incorrect. Returns an error message.
+- `500 Internal Server Error:` An error occurred on the server while trying to update the password. Returns an error message.
 
 **Example Request:**
 
@@ -181,7 +311,7 @@ Technologies employed:
     "newPasswordRepeat": "newPassword123"
 }
 ```
-**Example Response:** 
+**Example Response:**
 ```json
 {
     "success": true,
@@ -189,649 +319,769 @@ Technologies employed:
 }
 ```
 
-### Deactivate User
-
-**Endpoint:** `/api/users/profile/delete`
-
-**Method:** `DELETE`
-
-**Description:** This endpoint allows a user to deactivate their account. Once deactivated, the user's account will no longer be active.
-
-**Headers:**
-
-- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
-
-**Request Body:**
-
-- `password`: The user's current password.
-
-**Responses:**
-
-- `200 OK`: The account was successfully deactivated. Returns a success message.
-- `400 Bad Request`: The provided password is incorrect. Returns an error message.
-- `404 Not Found`: The user was not found. This should be redundant and not trigger. Returns an error message.
-- `500 Internal Server Error`: An error occurred on the server while trying to deactivate the account. Returns an error message.
-
-**Example Request:**
-
-```json
-{
-    "Authorization": "Bearer your_token_here"
-}
-```
-### UPDATE USER BY ID
+### Update User by ID
 
 **Endpoint:** `/api/users/:id`
 
 **Method:** `PUT`
 
-**Description:** This endpoint allows a super admin to update a user.
+**Description:** This endpoint allows an admin to update a user's information by their ID.
 
 **Headers:**
 
-- `Authorization`: Bearer token for authenticating the super admin. This should be included in all requests to this endpoint.
+- `Authorization`: Bearer token for authenticating the admin. This should be included in all requests to this endpoint.
 
-**URL Parameters:**
-
-- `id`: The ID of the user to be updated.
-
-**Responses:**
-
-- `200 OK`: The request was successful. 
-- `401 Unauthorized`: The user is not authenticated or not a super admin. Returns an error message.
-- `500 Internal Server Error`: An error occurred on the server while trying to update the user. Returns an error message.
-
-**Example Request:**
+**Example Headers:**
 
 ```json
 {
     "Authorization": "Bearer your_token_here"
 }
 ```
+
+**URL Parameters:**
+
+- `id:` The ID of the user to update.
+**Request Body:**
+
+- `userName:` The new username for the user (optional).
+- `email:` The new email for the user (optional).
+- `role:` The new role for the user (optional). Must be one of user, admin, or superadmin.
+- `isActive:` The new active status for the user (optional). Must be a boolean.
+- `bio:` The new bio for the user (optional).
+- `profilePicture:` The new profile picture URL for the user (optional).
+**Responses:**
+
+- `200 OK:` The user was successfully updated. Returns the updated user data.
+- `400 Bad Request:` The provided username, email, role, active status, bio, or profile picture URL is invalid, or the user ID is invalid. Returns an error message.
+- `401 Unauthorized:` The admin is not authenticated. Returns an error message.
+- `404 Not Found:` The user with the provided ID was not found. Returns an error message.
+- `500 Internal Server Error:` An error occurred on the server while trying to update the user. Returns an error message.
+
+**Example Request:**
+all fields are optional for updates.
+```json
+{
+    "userName": "new_username",
+    "email": "new_email@example.com",
+    "role": "user",
+    "isActive": true,
+    "bio": "This is my new bio",
+    "profilePicture": "https://example.com/new_profile_picture.jpg"
+}
+```
+***Example Response:**
+```js
+{
+    "success": true,
+    "message": "User updated successfully",
+    "data": user
+    
+}
+```
+
 ### Delete User by ID
 
 **Endpoint:** `/api/users/:id`
 
 **Method:** `DELETE`
 
-**Description:** This endpoint allows a super admin to delete a user by their ID.
+**Description:** This endpoint allows an admin to delete a user by their ID.
 
 **Headers:**
 
-- `Authorization`: Bearer token for authenticating the super admin. This should be included in all requests to this endpoint.
+- `Authorization`: Bearer token for authenticating the admin. This should be included in all requests to this endpoint.
+
+**Example Headers:**
+
+```json
+{
+    "Authorization": "Bearer your_token_here"
+}
+```
 
 **URL Parameters:**
 
-- `id`: The ID of the user to be deleted.
-
+- `id:` The ID of the user to delete.
 **Responses:**
 
-- `200 OK`: The user was successfully deleted. Returns a success message.
-- `404 Not Found`: The user with the specified ID was not found. Returns an error message.
-- `401 Unauthorized`: The user is not authenticated or not a super admin. Returns an error message.
-- `500 Internal Server Error`: An error occurred on the server while trying to delete the user. Returns an error message.
-
-**Example Request:**
-
+- `200 OK:` The user was successfully deleted. Returns a success message.
+- `400 Bad Request:` The user ID is invalid. Returns an error message.
+- `401 Unauthorized:` The admin is not authenticated. Returns an error message.
+- `404 Not Found:` The user with the provided ID was not found. Returns an error message.
+- `500 Internal Server Error:` An error occurred on the server while trying to delete the user. Returns an error message.
+**Example Response:**
 ```json
-{
-    "Authorization": "Bearer your_token_here"
-}
-```
-### Get All Users with Optional Filters
-
-**Endpoint:** `/api/users`
-
-**Method:** `GET`
-
-**Description:** This endpoint allows a super admin to retrieve users. Optional query parameters can be provided to filter the users by name and email.
-
-**Headers:**
-
-- `Authorization`: Bearer token for authenticating the super admin. This should be included in all requests to this endpoint.
-
-**Query Parameters:**
-
-- `name`: (Optional) A string to filter users by name.
-- `email`: (Optional) A string to filter users by email.
-
-**Responses:**
-
-- `200 OK`: The request was successful. Returns a list of all users that match the provided filters.
-- `401 Unauthorized`: The user is not authenticated or not a super admin. Returns an error message.
-- `500 Internal Server Error`: An error occurred on the server while trying to retrieve the users. Returns an error message.
-
-**Example Request:**
-
-```json
-{
-    "Authorization": "Bearer your_token_here"
-}
-```
-### Create a Service
-
-**Endpoint:** `/api/services`
-
-**Method:** `POST`
-
-**Description:** This endpoint allows an authenticated user to create a new service.
-
-**Headers:**
-
-- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
-
-**Request Body:**
-
-- `name`: The name of the service. This is a required field.
-- `description`: (Optional) A description of the service.
-- `photo`: (Optional) A URL to a photo of the service.
-
-**Responses:**
-
-- `201 Created`: The service was successfully created. Returns a success message.
-- `400 Bad Request`: The service name already exists or the name was not provided. Returns an error message.
-- `500 Internal Server Error`: An error occurred on the server while trying to create the service. Returns an error message.
-
-**Example Request:**
-
-```json
-{
-    "Authorization": "Bearer your_token_here"
-}
-```
-### Get All Services
-
-**Endpoint:** `/api/services`
-
-**Method:** `GET`
-
-**Description:** This endpoint retrieves all services.
-
-**Responses:**
-
-- `200 OK`: The request was successful. Returns a list of all services.
-- `404 Not Found`: No services were found. Returns an error message.
-- `500 Internal Server Error`: An error occurred on the server while trying to retrieve the services. Returns an error message.
-
-### Update a Service
-
-**Endpoint:** `/api/services/:id`
-
-**Method:** `PUT`
-
-**Description:** This endpoint allows an authenticated user to update an existing service.
-
-**Headers:**
-
-- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
-
-**URL Parameters:**
-
-- `id`: The ID of the service to be updated.
-
-**Request Body:**
-
-- `name`: (Optional) The new name of the service.
-- `description`: (Optional) The new description of the service.
-- `photo`: (Optional) The new URL to a photo of the service.
-
-**Responses:**
-
-- `200 OK`: The service was successfully updated. Returns a success message.
-- `404 Not Found`: The service with the specified ID was not found. Returns an error message.
-- `500 Internal Server Error`: An error occurred on the server while trying to update the service. Returns an error message.
-
-**Example Request:**
-
-```json
-{
-    "Authorization": "Bearer your_token_here"
-}
-```
-
-### Delete a Service
-
-**Endpoint:** `/api/services/:id`
-
-**Method:** `DELETE`
-
-**Description:** This endpoint allows an authenticated user to delete an existing service.
-
-**Headers:**
-
-- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
-
-**URL Parameters:**
-
-- `id`: The ID of the service to be deleted.
-
-**Responses:**
-
-- `200 OK`: The service was successfully deleted. Returns a success message.
-- `404 Not Found`: The service with the specified ID was not found. Returns an error message.
-- `500 Internal Server Error`: An error occurred on the server while trying to delete the service. Returns an error message.
-
-**Example Request:**
-
-```json
-{
-    "Authorization": "Bearer your_token_here"
-}
-```
-### Create a Catalogue Entry
-
-**Endpoint:** `/api/catalogue`
-
-**Method:** `POST`
-
-**Description:** This endpoint allows an authenticated user to create a new catalogue entry.
-
-**Headers:**
-
-- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
-
-**Request Body:**
-
-- `name`: The name of the catalogue entry. This is a required field.
-- `description`: (Optional) A description of the catalogue entry.
-- `artistId`: The ID of the artist. This is a required field.
-- `serviceId`: The ID of the service. This is a required field.
-- `price`: The price of the catalogue entry. This is a required field.
-- `beforeImage`: (Optional) A URL to a before image of the catalogue entry.
-- `afterImage`: A URL to an after image of the catalogue entry. This is a required field.
-
-**Responses:**
-
-- `201 Created`: The catalogue entry was successfully created. Returns a success message and the created catalogue entry.
-- `400 Bad Request`: The request body is missing required fields or contains invalid data. Returns an error message.
-- `404 Not Found`: The artist or service with the specified ID was not found. Returns an error message.
-- `500 Internal Server Error`: An error occurred on the server while trying to create the catalogue entry. Returns an error message.
-
-**Example Request:**
-
-```json
-header auth
-{
-    "Authorization": "Bearer your_token_here"
-}
-body
-{
-    "name": "Catalogue Entry Name",
-    "description": "Catalogue Entry Description",
-    "artistId": 1,
-    "serviceId": 1,
-    "price": 100,
-    "beforeImage": "http://example.com/before_image.jpg",
-    "afterImage": "http://example.com/after_image.jpg"
-}
-```
-### Update a Catalogue Entry
-
-**Endpoint:** `/api/catalogue/:id`
-
-**Method:** `PUT`
-
-**Description:** This endpoint allows an authenticated user to update an existing catalogue entry.
-
-**Headers:**
-
-- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
-
-**URL Parameters:**
-
-- `id`: The ID of the catalogue entry to be updated.
-
-**Request Body:**
-
-- `name`: (Optional) The new name of the catalogue entry.
-- `description`: (Optional) The new description of the catalogue entry.
-- `artistId`: (Optional) The new ID of the artist.
-- `serviceId`: (Optional) The new ID of the service.
-- `price`: (Optional) The new price of the catalogue entry.
-- `beforeImage`: (Optional) The new URL to a before image of the catalogue entry.
-- `afterImage`: (Optional) The new URL to an after image of the catalogue entry.
-
-**Responses:**
-
-- `200 OK`: The catalogue entry was successfully updated. Returns a success message.
-- `400 Bad Request`: The request body is missing required fields or contains invalid data. Returns an error message.
-- `404 Not Found`: The catalogue entry, artist, or service with the specified ID was not found. Returns an error message.
-- `500 Internal Server Error`: An error occurred on the server while trying to update the catalogue entry. Returns an error message.
-
-**Example Request:**
-
-```json
-header auth
-{
-    "Authorization": "Bearer your_token_here"
-}
-body
-{
-    "name": "New Catalogue Entry Name",
-    "description": "New Catalogue Entry Description",
-    "artistId": 2,
-    "serviceId": 2,
-    "price": 200,
-    "beforeImage": "http://example.com/new_before_image.jpg",
-    "afterImage": "http://example.com/new_after_image.jpg"
-}
-```
-### Delete a Catalogue Entry
-
-**Endpoint:** `/api/catalogue/:id`
-
-**Method:** `DELETE`
-
-**Description:** This endpoint allows an authenticated user to delete an existing catalogue entry.
-
-**Headers:**
-
-- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
-
-**URL Parameters:**
-
-- `id`: The ID of the catalogue entry to be deleted.
-
-**Responses:**
-
-- `200 OK`: The catalogue entry was successfully deleted. Returns a success message and the deleted catalogue entry.
-- `400 Bad Request`: The provided ID is invalid. Returns an error message.
-- `404 Not Found`: The catalogue entry with the specified ID was not found. Returns an error message.
-- `500 Internal Server Error`: An error occurred on the server while trying to delete the catalogue entry. Returns an error message.
-
-**Example Request:**
-
-```json
-header auth
-{
-    "Authorization": "Bearer your_token_here"
-}
-body
 {
     "success": true,
-    "message": "Catalogue entry deleted successfully",
-    "data": {
-        "id": 1,
-        "name": "Catalogue Entry Name",
-        "description": "Catalogue Entry Description",
-        "artistId": 1,
-        "serviceId": 1,
-        "price": 100,
-        "beforeImage": "http://example.com/before_image.jpg",
-        "afterImage": "http://example.com/after_image.jpg"
-    }
+    "message": "User deleted successfully"
 }
 ```
 
-### Get Catalogue Entries
+### Deactivate User Profile
 
-**Endpoint:** `/api/catalogue`
+**Endpoint:** `/api/users/profile/deactivate`
+
+**Method:** `PUT`
+
+**Description:** This endpoint allows a user to deactivate their profile.
+
+**Headers:**
+
+- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
+
+**Example Headers:**
+
+```json
+{
+    "Authorization": "Bearer your_token_here"
+}
+```
+
+**Request Body:**
+
+- `password:` The user's current password. This is required to confirm the deactivation.
+**Responses:**
+
+- `200 OK:` The profile was successfully deactivated. Returns a success message.
+- `400 Bad Request:` The provided password is incorrect. Returns an error message.
+- `401 Unauthorized:` The user is not authenticated. Returns an error message.
+- `404 Not Found:` The user was not found. Returns an error message.
+- `500 Internal Server Error:` An error occurred on the server while trying to deactivate the profile. Returns an error message.
+**Example Request:**
+```json
+{
+    "password": "currentPassword123"
+}
+```
+
+### Get Posts by User ID
+
+**Endpoint:** `/api/users/posts/:id`
 
 **Method:** `GET`
 
-**Description:** This endpoint allows users to retrieve catalogue entries. Users can filter the results by name, artist ID, service ID, artist name, and service name.
+**Description:** This endpoint allows a user to retrieve all posts made by a specific user, identified by their ID.
 
+**Headers:**
+
+- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
+
+**Example Headers:**
+
+```json
+{
+    "Authorization": "Bearer your_token_here"
+}
+```
+
+**URL Parameters:**
+
+- `id:` The ID of the user whose posts are to be retrieved.
 **Query Parameters:**
 
-- `name`: (Optional) The name of the catalogue entry.
-- `artistId`: (Optional) The ID of the artist.
-- `serviceId`: (Optional) The ID of the service.
-- `artistName`: (Optional) The name of the artist.
-- `serviceName`: (Optional) The name of the service.
+- `page:` The page number to return (optional).
 
 **Responses:**
 
-- `200 OK`: The catalogue entries were successfully retrieved. Returns a success message and the retrieved catalogue entries.
-- `500 Internal Server Error`: An error occurred on the server while trying to retrieve the catalogue entries. Returns an error message.
+- `200 OK:` The posts were successfully retrieved. Returns the posts data.
+- `400 Bad Request:` The provided user ID, limit, skip, or page number is invalid. Returns an error message.
+- `401 Unauthorized:` The user is not authenticated. Returns an error message.
+- `500 Internal Server Error:` An error occurred on the server while trying to retrieve the posts. Returns an error message.
 
-**Example Request:**
+### Get Saved Posts by User
 
-```http
-GET /api/catalogue?name=Catalogue%20Entry%20Name&artistId=1&serviceId=1&artistName=Artist%20Name&serviceName=Service%20Name
+**Endpoint:** `/api/users/saved`
+
+**Method:** `GET`
+
+**Description:** This endpoint allows a user to retrieve all posts they have saved.
+
+**Headers:**
+
+- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
+
+**Example Headers:**
+
+```json
+{
+    "Authorization": "Bearer your_token_here"
+}
 ```
 
-### Create an Appointment
+**Query Parameters:**
 
-**Endpoint:** `/api/appointments`
+- `page:` The page number to return (optional).
+
+**Responses:**
+
+- `200 OK:` The posts were successfully retrieved. Returns the posts data.
+- `400 Bad Request:` The provided limit, skip, or page number is invalid. Returns an error message.
+- `401 Unauthorized:` The user is not authenticated. Returns an error message.
+- `500 Internal Server Error:` An error occurred on the server while trying to retrieve the posts. Returns an error message.
+
+### Toggle Follow User
+
+**Endpoint:** `/api/users/follow`
+
+**Method:** `PUT`
+
+**Description:** This endpoint allows a user to follow or unfollow another user.
+
+**Headers:**
+
+- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
+
+**Example Headers:**
+
+```json
+{
+    "Authorization": "Bearer your_token_here"
+}
+```
+
+**Request Body:**
+
+- `targetUserId:` The ID of the user to follow or unfollow.
+**Responses:**
+
+- `200 OK:` The follow/unfollow operation was successful. Returns the updated user data.
+- `400 Bad Request:` The provided targetUserId is invalid. Returns an error message.
+- `401 Unauthorized:` The user is not authenticated. Returns an error message.
+- `404 Not Found:` The user with the provided targetUserId was not found. Returns an error message.
+- `500 Internal Server Error:` An error occurred on the server while trying to follow/unfollow the user. Returns an error message.
+**Example Request:**
+```json
+{
+    "targetUserId": "123"
+}
+```
+
+### Get Timeline Posts
+
+**Endpoint:** `/api/posts/timeline`
+
+**Method:** `GET`
+
+**Description:** This endpoint allows a user to retrieve posts from users they are following, sorted by creation date in descending order.
+
+**Headers:**
+
+- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
+
+**Example Headers:**
+
+```json
+{
+    "Authorization": "Bearer your_token_here"
+}
+```
+
+**Query Parameters:**
+
+- `page:` The page number to return (optional).
+**Responses:**
+
+- `200 OK:` The posts were successfully retrieved. Returns the posts data.
+- `400 Bad Request:` The provided limit, skip, or page number is invalid. Returns an error message.
+- `401 Unauthorized:` The user is not authenticated. Returns an error message.
+- `500 Internal Server Error:` An error occurred on the server while trying to retrieve the posts. Returns an error message.
+
+### Get All Posts
+
+**Endpoint:** `/api/posts/`
+
+**Method:** `GET`
+
+**Description:** This endpoint allows a user to retrieve all posts, sorted by creation date in descending order.
+
+**Headers:**
+
+- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
+
+**Example Headers:**
+
+```json
+{
+    "Authorization": "Bearer your_token_here"
+}
+```
+
+**Query Parameters:**
+
+- `page:` The page number to return (optional).
+**Responses:**
+
+- `200 OK:` The posts were successfully retrieved. Returns the posts data.
+- `400 Bad Request:` The provided limit, skip, or page number is invalid. Returns an error message.
+- `401 Unauthorized:` The user is not authenticated. Returns an error message.
+- `500 Internal Server Error:` An error occurred on the server while trying to retrieve the posts. Returns an error message.
+
+### Create a New Post
+
+**Endpoint:** `/api/posts/`
 
 **Method:** `POST`
 
-**Description:** This endpoint allows an authenticated user to create a new appointment.
+**Description:** This endpoint allows a user to create a new post.
 
 **Headers:**
 
 - `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
+
+**Example Headers:**
+
+```json
+{
+    "Authorization": "Bearer your_token_here"
+}
+```
 
 **Request Body:**
 
-- `serviceId`: The ID of the service for the appointment.
-- `artistId`: (Optional) The ID of the artist for the appointment. Required if the user is a customer.
-- `date`: The date and time of the appointment.
-- `customerId`: (Optional) The ID of the customer for the appointment. Required if the user is an artist.
-- `catalogueId`: The ID of the catalogue entry for the appointment.
-
+- `image:` The URL of the image for the post. This is required.
+- `caption:` The caption of the post (optional).
+- `visibility:` The visibility of the post (optional).
+- `tags:` An array of tags for the post (optional).
 **Responses:**
 
-- `201 Created`: The appointment was successfully created. Returns a success message and the created appointment.
-- `400 Bad Request`: The request body is missing required fields, contains invalid data, or the artist or customer already have an appointment at the same time. Returns an error message.
-- `404 Not Found`: The user, artist, service, or catalogue entry with the specified ID was not found. Returns an error message.
-- `500 Internal Server Error`: An error occurred on the server while trying to create the appointment. Returns an error message.
-
-**Example Request**
-
+- `201 Created:` The post was successfully created. Returns the created post data.
+- `400 Bad Request:` The provided image URL, caption, visibility, or tags are invalid. Returns an error message.
+- `401 Unauthorized:` The user is not authenticated. Returns an error message.
+- `500 Internal Server Error:` An error occurred on the server while trying to create the post. Returns an error message.
+**Example Request:**
 ```json
-header auth
 {
-    "Authorization": "Bearer your_token_here"
-}
-body
-{
-    "serviceId": 1,
-    "artistId": 2,
-    "date": "2022-12-31T23:59:59Z",
-    "catalogueId": 3
+    "image": "https://example.com/image.jpg",
+    "caption": "This is a caption",
+    "visibility": "public",
+    "tags": ["tag1", "tag2"]
 }
 ```
 
-### Update an Appointment
+### Update a Post
 
-**Endpoint:** `/api/appointments/:id`
+**Endpoint:** `/api/posts/`
 
 **Method:** `PUT`
 
-**Description:** This endpoint allows an authenticated user to update an existing appointment.
+**Description:** This endpoint allows a user to update an existing post.
 
 **Headers:**
 
 - `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
 
-**URL Parameters:**
+**Example Headers:**
 
-- `id`: The ID of the appointment to be updated.
+```json
+{
+    "Authorization": "Bearer your_token_here"
+}
+```
 
 **Request Body:**
 
-- `date`: (Optional) The new date and time of the appointment.
-- `artistId`: (Optional) The new ID of the artist for the appointment.
-- `serviceId`: (Optional) The new ID of the service for the appointment.
-- `catalogueId`: (Optional) The new ID of the catalogue entry for the appointment.
-
+- `postId:` The ID of the post to update. This is required.
+- `caption:` The new caption of the post (optional).
+- `visibility:` The new visibility of the post (optional).
+- `tags:` An array of new tags for the post (optional).
 **Responses:**
 
-- `200 OK`: The appointment was successfully updated. Returns a success message and the updated appointment.
-- `400 Bad Request`: The request body contains invalid data, the new date is in the past, or the customer or artist already have an appointment at the new time. Returns an error message.
-- `403 Forbidden`: The authenticated user is not authorized to update the appointment. Returns an error message.
-- `404 Not Found`: The user, artist, service, catalogue entry, or appointment with the specified ID was not found. Returns an error message.
-- `500 Internal Server Error`: An error occurred on the server while trying to update the appointment. Returns an error message.
-
+- `200 OK:` The post was successfully updated. Returns the updated post data.
+- `400 Bad Request:` The provided postId, caption, visibility, or tags are invalid, or the post was not found. Returns an error message.
+- `401 Unauthorized:` The user is not authenticated, or the user is not the author of the post. Returns an error message.
+- `500 Internal Server Error:` An error occurred on the server while trying to update the post. Returns an error message.
 **Example Request:**
-
-```json
-header auth
-{
-    "Authorization": "Bearer your_token_here"
-}
-body
-{
-    "date": "2022-12-31T23:59:59Z",
-    "artistId": 2,
-    "serviceId": 1,
-    "catalogueId": 3
-}
-```
-### Cancel an Appointment
-
-**Endpoint:** `/api/appointments/:id/cancel`
-
-**Method:** `PUT`
-
-**Description:** This endpoint allows an authenticated user to cancel an existing appointment.
-
-**Headers:**
-
-- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
-
-**URL Parameters:**
-
-- `id`: The ID of the appointment to be cancelled.
-
-**Responses:**
-
-- `200 OK`: The appointment was successfully cancelled. Returns a success message.
-- `403 Forbidden`: The authenticated user is not authorized to cancel the appointment. Returns an error message.
-- `404 Not Found`: The user or appointment with the specified ID was not found, or the appointment is not in the "pending" status. Returns an error message.
-- `500 Internal Server Error`: An error occurred on the server while trying to cancel the appointment. Returns an error message.
-
-**Example Request:**
-
 ```json
 {
-    "Authorization": "Bearer your_token_here"
+    "postId": "123",
+    "caption": "This is a new caption",
+    "visibility": "private",
+    "tags": ["newTag1", "newTag2"]
 }
 ```
-### Get Appointments
 
-**Endpoint:** `/api/appointments`
+### Get Own Posts
+
+**Endpoint:** `/api/posts/own`
 
 **Method:** `GET`
 
-**Description:** This endpoint allows an authenticated user to retrieve appointments based on various filters.
+**Description:** This endpoint allows a user to retrieve their own posts, sorted by creation date in descending order.
 
 **Headers:**
 
 - `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
+
+**Example Headers:**
+
+```json
+{
+    "Authorization": "Bearer your_token_here"
+}
+```
 
 **Query Parameters:**
 
-- `date`: (Optional) The date of the appointments to retrieve.
-- `serviceName`: (Optional) The name of the service of the appointments to retrieve.
-- `artistName`: (Optional) The name of the artist of the appointments to retrieve.
-- `customerName`: (Optional) The name of the customer of the appointments to retrieve.
-- `catalogueEntry`: (Optional) The name of the catalogue entry of the appointments to retrieve.
-
+- `page:` The page number to return (optional).
 **Responses:**
 
-- `200 OK`: The appointments were successfully retrieved. Returns a success message and the retrieved appointments.
-- `400 Bad Request`: The request query contains invalid data, such as an invalid date. Returns an error message.
-- `403 Forbidden`: The authenticated user is not authorized to retrieve the appointments. Returns an error message.
-- `404 Not Found`: The user, artist, service, or catalogue entry with the specified name was not found. Returns an error message.
-- `500 Internal Server Error`: An error occurred on the server while trying to retrieve the appointments. Returns an error message.
+- `200 OK:` The posts were successfully retrieved. Returns the posts data.
+- `400 Bad Request:` The provided limit, skip, or page number is invalid. Returns an error message.
+- `401 Unauthorized:` The user is not authenticated. Returns an error message.
+- `500 Internal Server Error:` An error occurred on the server while trying to retrieve the posts. Returns an error message.
 
-**Example Request:**
+### Get a Post by ID
 
-```http
-GET /api/appointments?date=2022-12-31&serviceName=Service%20Name&artistName=Artist%20Name&customerName=Customer%20Name&catalogueEntry=Catalogue%20Entry%20Name
-```
-```json
-{
-    "Authorization": "Bearer your_token_here"
-}
-```
-### Get an Appointment by ID
-
-**Endpoint:** `/api/appointments/:id`
+**Endpoint:** `/api/posts/:id`
 
 **Method:** `GET`
 
-**Description:** This endpoint allows an authenticated user to retrieve a specific appointment by its ID.
+**Description:** This endpoint allows a user to retrieve a specific post by its ID, provided the post's visibility is set to "public".
 
 **Headers:**
 
-- `Authorization`: Bearer token for authentic the user. This should be included in all requests to this endpoint.
+- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
 
-**URL Parameters:**
+**Example Headers:**
 
-- `id`: The ID of the appointment to be retrieved.
-
-**Responses:**
-
-- `200 OK`: The appointment was successfully retrieved. Returns a success message and the retrieved appointment.
-- `404 Not Found`: The user or appointment with the specified ID was not found. Returns an error message.
-- `500 Internal Server Error`: An error occurred on the server while trying to retrieve the appointment. Returns an error message.
-
-**Example Request:**
-
-```http
-GET /api/appointments/1
-```
 ```json
 {
     "Authorization": "Bearer your_token_here"
 }
 ```
 
-### Delete an Appointment by ID
+**Path Parameters:**
 
-**Endpoint:** `/api/appointments/:id`
+- `id:` The ID of the post to retrieve.
+**Responses:**
+
+- `200 OK:` The post was successfully retrieved. Returns the post data.
+- `400 Bad Request:` The provided ID is invalid. Returns an error message.
+- `401 Unauthorized:` The user is not authenticated. Returns an error message.
+- `404 Not Found:` The post with the provided ID was not found, or the post's visibility is not set to "public". Returns an error message.
+- `500 Internal Server Error:` An error occurred on the server while trying to retrieve the post. Returns an error message.
+
+### Delete a Post by ID
+
+**Endpoint:** `/api/posts/:id`
 
 **Method:** `DELETE`
 
-**Description:** This endpoint allows an authenticated user to delete a specific appointment by its ID.
+**Description:** This endpoint allows a user to delete a specific post by its ID, provided they are the author of the post.
 
 **Headers:**
 
-- `Authorization`: Bearer token for authentic the user. This should be included in all requests to this endpoint.
+- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
 
-**URL Parameters:**
+**Example Headers:**
 
-- `id`: The ID of the appointment to be deleted.
-
-**Responses:**
-
-- `200 OK`: The appointment was successfully deleted. Returns a success message.
-- `403 Forbidden`: The authenticated user is not authorized to delete the appointment. Returns an error message.
-- `404 Not Found`: The user or appointment with the specified ID was not found. Returns an error message.
-- `500 Internal Server Error`: An error occurred on the server while trying to delete the appointment. Returns an error message.
-
-**Example Request:**
-
-```http
-DELETE /api/appointments/1
-```
 ```json
 {
     "Authorization": "Bearer your_token_here"
 }
 ```
 
+**Path Parameters:**
+
+- `id:` The ID of the post to delete.
+**Responses:**
+
+- `200 OK:` The post was successfully deleted. Returns a success message.
+- `400 Bad Request:` The provided ID is invalid. Returns an error message.
+- `401 Unauthorized:` The user is not authenticated, or the user is not the author of the post. Returns an error message.
+- `404 Not Found:` The post with the provided ID was not found. Returns an error message.
+- `500 Internal Server Error:` An error occurred on the server while trying to delete the post. Returns an error message.
+
+### Like or Unlike a Post
+
+**Endpoint:** `/api/posts/like`
+
+**Method:** `PUT`
+
+**Description:** This endpoint allows a user to like or unlike a specific post.
+
+**Headers:**
+
+- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
+
+**Example Headers:**
+
+```json
+{
+    "Authorization": "Bearer your_token_here"
+}
+```
+
+**Request Body:**
+
+- `postId:` The ID of the post to like or unlike. This is required.
+**Responses:**
+
+- `200 OK:` The post was successfully liked or unliked. Returns the updated post data.
+- `400 Bad Request:` The provided postId is invalid, or the post was not found. Returns an error message.
+- `401 Unauthorized:` The user is not authenticated. Returns an error message.
+- `500 Internal Server Error:` An error occurred on the server while trying to like or unlike the post. Returns an error message.
+**Example Request:**
+```json
+{
+    "postId": "123"
+}
+```
+
+### Save or Unsave a Post
+
+**Endpoint:** `/api/posts/save`
+
+**Method:** `PUT`
+
+**Description:** This endpoint allows a user to save or unsave a post.
+
+**Headers:**
+
+- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
+
+**Example Headers:**
+
+```json
+{
+    "Authorization": "Bearer your_token_here"
+}
+```
+
+**Request Body:**
+
+- `postId:` The ID of the post to save or unsave. This is required.
+**Responses:**
+
+- `200 OK:` The post was successfully saved or unsaved. Returns the updated user profile data.
+- `400 Bad Request:` The provided postId is invalid, or the post was not found. Returns an error message.
+- `401 Unauthorized:` The user is not authenticated. Returns an error message.
+- `500 Internal Server Error:` An error occurred on the server while trying to save or unsave the post. Returns an error message.
+**Example Request:**
+```json
+{
+    "postId": "123"
+}
+```
+
+### Post a Comment
+
+**Endpoint:** `/api/comments/`
+
+**Method:** `POST`
+
+**Description:** This endpoint allows a user to post a comment on a specific post.
+
+**Headers:**
+
+- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
+
+**Example Headers:**
+
+```json
+{
+    "Authorization": "Bearer your_token_here"
+}
+```
+
+**Request Body:**
+
+- `postId:` The ID of the post to comment on. This is required.
+- `content:` The content of the comment. This is required.
+**Responses:**
+
+- `200 OK:` The comment was successfully posted. Returns the comment data.
+- `400 Bad Request:` The provided postId or content is invalid, or the post was not found. Returns an error message.
+- `401 Unauthorized:` The user is not authenticated. Returns an error message.
+- `500 Internal Server Error:` An error occurred on the server while trying to post the comment. Returns an error message.
+**Example Request:**
+```json
+{
+    "postId": "123", //this must be a mongoose id object, not like this
+    "content": "This is a comment"
+}
+```
+
+### Post a Reply to a Comment
+
+**Endpoint:** `/api/comments/reply`
+
+**Method:** `POST`
+
+**Description:** This endpoint allows a user to post a reply to a comment on a post.
+
+**Headers:**
+
+- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
+
+**Example Headers:**
+
+```json
+{
+    "Authorization": "Bearer your_token_here"
+}
+```
+
+**Request Body:**
+
+- `postId:` The ID of the post the comment belongs to. This is required.
+- `commentId:` The ID of the comment to reply to. This is required.
+- `content:` The content of the reply. This is required.
+**Responses:**
+
+- `200 OK:` The reply was successfully posted. Returns the updated comment data.
+- `400 Bad Request:` The provided postId, commentId, or content is invalid, or the post or comment was not found. Returns an error message.
+- `401 Unauthorized:` The user is not authenticated. Returns an error message.
+- `404 Not Found:` Comment was not found. 
+- `500 Internal Server Error:` An error occurred on the server while trying to post the reply. Returns an error message.
+**Example Request:**
+```json
+{
+    "postId": "123",
+    "commentId": "456",
+    "content": "This is a reply"
+}
+```
+
+### Delete a Comment
+
+**Endpoint:** `/api/comment/delete`
+
+**Method:** `PUT`
+
+**Description:** This endpoint allows a user to delete a comment on a post. Instead of completely removing the comment, it updates the content to "This comment has been deleted".
+
+**Headers:**
+
+- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
+
+**Example Headers:**
+
+```json
+{
+    "Authorization": "Bearer your_token_here"
+}
+```
+
+**Request Body:**
+
+postId: The ID of the post the comment belongs to. This is required.
+commentId: The ID of the comment to delete. This is required.
+**Responses:**
+
+- `200 OK:` The comment was successfully deleted. Returns the updated comment data.
+- `400 Bad Request:` The provided postId or commentId is invalid, or the post or comment was not found. Returns an error message.
+- `401 Unauthorized:` The user is not authenticated, or the user is not the author of the comment. Returns an error message.
+- `404 Not Found:` Comment was not found.
+- `500 Internal Server Error:` An error occurred on the server while trying to delete the comment. Returns an error message.
+**Example Request:**
+```json
+{
+    "postId": "123", // This must be a mongoose object id
+    "commentId": "456" // This must be a mongoose object id
+}
+```
+
+### Like or Unlike a Comment
+
+**Endpoint:** `/api/comments/like`
+
+**Method:** `PUT`
+
+**Description:** This endpoint allows a user to like or unlike a comment.
+
+**Headers:**
+
+- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
+
+**Example Headers:**
+
+```json
+{
+    "Authorization": "Bearer your_token_here"
+}
+```
+
+**Request Body:**
+
+- `commentId:` The ID of the comment to like or unlike. This is required.
+- `postId:` The ID of the post the comment belongs to. This is required.
+**Responses:**
+
+- `200 OK:` The comment was successfully liked or unliked. Returns the updated comment data.
+- `400 Bad Request:` The provided commentId or postId is invalid, or the comment was not found. Returns an error message.
+- `401 Unauthorized:` The user is not authenticated. Returns an error message.
+- `404 Not Found:` The comment with the provided commentId was not found. Returns an error message.
+- `500 Internal Server Error:` An error occurred on the server while trying to like or unlike the comment. Returns an error message.
+**Example Request:**
+```json
+{
+    "postId": "123", // This must be a mongoose object id
+    "commentId": "456" // This must be a mongoose object id
+}
+```
+
+### Update a Comment
+
+**Endpoint:** `/api/comments`
+
+**Method:** `PUT`
+
+**Description:** This endpoint allows a user to update the content of a comment they authored.
+
+**Headers:**
+
+- `Authorization`: Bearer token for authenticating the user. This should be included in all requests to this endpoint.
+
+**Example Headers:**
+
+```json
+{
+    "Authorization": "Bearer your_token_here"
+}
+```
+
+**Request Body:**
+
+- `commentId:` The ID of the comment to update. This is required.
+- `postId:` The ID of the post the comment belongs to. This is required.
+- `content:` The new content of the comment. This is required.
+**Responses:**
+
+- `200 OK:` The comment was successfully updated. Returns the updated comment data.
+- `400 Bad Request:` The provided commentId, postId, or content is invalid, or the comment was not found. Returns an error message.
+- `401 Unauthorized:` The user is not authenticated, or the user is not the author of the comment. Returns an error message.
+- `404 Not Found:` The comment with the provided commentId was not found. Returns an error message.
+- `500 Internal Server Error:` An error occurred on the server while trying to update the comment. Returns an error message.
+**Example Request:**
+```json
+{
+    "postId": "123", // This must be a mongoose object id
+    "commentId": "456", // This must be a mongoose object id
+    "content": "This is the updated content"
+}
+```
 
 </details>
 
 ## Credentials
     These are some of the credentials provided in the seeder.
-    - user1@example.com password: Aa123456 super_admin
-    - user3@example.com password: Aa123456 artist
-    - user4@example.com password: Aa123456 customer
+    - user@user.com password: Aa123456 user
+    - admin@admin.com password: Aa123456 admin
+    - super_admin@super_admin.com password: Aa123456 super_admin
+
+## Decisions
+
+- I decided to take an approach where I avoid denormalizing the database as I think it is unnecessary but I have indexed the fields that are used in queries to speed up fetches considering the drawback in an api like this are acceptable.
 
 ## Roadmap
-- check update methods have at least 1 param
-- allow admins and super_admins to create appointments and users
-- move middlewares and helpers onto their own files.
-- add an option for random artist on appointment creation and update.
-- add an updated_by field to all tables.
-- add pagination.
-- add a function to auto-update appointment status if their date has already passed.
-- implement more conditional checks depending on user calling the endpoint like appointment does.
+- Implement aggregate fetches for complex fetches.
+- Review code to unify some parts where functions still keep the old approach.
+- Abstract auth into service and repository.
+- Clean up code.
+- Add testing.
+- Complete seeders so that they include saved in users and replies in comments.
 
 ## Author 
 

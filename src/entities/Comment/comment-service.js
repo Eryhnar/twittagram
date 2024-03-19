@@ -1,4 +1,5 @@
 import InvalidInputError from "../../utils/errors/InvalidInputError.js";
+import NotFoundError from "../../utils/errors/NotFoundError.js";
 import validateRequiredFields from "../../utils/validators/validateRequiredFields.js";
 import { findPost } from "../Post/post-repository.js";
 import { findComment, postComment, updateComment } from "./comment-repository.js";
@@ -30,7 +31,7 @@ export const postReplyService = async (req) => {
         }
         const comment = await findComment({ _id: commentId });
         if (!comment) {
-            throw new InvalidInputError(400, "Comment not found");
+            throw new NotFoundError(404, "Comment not found");
         }
         const reply = await postComment(authorId, postId, content);
         comment.replies.push(reply._id);
@@ -48,11 +49,11 @@ export const deleteCommentService = async (req) => {
         validateRequiredFields(['commentId', 'postId'], req.body);
         const post = await findPost({ _id: postId });
         if (!post) {
-            throw new InvalidInputError(400, "Post not found");
+            throw new NotFoundError(404, "Post not found");
         }
         const comment = await findComment({ _id: commentId, author: userId });
         if (!comment) {
-            throw new InvalidInputError(400, "Comment not found");
+            throw new NotFoundError(404, "Comment not found");
         }
         await updateComment(commentId, { content: "This comment has been deleted" });
     } catch (error) {
@@ -67,7 +68,7 @@ export const likeCommentService = async (req) => {
         validateRequiredFields(['commentId', 'postId'], req.body);
         const comment = await findComment({ _id: commentId, post: postId });
         if (!comment) {
-            throw new InvalidInputError(400, "Comment not found");
+            throw new NotFoundError(404, "Comment not found");
         }
         if ( comment.likes.includes(userId) ) {
             comment.likes.pull(userId);
@@ -88,7 +89,7 @@ export const updateCommentService = async (req) => {
         validateRequiredFields(['commentId', 'postId', 'content'], req.body);
         const comment = await findComment({ _id: commentId, post: postId, author: userId });
         if (!comment) {
-            throw new InvalidInputError(400, "Comment not found");
+            throw new NotFoundError(404, "Comment not found");
         }
         return await updateComment(commentId, { content });
     } catch (error) {

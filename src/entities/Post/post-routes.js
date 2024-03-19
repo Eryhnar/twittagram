@@ -11,8 +11,8 @@ router.get("/", auth, isSuperadmin, getPosts, errorHandler); //admin
 router.put("/", auth, updatePost, errorHandler);
 router.get("/timeline", auth, getTimeline, errorHandler);
 router.get("/own", auth, getOwnPosts, errorHandler);
-router.put("/like/:id", auth, toggleLike, errorHandler); //Todo id/like
-router.put("/save/:id", auth, savePost, errorHandler); // is it ok here or user? //Todo id/save
+router.put("/like", auth, toggleLike, errorHandler); //Todo id/like
+router.put("/save", auth, savePost, errorHandler); // is it ok here or user? //Todo MOVE TO USER
 router.get("/:id", auth, getPostById, errorHandler);
 router.delete("/:id", auth, deletePostById, errorHandler);
 //router.get("/:user-id", auth, getPostsByUserId); 

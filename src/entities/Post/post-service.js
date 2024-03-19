@@ -6,10 +6,11 @@ import processTag from "../../utils/treatment-utils/processTag.js";
 import isValidVisibility from "../../utils/validators/isValidVisibility.js";
 import isValidHashtag from "../../utils/validators/isValidHashtag.js";
 import isValidCaption from "../../utils/validators/isValidCaption.js";
+import NotFoundError from "../../utils/errors/NotFoundError.js";
 
 export const getTimelineService = async (req, limit, skip, page) => {
     try {
-        if (isNaN(page) || page <= 0) {
+        if (isNaN(page) || page <= 0) { //TODO use a validator
             throw new InvalidInputError(400, "Invalid page number");
         }
         const userId = req.tokenData.userId;
@@ -152,7 +153,7 @@ export const getPostByIdService = async (req) => {
         const postId = req.params.id;
         const post = await findPost({ _id: postId, visibility: "public" });
         if (!post) {
-            throw new InvalidInputError(404, "Post not found");
+            throw new NotFoundError(404, "Post not found");
         }
         return post;
     } catch (error) {
@@ -166,7 +167,7 @@ export const deletePostByIdService = async (req) => {
         const userId = req.tokenData.userId;
         const post = await findPost({ _id: postId, author: userId });
         if (!post) {
-            throw new InvalidInputError(404, "Post not found");
+            throw new NotFoundError(404, "Post not found");
         }
         return await deletePostById({ _id: postId });
     } catch (error) {
@@ -176,11 +177,12 @@ export const deletePostByIdService = async (req) => {
 
 export const toggleLikeService = async (req) => {
     try {
-        const postId = req.params.id;
+        //const postId = req.params.id;
+        const postId = req.body.postId;
         const userId = req.tokenData.userId;
         const post = await findPost({ _id: postId, visibility: "public"});
         if (!post) {
-            throw new InvalidInputError(404, "Post not found");
+            throw new NotFoundError(404, "Post not found");
         }
         post.likes.includes(userId) ? post.likes.pull(userId) : post.likes.push(userId);
         return await updatePost(post, { likes: post.likes });
@@ -192,11 +194,11 @@ export const toggleLikeService = async (req) => {
 export const savePostService = async (req) => {
     try {
         const userId = req.tokenData.userId;
-        const postId = req.params.id;
+        const postId = req.body.postId;
         const user = await findUserById(userId);
         const post = await findPost({ _id: postId });
         if (!post) {
-            throw new InvalidInputError(404, "Post not found");
+            throw new NotFoundError(404, "Post not found");
         }
         user.saved.includes(postId) 
         ? user.saved.pull(postId) 
