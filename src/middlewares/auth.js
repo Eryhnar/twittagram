@@ -28,8 +28,7 @@ export const auth = async (req, res, next) => {
                 _id: userId
             }
         );
-
-        const { isActive, ...tokenUser } = user;
+        const { isActive, ...tokenUser } = user._doc;
 
         // verify if user exists and is active and role matches the token
         // TODO verify token in session database
@@ -41,8 +40,7 @@ export const auth = async (req, res, next) => {
                 }
             );
         }
-
-        req.body.tokenUser = tokenUser;
+        // req.tokenUser = tokenUser;
         next();
     } catch (error) {
         return res.status(500).json(

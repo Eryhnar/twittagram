@@ -1,5 +1,7 @@
-const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-export default function isValidEmail(email) {
+const isValidEmail = (email) => {
     return emailRegex.test(email);
-}
+};
+
+export default isValidEmail;

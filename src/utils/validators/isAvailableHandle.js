@@ -1,6 +1,6 @@
 import User from "../../entities/User/user-model";
 
-export const isAvailableHandle = async (handle) => {
+const isAvailableHandle = async (handle) => {
     try {
         const user = await User.findOne(
             {
@@ -15,3 +15,5 @@ export const isAvailableHandle = async (handle) => {
         throw new UndefinedError("Error checking handle availability");
     }
 }
+
+export default isAvailableHandle;

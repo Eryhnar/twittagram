@@ -1,6 +1,8 @@
 import User from "../entities/User/user-model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import processHandle from "../utils/treatment-utils/processHandle.js";
+import isValidHandle from "../utils/validators/isValidHandle.js";
 
 export const register = async (req, res) => {
     try {
@@ -15,7 +17,16 @@ export const register = async (req, res) => {
             );
         }
 
-        const userHandle = "@" + userName.trim().toLowerCase();
+        // const userHandle = "@" + userName.trim().toLowerCase();
+        const userHandle = processHandle(userName);
+        if (!isValidHandle(userHandle)) {
+            return res.status(400).json(
+                {
+                    success: false,
+                    message: "Invalid username"
+                }
+            );
+        }
 
         if (await User.findOne ({ userHandle })) {
             return res.status(400).json(
