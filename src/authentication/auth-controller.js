@@ -28,6 +28,8 @@ export const register = async (req, res) => {
             );
         }
 
+        
+
         if (await User.findOne ({ userHandle })) {
             return res.status(400).json(
                 { 
