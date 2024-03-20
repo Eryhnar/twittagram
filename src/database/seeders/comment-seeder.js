@@ -35,6 +35,7 @@ const seedComments = async () => {
         comments.push(comment);
     }
     await Comment.create(comments);
+    console.log("comments created successfully!");
 }
 
 export default seedComments;

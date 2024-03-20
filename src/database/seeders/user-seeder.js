@@ -96,8 +96,9 @@ const seedUsers = async () => {
         
         await user.save();
     }
-        
-        
+    
+    
+    console.log("users created successfully!")
 }
 
 export default seedUsers;

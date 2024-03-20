@@ -16,6 +16,7 @@
     <li><a href="#deployment-🚀">Deployment</a></li>
     <li><a href="#stack">Stack</a></li>
     <li><a href="#local-installation">Installation</a></li>
+    <li><a href="#diagram">Diagram</a></li>
     <li><a href="#endpoints">Endpoints</a></li>
     <li><a href="#decisions">Decisions</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
@@ -76,6 +77,9 @@ Technologies employed:
 4. Set the .env file and adjust the params for the database.
 5. Connect to the database. If the .env is set properly, executing the following command within the ide console will connect to the database ``` $ npm run dev ```
 6. Import the routes from the thunder routes collection folder.
+
+## Diagram
+!['imagen-db'](./img/dbDiagram.PNG)
 
 ## Endpoints
 <details>
